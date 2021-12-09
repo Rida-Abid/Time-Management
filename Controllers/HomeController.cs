@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TTMS.Models;
 
@@ -13,8 +14,15 @@ namespace TTMS.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
+            var isAuthenticated = HttpContext?.User?.Identity?.IsAuthenticated;
+
+            if (!isAuthenticated.GetValueOrDefault())
+            {
+                // Authenticated, do something!
+            }
             return View();
         }
 
