@@ -6,9 +6,9 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Manage Subjects</h1>
-        <button type="button" class="btn btn-sm btn-outline-secondary">
+        <a href="~/subject/add" class="btn btn-sm btn-outline-secondary">
             Add
-        </button>
+        </a>
     </div>
         
     <div class="table-responsive">
@@ -27,8 +27,8 @@
                     <td>@subject.SubjectID</td>
                     <td>@subject.SubjectName</td>
                     <td>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                        <a href="~/subject/edit?id=@subject.SubjectID" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a href="~/subject/delete?id=@subject.SubjectID" class="btn btn-sm btn-outline-secondary">Delete</a>
                     </td>
                 </tr>
                 }
