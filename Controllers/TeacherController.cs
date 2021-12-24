@@ -10,5 +10,11 @@ namespace TTMS.Controllers
         {
             return View();
         }
+        
+        [Authorize]
+        public IActionResult AddEdit()
+        {
+            return View();
+        }
     }
 }
