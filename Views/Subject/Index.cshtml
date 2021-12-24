@@ -1,141 +1,39 @@
-﻿@{
+﻿@model List<SubjectViewModel>;
+
+@{
     ViewData["Title"] = "Subjects";
 }
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Manage Subjects</h1>
-         <a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Add</a>
+        <a href="~/subject/addedit" class="btn btn-sm btn-outline-secondary">
+            Add
+        </a>
     </div>
         
-      <div class="table-responsive">
+    <div class="table-responsive">
         <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Subject</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>random</td>
-              <td>data</td>
-              <td>
-            <a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
-          </td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>data</td>
-              <td>rich</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>information</td>
-              <td>placeholder</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,004</td>
-              <td>text</td>
-              <td>random</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,005</td>
-              <td>dashboard</td>
-              <td>irrelevant</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,006</td>
-              <td>dashboard</td>
-              <td>illustrative</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,007</td>
-              <td>placeholder</td>
-              <td>tabular</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            </tr>
-            <tr>
-              <td>1,008</td>
-              <td>random</td>
-              <td>data</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,009</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,010</td>
-              <td>data</td>
-              <td>rich</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,011</td>
-              <td>information</td>
-              <td>placeholder</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,012</td>
-              <td>text</td>
-              <td>placeholder</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,013</td>
-              <td>dashboard</td>
-              <td>irrelevant</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,014</td>
-              <td>dashboard</td>
-              <td>illustrative</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,015</td>
-              <td>random</td>
-              <td>tabular</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Subject/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-          </tbody>
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var subject in Model)
+                {
+                <tr>
+                    <td>@subject.SubjectID</td>
+                    <td>@subject.SubjectName</td>
+                    <td>
+                        <a href="~/subject/edit?id=@subject.SubjectID" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a href="~/subject/delete?id=@subject.SubjectID" class="btn btn-sm btn-outline-secondary">Delete</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
         </table>
-      </div>
     </div>
 </main>
 
