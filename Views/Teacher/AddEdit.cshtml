@@ -2,33 +2,48 @@
     ViewData["Title"] = "Add";
 }
           
- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+ <main class="col-md-9 ms-sm-auto px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Manage Teachers</h1>
+        <h1 class="h2">Manage teachers</h1>
     </div>
-      <div class="col-md-7 col-lg-8">
+      <div class="col-md-7x col-lg-8x">
         
-            <div class="row g-3">
-            <div class="col-sm-6">
-              <label for="firstName" class="form-label">First name</label>
+            <div class="col-sm-12">
+              <label for="firstName" class="form-label">first name</label>
               <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
               <div class="invalid-feedback">
                 Valid first name is required.
               </div>
             </div>
 
-            <div class="col-sm-6">
-              <label for="lastName" class="form-label">Surname</label>
-              <input type="text" class="form-control" id="Surname" placeholder="" value="" required>
+            <div class="col-sm-12">
+              <label for="lastName" class="form-label">surname</label>
+              <input type="text" class="form-control" id="surname" placeholder="" value="" required>
               <div class="invalid-feedback">
                 Valid  surname is required.
               </div>
             </div>
+
+            <div class="col-sm-12">
+              <label for="email" class="form-label">email</label>
+              <input type="email" class="form-control" id="email" placeholder="" value="" required>
+              <div class="invalid-feedback">
+                Valid Email is required.
+              </div>
             </div>
-            <div class="col-md-5">
-              <label for="Subject" class="form-label">Subject</label>
-              <select class="form-select" id="Subject" required>
-                <option> </option>
+
+            <div class="col-sm-12">
+            <label for="Mobile" class="form-label">mobile</label>
+            <input type="text" class="form-control" id="mobile" placeholder="" value="" required>
+            <div class="invalid-feedback">
+                Valid Mobile number is required.
+            </div>
+        </div>
+  
+            <div class="col-sm-12">
+              <label for="Subject" class="form-label">subject</label>
+              <select class="form-select" id="Subject" required multiple style="height:200px">
+                <option>please select</option>
                 <option>English</option>
                 <option>Urdu</option>
                 <option>Mathematics</option>
@@ -46,28 +61,12 @@
                 Please select a valid Subject.
               </div>
             </div>
-
-            <div class="col-md-4">
-              <label for="Secondary Subject" class="form-label">Secondary Subject</label>
-              <select class="form-select" id="Secondary Subject" required>
-                <option> </option>
-                <option>English</option>
-                <option>Urdu</option>
-                <option>Mathematics</option>
-                <option>Science</option>
-                <option>Social Studies</option>
-                <option>Islamiat</option>
-                <option>Computer</option>
-                <option>Art</option>
-                <option>Physics</option>
-                <option>Biology</option>
-                <option>Chemistry</option>
-                <option>Pak Studies</option> 
-              </select>
-              <div class="invalid-feedback">
-                Please provide a valid Subject.
-              </div>
-            </div>
+        
+        
 
       </div>
- </main>       
+        <div class="form-control">
+            <a class="btn btn-lg btn-outline-success col-md-12" href="~/Teacher/AddEdit">save</a>
+        </div>
+ </main> 
+ 
