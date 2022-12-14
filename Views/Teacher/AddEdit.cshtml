@@ -7,12 +7,23 @@
         <h1 class="h2">Manage teachers</h1>
     </div>
       <div class="col-md-7x col-lg-8x">
+
+            <div class="col-sm-12">
+                <label for="title" class="form-label">title</label>
+                <select class="form-select" id="title" required style="height:40px">
+                <option>Mr.</option>
+                <option>Ms.</option>
+                </select>
+                <div class="invalid-feedback">
+                    Valid title is required.
+                </div>
+            </div>
         
             <div class="col-sm-12">
               <label for="firstName" class="form-label">first name</label>
               <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
               <div class="invalid-feedback">
-                Valid first name is required.
+                Valid firstname is required.
               </div>
             </div>
 
@@ -32,13 +43,8 @@
               </div>
             </div>
 
-            <div class="col-sm-12">
-            <label for="Mobile" class="form-label">mobile</label>
-            <input type="text" class="form-control" id="mobile" placeholder="" value="" required>
-            <div class="invalid-feedback">
-                Valid Mobile number is required.
-            </div>
-        </div>
+           
+        
   
             <div class="col-sm-12">
               <label for="Subject" class="form-label">subject</label>
