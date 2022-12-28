@@ -1,5 +1,8 @@
-﻿@{
-    ViewData["Title"] = "Teacher";
+﻿@page
+@model TTMS.Controllers.IndexModel
+                                                                                                                                         
+@{
+    /*ViewData["Title"] = "Teacher";*/
 }
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -12,129 +15,33 @@
           <thead>
             <tr>
               <th scope="col">id</th>
-              <th scope="col">name</th>
-              <th scope="col">subject</th>
+              <th scope="col">title</th>
+              <th scope="col">firstname</th>
+              <th scope="col">surname</th>
+              <th scope="col">email</th>
+              <th scope="col">date created</th>
  
               <th scope="col">action</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>random</td>
-                    <td>data</td>
-                    
-              <td>
-            <a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">edit</a>
-            <button type="button" class="btn btn-sm btn-outline-danger">delete</button>
-          </td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>data</td>
-              <td>rich</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>information</td>
-              <td>placeholder</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,004</td>
-              <td>text</td>
-              <td>random</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,005</td>
-              <td>dashboard</td>
-              <td>irrelevant</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,006</td>
-              <td>dashboard</td>
-              <td>illustrative</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,007</td>
-              <td>placeholder</td>
-              <td>tabular</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,008</td>
-              <td>random</td>
-              <td>data</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,009</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,010</td>
-              <td>data</td>
-              <td>rich</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,011</td>
-              <td>information</td>
-              <td>placeholder</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,012</td>
-              <td>text</td>
-              <td>placeholder</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,013</td>
-              <td>dashboard</td>
-              <td>irrelevant</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,014</td>
-              <td>dashboard</td>
-              <td>illustrative</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-            <tr>
-              <td>1,015</td>
-              <td>random</td>
-              <td>tabular</td>
-              <td><a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">Edit</a>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button></td>
-            </tr>
-          </tbody>
+           <tbody>
+              @foreach(var item in Teacher .listTeachers)
+              {
+                <tr>
+                    <td>@item.TeacherID</td>
+                    <td>@item.Title</td>
+                    <td>@item.Firstname</td>
+                    <td>@item.Surname</td>
+                    <td>@item.Email</td>
+                    <td>@item.DateCreated</td>
+
+                    <td>
+                    <a class="btn btn-sm btn-outline-secondary" href="/Teacher/AddEdit?id = @item.TeacherID">edit</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="/Teacher/AddEdit?id = @item.TeacherID">delete</a>
+                    </td>
+                </tr>
+              }
+        </tbody>
         </table>
       </div>
 </main>

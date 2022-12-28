@@ -24,11 +24,11 @@
                 @foreach(var subject in Model)
                 {
                 <tr>
-                    <td>@subject.SubjectID</td>
-                    <td>@subject.SubjectName</td>
+                    <td>subject.SubjectID</td>
+                    <td>subject.SubjectName</td>
                     <td>
-                        <a href="~/subject/edit?id=@subject.SubjectID" class="btn btn-sm btn-outline-secondary">Edit</a>
-                        <a href="~/subject/delete?id=@subject.SubjectID" class="btn btn-sm btn-outline-secondary">Delete</a>
+                        <a href="~/subject/edit?id=subject.SubjectID" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a href="~/subject/delete?id=subject.SubjectID" class="btn btn-sm btn-outline-secondary">Delete</a>
                     </td>
                 </tr>
                 }
