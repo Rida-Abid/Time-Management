@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
+using TTMS.Models;
 
 namespace TTMS.Controllers
 {
@@ -9,7 +10,13 @@ namespace TTMS.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            return View();
+            var listTeachers = new List<TeacherModel>();
+            listTeachers.Add(new TeacherModel
+            {
+                Email = "laibasaqib256@gmail.com"
+
+            });
+            return View(listTeachers);
         }
 
         [Authorize]
@@ -21,7 +28,7 @@ namespace TTMS.Controllers
 
     public class TeacherData
     { 
-        public List<TeacherTable> listTeachers = new List<TeacherTable>(); 
+         
         public void OnGet()
         { 
             try
@@ -46,7 +53,7 @@ namespace TTMS.Controllers
                                 teachertable.Email = reader.GetString(4);
                                 teachertable.DateCreated = reader.GetString(5);
 
-                                listTeachers.Add(teachertable);
+                               // listTeachers.Add(teachertable);
                             }
                         }
                     }

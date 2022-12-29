@@ -1,7 +1,7 @@
 ﻿
 namespace TTMS.Models
 {
-    public class TeacherViewModel
+    public class TeacherModel
     {
 
         public int TeacherID { get; set; }
