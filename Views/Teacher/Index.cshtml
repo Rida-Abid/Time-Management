@@ -1,6 +1,6 @@
 ﻿@page
-@model TTMS.Controllers.IndexModel
-                                                                                                                                         
+@model List<TeacherViewModel>
+
 @{
     /*ViewData["Title"] = "Teacher";*/
 }
@@ -25,19 +25,18 @@
             </tr>
           </thead>
            <tbody>
-              @foreach(var item in Teacher .listTeachers)
+              @foreach(var teacher in Model)
               {
                 <tr>
-                    <td>@item.TeacherID</td>
-                    <td>@item.Title</td>
-                    <td>@item.Firstname</td>
-                    <td>@item.Surname</td>
-                    <td>@item.Email</td>
-                    <td>@item.DateCreated</td>
+                    <td>@teacher.TeacherID</td>
+                    <td>@teacher.Title</td>
+                    <td>@teacher.Firstname</td>
+                    <td>@teacher.Surname</td>
+                    <td>@teacher.Email</td>
 
                     <td>
-                    <a class="btn btn-sm btn-outline-secondary" href="/Teacher/AddEdit?id = @item.TeacherID">edit</a>
-                    <a class="btn btn-sm btn-outline-secondary" href="/Teacher/AddEdit?id = @item.TeacherID">delete</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="/Teacher/AddEdit?id = @teacher.TeacherID">edit</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="/Teacher/AddEdit?id = @teacher.TeacherID">delete</a>
                     </td>
                 </tr>
               }
