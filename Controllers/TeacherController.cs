@@ -10,13 +10,8 @@ namespace TTMS.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            var listTeachers = new List<TeacherModel>();
-            listTeachers.Add(new TeacherModel
-            {
-                Email = "laibasaqib256@gmail.com"
-
-            });
-            return View(listTeachers);
+           
+            return View(GetTeachers());
         }
 
         [Authorize]
@@ -24,58 +19,49 @@ namespace TTMS.Controllers
         {
             return View();
         }
-    }
+        public List<TeacherRecord> GetTeachers()
+        {
 
-    public class TeacherData
-    { 
-         
-        public void OnGet()
-        { 
-            try
+            string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=tms;Integrated Security=True";
+            var listTeachers = new List<TeacherRecord>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                String connectionString = "Data Source=.\\sqlexpress;Initial Catalog=tms;Integrated Security=True";
-
-                using (SqlConnection connection = new SqlConnection(connectionString)) 
+                connection.Open();
+                string sql = "SELECT * FROM Teacher";
+                using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    connection.Open();
-                    String sql = "SELECT * FROM Teacher";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        using (SqlDataReader reader = command.ExecuteReader()) 
-                        { 
-                            while (reader.Read())
-                            {
-                                TeacherTable teachertable = new TeacherTable();
-                                teachertable.TeacherID = "" + reader.GetInt32(0);
-                                teachertable.Title = reader.GetString(1);
-                                teachertable.Firstname = reader.GetString(2);
-                                teachertable.Surname = reader.GetString(3);
-                                teachertable.Email = reader.GetString(4);
-                                teachertable.DateCreated = reader.GetString(5);
 
-                               // listTeachers.Add(teachertable);
-                            }
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            TeacherRecord teachertable = new TeacherRecord();
+                            teachertable.TeacherID = "" + reader.GetInt32(0);
+                            teachertable.Title = reader.GetString(1);
+                            teachertable.Firstname = reader.GetString(2);
+                            teachertable.Surname = reader.GetString(3);
+                            teachertable.Email = reader.GetString(4);
+                            teachertable.DateCreated = reader.GetDateTime(5);
+
+                            listTeachers.Add(teachertable);
                         }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex.ToString());
-            }
-        
-        
+            return listTeachers;
         }
     }
 
-        public class TeacherTable
+    
+
+        public class TeacherRecord
         {
-            public String TeacherID;
-            public String Title;
-            public String Firstname;
-            public String Surname;
-            public String Email;
-            public String DateCreated;
+            public string TeacherID;
+            public string Title;
+            public string Firstname;
+            public string Surname;
+            public string Email;
+            public DateTime DateCreated;
 
         }
 
