@@ -1,9 +1,9 @@
 ﻿namespace TTMS.Models
 {
-    public class RoomsViewModel
+    public class ClassViewModel
     {
 
-        public int RoomID { get; set; }
+        public int ClassID { get; set; }
 
         public string Name { get; set; }
 
