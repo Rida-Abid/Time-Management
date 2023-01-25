@@ -7,7 +7,7 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Manage Teachers</h1>
-         <a class="btn btn-sm btn-outline-secondary" href="~/Teacher/AddEdit">add</a>
+         <a class="btn btn-md btn-outline-primary" href="~/Teacher/AddEdit">add</a>
     </div>
         
       <div class="table-responsive">
@@ -18,9 +18,7 @@
               <th scope="col">title</th>
               <th scope="col">firstname</th>
               <th scope="col">surname</th>
-              <th scope="col">email</th>
-              <th scope="col">date created</th>
- 
+              <th scope="col">email</th> 
               <th scope="col">action</th>
             </tr>
           </thead>
@@ -36,7 +34,7 @@
 
                     <td>
                             <a class="btn btn-sm btn-outline-secondary" href="/Teacher/AddEdit?id = @teacher.TeacherID">edit</a>
-                            <a class="btn btn-sm btn-outline-secondary" href="/Teacher/AddEdit?id = @teacher.TeacherID">delete</a>
+                            <a class="btn btn-sm btn-outline-danger" href="/Teacher/AddEdit?id = @teacher.TeacherID">delete</a>
                     </td>
                 </tr>
               }
