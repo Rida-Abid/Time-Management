@@ -1,4 +1,5 @@
 ﻿@using TTMS.Controllers;
+@using static TTMS.Controllers.TeacherController;
 @model IEnumerable<TeacherRecord>
 
 @{
@@ -25,18 +26,21 @@
            <tbody>
               @foreach(var teacher in Model)
               {
-                <tr>
-                    <td>@teacher.TeacherID</td>
-                    <td>@teacher.Title</td>
-                    <td>@teacher.Firstname</td>
-                    <td>@teacher.Surname</td>
-                    <td>@teacher.Email</td>
+                using (Html.BeginForm("Delete", "Teacher", new { id = @teacher.TeacherID }))
+                {
+                    <tr>
+                        <td>@teacher.TeacherID</td>
+                        <td>@teacher.Title</td>
+                        <td>@teacher.Firstname</td>
+                        <td>@teacher.Surname</td>
+                        <td>@teacher.Email</td>
 
-                    <td>
-                            <a class="btn btn-sm btn-outline-secondary" href="/Teacher/AddEdit?id = @teacher.TeacherID">edit</a>
-                            <a class="btn btn-sm btn-outline-danger" href="/Teacher/Delete?id = @teacher.TeacherID">delete</a>
-                    </td>
-                </tr>
+                        <td>
+                                <a class="btn btn-sm btn-outline-secondary" href="/Teacher/AddEdit?id=@teacher.TeacherID">edit</a>
+                                <a class="btn btn-sm btn-outline-danger" href="/Teacher/Delete?id=@teacher.TeacherID" onclick="return confirm('Are you sure you want to delete record with ID = @teacher.TeacherID');">delete</a>
+                        </td>
+                    </tr>
+                }
               }
         </tbody>
         </table>

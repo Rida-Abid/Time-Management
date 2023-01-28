@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Data.SqlClient;
 using TTMS.Models;
 
@@ -10,8 +11,33 @@ namespace TTMS.Controllers
         [Authorize]
         public IActionResult Index()
         {
-           
+
             return View(GetTeachers());
+        }
+
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            TeacherController teacher= new TeacherController();
+            teacher.DeleteTeacher( id);
+            return RedirectToAction("Index");
+
+        }
+
+        public void DeleteTeacher(int id)
+        {
+            string connectionString ="Data Source=.\\sqlexpress;Initial Catalog=tms;Integrated Security=True";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = "DELETE FROM TEACHER WHERE TeacherID = @Id";
+                SqlCommand command = new SqlCommand(sql , connection);
+                SqlParameter paramId = new SqlParameter();
+                paramId.ParameterName = "@Id";
+                paramId.Value = id;
+                command.Parameters.Add(paramId);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
         }
 
         [Authorize]
@@ -45,14 +71,12 @@ namespace TTMS.Controllers
 
                             listTeachers.Add(teachertable);
                         }
+
                     }
                 }
             }
             return listTeachers;
         }
-    }
-
-    
 
         public class TeacherRecord
         {
@@ -67,4 +91,6 @@ namespace TTMS.Controllers
 
 
 
+
+    }
 }
