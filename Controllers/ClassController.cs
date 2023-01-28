@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace TTMS.Controllers
@@ -29,10 +30,65 @@ namespace TTMS.Controllers
             return View(GetClasses());
         }
 
-        [Authorize]
-        public IActionResult AddEdit()
+        public IActionResult Delete(int id)
         {
-            return View();
+            ClassController Class = new ClassController();
+            Class.DeleteClass(id);
+            return RedirectToAction("Index");
+
+        }
+
+        public void DeleteClass(int id)
+        {
+            string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=tms;Integrated Security=True";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = "DELETE FROM CLASS WHERE ClassID = @Id";
+                SqlCommand command = new SqlCommand(sql, connection);
+                SqlParameter paramId = new SqlParameter();
+                paramId.ParameterName = "@Id";
+                paramId.Value = id;
+                command.Parameters.Add(paramId);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        [Authorize]
+        public IActionResult AddEdit(ClassRecord classtable)
+        {
+            ClassController Class = new ClassController();
+            Class.AddClass(classtable);
+            return RedirectToAction("Index");
+        }
+
+        public void AddClass(ClassRecord classtable)
+        {
+            string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=tms;Integrated Security=True";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = "INSERT INTO Class(Name) Values(@Name)";
+                sql += " SELECT SCOPE_IDENTITY()";
+
+                SqlCommand command = new SqlCommand(sql, connection);
+                SqlDataAdapter ad = new SqlDataAdapter(command);
+                DataSet ds = new DataSet();
+                {
+                    command.Connection = connection;
+
+
+                    //command.ExecuteNonQuery();
+
+                    //command.Parameters.AddWithValue("@Id", subjecttable.SubjectID) ;
+                    command.Parameters.AddWithValue("@Name", classtable.Name);
+                    connection.Open();
+                    classtable.ClassID = Convert.ToInt32(command.ExecuteScalar());
+                    //ad.Fill(ds, "Class");
+                    connection.Close();
+
+                }
+            }
+
         }
         public List<ClassRecord> GetClasses()
         {
@@ -51,7 +107,7 @@ namespace TTMS.Controllers
                         while (reader.Read())
                         {
                             ClassRecord classtable = new ClassRecord();
-                            classtable.ClassID = "" + reader.GetInt32(0);
+                            classtable.ClassID =reader.GetInt32(0);
                             classtable.Name = reader.GetString(1);
                             classtable.DateCreated = reader.GetDateTime(2);
 
@@ -68,8 +124,8 @@ namespace TTMS.Controllers
 
     public class ClassRecord
     {
-        public string ClassID;
-        public string Name;
+        public int? ClassID;
+        public string? Name;
         public DateTime DateCreated;
 
     }

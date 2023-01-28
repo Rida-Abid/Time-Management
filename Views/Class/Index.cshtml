@@ -21,13 +21,16 @@
             <tbody>
                 @foreach (var Class in Model)
                 {
-                    <tr>
-                        <td>@Class.Name</td>
-                        <td>
-                            <a class="btn btn-sm btn-outline-secondary" href="/Class/AddEdit?id = @Class.ClassID">edit</a>
-                            <a class="btn btn-sm btn-outline-danger" href="/Class/Delete?id = @Class.ClassID">delete</a>
-                        </td>
-                    </tr>
+                    using (Html.BeginForm("Delete", "Class", new { id = Class.ClassID }))
+                    {
+                        <tr>
+                            <td>@Class.Name</td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-secondary" href="/Class/AddEdit?id = @Class.ClassID">edit</a>
+                                <a class="btn btn-sm btn-outline-danger" href="/Class/Delete?id = @Class.ClassID" onclick="return confirm('Are you sure you want to delete @Class.Name');">delete</a>
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
