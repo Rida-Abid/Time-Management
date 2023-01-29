@@ -1,10 +1,10 @@
 ﻿namespace TTMS.Models
 {
-    public class SubjectViewModel
+    public class SubjectModel
     {
 
         public IEnumerable<Subject> Subjects { get; set; }
-
+        
     }
 
     public class Subject

@@ -2,7 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using System.Data;
+using System.Xml.Linq;
 using TTMS.Models;
+using System.Configuration;
+
 
 namespace TTMS.Controllers
 {
@@ -49,10 +53,64 @@ namespace TTMS.Controllers
             return View(GetSubjects());
         }
 
-        [Authorize]
-        public IActionResult AddEdit()
+        public IActionResult Delete(int id)
         {
-            return View();
+        SubjectController subject = new SubjectController();
+        subject.DeleteSubject(id);
+        return RedirectToAction("Index");
+
+        }
+
+        public void DeleteSubject(int id)
+        {
+            string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=tms;Integrated Security=True";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = "DELETE FROM SUBJECT WHERE SubjectID = @Id";
+                SqlCommand command = new SqlCommand(sql, connection);
+                SqlParameter paramId = new SqlParameter();
+                paramId.ParameterName = "@Id";
+                paramId.Value = id;
+                command.Parameters.Add(paramId);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        [Authorize]
+        public IActionResult AddEdit(SubjectRecord subjecttable)
+        {
+            SubjectController sub = new SubjectController();
+            sub.AddSubject( subjecttable);
+            return RedirectToAction("Index");
+        }
+
+        public void AddSubject(SubjectRecord subjecttable)
+        {
+            string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=tms;Integrated Security=True";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = "INSERT INTO Subject(Name) Values(@Name)";
+                sql += " SELECT SCOPE_IDENTITY()";
+                SqlDataAdapter ad = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Connection = connection;
+                    
+
+                    //command.ExecuteNonQuery();
+                    
+                    //command.Parameters.AddWithValue("@Id", subjecttable.SubjectID) ;
+                    command.Parameters.AddWithValue("@Name", subjecttable.Name);
+                    connection.Open();
+                    subjecttable.SubjectID = Convert.ToInt32 (command.ExecuteScalar());
+                    ad.Fill(ds,"Subject");
+                    connection.Close();
+                    
+                }
+            }
+
         }
         public List<SubjectRecord> GetSubjects()
         {
@@ -71,7 +129,7 @@ namespace TTMS.Controllers
                         while (reader.Read())
                         {
                             SubjectRecord subjecttable = new SubjectRecord();
-                            subjecttable.SubjectID = "" + reader.GetInt32(0);
+                            subjecttable.SubjectID =  reader.GetInt32(0);
                             subjecttable.Name = reader.GetString(1);
                             subjecttable.DateCreated = reader.GetDateTime(2);
 
@@ -88,7 +146,7 @@ namespace TTMS.Controllers
 
     public class SubjectRecord
     {
-        public string SubjectID;
+        public int SubjectID;
         public string Name;
         public DateTime DateCreated;
 
