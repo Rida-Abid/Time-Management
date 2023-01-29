@@ -18,8 +18,7 @@ namespace TTMS.Controllers
         [Authorize]
         public IActionResult Delete(int id)
         {
-            TeacherController teacher= new TeacherController();
-            teacher.DeleteTeacher( id);
+            DeleteTeacher( id);
             return RedirectToAction("Index");
 
         }
@@ -41,9 +40,41 @@ namespace TTMS.Controllers
         }
 
         [Authorize]
-        public IActionResult AddEdit()
+        public IActionResult Add()
         {
             return View();
+        }
+        [Authorize]
+        [HttpPost]
+        public IActionResult Add(TeacherRecord teacherRecord)
+        {
+            
+            AddTeacher(teacherRecord);
+            return View();
+        }
+
+
+        private void AddTeacher(TeacherRecord teacherRecord)
+        {
+            string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=tms;Integrated Security=True";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string sql = "INSERT INTO Teacher(Title, Firstname, Surname, Email) Values(@Title, @Firstname, @Surname, @Email)";
+                               
+                SqlCommand command = new SqlCommand(sql, connection);
+                command.Parameters.Add(new SqlParameter { ParameterName = "@Title", Value = teacherRecord.Title });
+                command.Parameters.Add(new SqlParameter { ParameterName = "@Firstname", Value = teacherRecord.Firstname });
+                command.Parameters.Add(new SqlParameter { ParameterName = "@Surname", Value = teacherRecord.Surname });
+                command.Parameters.Add(new SqlParameter { ParameterName = "@Email", Value = teacherRecord.Email });
+
+                
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                
+            }
+
         }
         public List<TeacherRecord> GetTeachers()
         {
@@ -62,7 +93,7 @@ namespace TTMS.Controllers
                         while (reader.Read())
                         {
                             TeacherRecord teachertable = new TeacherRecord();
-                            teachertable.TeacherID = "" + reader.GetInt32(0);
+                            teachertable.TeacherID =  reader.GetInt32(0);
                             teachertable.Title = reader.GetString(1);
                             teachertable.Firstname = reader.GetString(2);
                             teachertable.Surname = reader.GetString(3);
@@ -80,7 +111,7 @@ namespace TTMS.Controllers
 
         public class TeacherRecord
         {
-            public string TeacherID;
+            public int TeacherID;
             public string Title;
             public string Firstname;
             public string Surname;

@@ -1,0 +1,86 @@
+﻿@using TTMS.Controllers;
+@using static TTMS.Controllers.TeacherController;
+@model IEnumerable<TeacherRecord>
+
+
+@{
+    //ViewData["Title"] = "Add";
+}
+ @using (Html.BeginForm("add", "Teacher", "POST"))
+{
+         
+     <main class="col-md-9 ms-sm-auto px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Add teacher</h1>
+        </div>
+          <div class="col-md-7x col-lg-8x">
+
+                <div class="col-sm-12">
+                    <label for="title" class="form-label">title</label>
+                    <select class="form-select" id="title" name="teacherRecord.Title" required style="height:40px">
+                    <option>Mr.</option>
+                    <option>Ms.</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Valid title is required.
+                    </div>
+                </div>
+        
+                <div class="col-sm-12">
+                  <label for="firstName" class="form-label">firstname</label>
+                  <input type="text" class="form-control" id="firstname" placeholder="" value="" required>
+                  <div class="invalid-feedback">
+                    Valid firstname is required.
+                  </div>
+                </div>
+
+                <div class="col-sm-12">
+                  <label for="surname" class="form-label">surname</label>
+                  <input type="text" class="form-control" id="surname" placeholder="" value="" required>
+                  <div class="invalid-feedback">
+                    Valid  surname is required.
+                  </div>
+                </div>
+
+                <div class="col-sm-12">
+                  <label for="email" class="form-label">email</label>
+                  <input type="email" class="form-control" id="email" placeholder="" value="" required>
+                  <div class="invalid-feedback">
+                    Valid Email is required.
+                  </div>
+                </div>
+
+           
+        
+  
+                <div class="col-sm-12">
+                  <label for="Subject" class="form-label">subject</label>
+                  <select class="form-select" id="Subject" required multiple style="height:200px">
+                    <option>please select</option>
+                    <option>English</option>
+                    <option>Urdu</option>
+                    <option>Mathematics</option>
+                    <option>Science</option>
+                    <option>Social Studies</option>
+                    <option>Islamiat</option>
+                    <option>Computer</option>
+                    <option>Art</option>
+                    <option>Physics</option>
+                    <option>Biology</option>
+                    <option>Chemistry</option>
+                    <option>Pak Studies</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Please select a valid Subject.
+                  </div>
+                </div>
+        
+        
+
+          </div>
+            <div class="container-fluid">
+                <input type="submit" value="add" class="btn btn-lg btn-outline-success col-md-12" >
+            </div>
+     </main> 
+}
+ 
