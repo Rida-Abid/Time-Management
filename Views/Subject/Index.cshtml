@@ -1,4 +1,5 @@
 ﻿@using TTMS.Controllers;
+@using static TTMS.Controllers.SubjectController;
 @model IEnumerable<SubjectRecord>
 
 @{
@@ -22,13 +23,17 @@
             <tbody>
                 @foreach(var subject in Model)
                 {
-                <tr>
-                    <td>@subject.Name</td>
-                    <td>
-                        <a class="btn btn-sm btn-outline-secondary" href="/Subject/AddEdit?id = @subject.SubjectID">edit</a>
-                        <a class="btn btn-sm btn-outline-danger" href="/Subject/Delete?id = @subject.SubjectID">delete</a>
-                    </td>
-                </tr>
+                    using (Html.BeginForm("Delete", "Subject", new { id = @subject.SubjectID }))
+                    {
+
+                        <tr>
+                            <td>@subject.Name</td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-secondary" href="/Subject/AddEdit?id=@subject.SubjectID">edit</a>
+                                <a class="btn btn-sm btn-outline-danger" href="/Subject/Delete?id=@subject.SubjectID"onclick="return confirm('Are you sure you want to delete @subject.Name');">delete</a>
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
