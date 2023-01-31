@@ -8,7 +8,7 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Manage Subjects</h1>
-        <a class="btn btn-md btn-outline-primary" href="~/Subject/AddEdit">add</a>
+        <a class="btn btn-md btn-outline-primary" href="~/Subject/Add">add</a>
     </div>
         
     <div class="table-responsive">
@@ -29,7 +29,7 @@
                         <tr>
                             <td>@subject.Name</td>
                             <td>
-                                <a class="btn btn-sm btn-outline-secondary" href="/Subject/AddEdit?id=@subject.SubjectID">edit</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="/Subject/Edit?id=@subject.SubjectID">edit</a>
                                 <a class="btn btn-sm btn-outline-danger" href="/Subject/Delete?id=@subject.SubjectID"onclick="return confirm('Are you sure you want to delete @subject.Name');">delete</a>
                             </td>
                         </tr>
