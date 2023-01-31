@@ -1,28 +1,23 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Dapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
+using static TTMS.Controllers.SubjectController;
 
 namespace TTMS.Controllers
 {
-    //public class ClassController : Controller
-    //{
-    //    [Authorize]
-    //    public IActionResult Index()
-    //    {
-    //        return View();
-    //    }
-
-    //    [Authorize]
-    //    public IActionResult AddEdit()
-    //    {
-    //        return View();
-    //    }
-
-
-    //}
     public class ClassController : Controller
     {
+        private string ConnectionString = "Data Source=.\\sqlexpress;Initial Catalog=tms;Integrated Security=True";
+
+        public IDbConnection Connection
+        {
+            get
+            {
+                return new SqlConnection(ConnectionString);
+            }
+        }
         [Authorize]
         public IActionResult Index()
         {
@@ -30,102 +25,57 @@ namespace TTMS.Controllers
             return View(GetClasses());
         }
 
+        [Authorize]
         public IActionResult Delete(int id)
         {
-            ClassController Class = new ClassController();
-            Class.DeleteClass(id);
+            DeleteClass(id);
             return RedirectToAction("Index");
-
         }
-
-        public void DeleteClass(int id)
+        private void DeleteClass(int id)
         {
-            string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=tms;Integrated Security=True";
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (IDbConnection dbConnection = Connection)
             {
-                string sql = "DELETE FROM CLASS WHERE ClassID = @Id";
-                SqlCommand command = new SqlCommand(sql, connection);
-                SqlParameter paramId = new SqlParameter();
-                paramId.ParameterName = "@Id";
-                paramId.Value = id;
-                command.Parameters.Add(paramId);
-                connection.Open();
-                command.ExecuteNonQuery();
+                string sql = @"DELETE FROM Class WHERE ClassID = @Id";
+                dbConnection.Open();
+                dbConnection.Execute(sql, new { Id = id });
             }
+
         }
 
         [Authorize]
-        public IActionResult AddEdit(ClassRecord classtable)
+        [HttpPost]
+        public IActionResult Add(ClassRecord classRecord)
         {
-            ClassController Class = new ClassController();
-            Class.AddClass(classtable);
-            return RedirectToAction("Index");
+            AddClass(classRecord);
+            return View();
         }
-
-        public void AddClass(ClassRecord classtable)
+        private void AddClass(ClassRecord classRecord)
         {
-            string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=tms;Integrated Security=True";
-            using (SqlConnection connection = new SqlConnection(connectionString))
+
+            using (IDbConnection dbConnection = Connection)
             {
-                string sql = "INSERT INTO Class(Name) Values(@Name)";
-                sql += " SELECT SCOPE_IDENTITY()";
-
-                SqlCommand command = new SqlCommand(sql, connection);
-                SqlDataAdapter ad = new SqlDataAdapter(command);
-                DataSet ds = new DataSet();
-                {
-                    command.Connection = connection;
-
-
-                    //command.ExecuteNonQuery();
-
-                    //command.Parameters.AddWithValue("@Id", subjecttable.SubjectID) ;
-                    command.Parameters.AddWithValue("@Name", classtable.Name);
-                    connection.Open();
-                    classtable.ClassID = Convert.ToInt32(command.ExecuteScalar());
-                    //ad.Fill(ds, "Class");
-                    connection.Close();
-
-                }
+                string sql = $"INSERT INTO Class(Name) VALUES('{classRecord.Name}')";
+                dbConnection.Open();
+                dbConnection.Execute(sql, classRecord);
             }
 
+
         }
-        public List<ClassRecord> GetClasses()
+
+        public IEnumerable<ClassRecord> GetClasses()
         {
-
-            string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=tms;Integrated Security=True";
-            var listClasses = new List<ClassRecord>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (IDbConnection dbConnection = Connection)
             {
-                connection.Open();
-                string sql = "SELECT * FROM Class";
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            ClassRecord classtable = new ClassRecord();
-                            classtable.ClassID =reader.GetInt32(0);
-                            classtable.Name = reader.GetString(1);
-                            classtable.DateCreated = reader.GetDateTime(2);
-
-                            listClasses.Add(classtable);
-                        }
-                    }
-                }
+                string sql = @"SELECT * FROM Class";
+                dbConnection.Open();
+                return dbConnection.Query<ClassRecord>(sql);
             }
-            return listClasses;
         }
     }
-
-
-
     public class ClassRecord
     {
-        public int? ClassID;
-        public string? Name;
+        public int ClassID;
+        public string Name;
         public DateTime DateCreated;
 
     }
