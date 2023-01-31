@@ -49,17 +49,17 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(TeacherRecord teacherRecord, string Title, string Firstname, string Surname, string Email)
+        public IActionResult Add(TeacherRecord teacherRecord, string Title, string Firstname, string Surname, string Subject, string Email)
         {
-            AddTeacher(teacherRecord, Title, Firstname, Surname, Email);
+            AddTeacher(teacherRecord, Title, Firstname, Surname, Subject, Email);
             return View();
         }
-        private void AddTeacher(TeacherRecord teacherRecord, string Title, string Firstname, string Surname, string Email)
+        private void AddTeacher(TeacherRecord teacherRecord, string Title, string Firstname, string Surname, string Subject, string Email)
         {
 
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"INSERT INTO Teacher(Title, Firstname, Surname, Email) VALUES('{Title}','{Firstname}','{Surname}','{Email}')";
+                string sql = $"INSERT INTO Teacher(Title, Firstname, Surname, Subject, Email) VALUES('{Title}','{Firstname}','{Surname}','{Subject}','{Email}')";
                 dbConnection.Open();
                 dbConnection.Execute(sql, teacherRecord);
             }
@@ -84,6 +84,7 @@ namespace TTMS.Controllers
             public string Title;
             public string Firstname;
             public string Surname;
+            public string Subject;
             public string Email;
             public DateTime DateCreated;
 

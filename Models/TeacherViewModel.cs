@@ -14,6 +14,8 @@ namespace TTMS.Models
 
         public string Surname { get; set; }
 
+        public string Subject { get; set; }
+
         public string FullName => Firstname + " " + Surname;
 
     }

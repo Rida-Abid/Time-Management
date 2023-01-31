@@ -6,6 +6,7 @@ Create table dbo.Teacher
 	Title varchar(5) NOT NULL,
 	Firstname varchar(50) NOT NULL,
 	Surname varchar(50) NOT NULL,
+	Subject varchar(50) NOT NULL,
 	Email varchar(50) NOT NULL,
 	CreatedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	UpdatedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
