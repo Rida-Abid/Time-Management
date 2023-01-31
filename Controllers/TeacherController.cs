@@ -44,6 +44,7 @@ namespace TTMS.Controllers
         }
 
         [Authorize]
+        [HttpPost]
         public IActionResult Add(TeacherRecord teacherRecord)
         {
             AddTeacher(teacherRecord);
