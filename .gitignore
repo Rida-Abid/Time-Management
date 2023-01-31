@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /Views/Subject/AddEdit.cshtml
 /Views/Teacher/AddEdit.cshtml
+/Views/Class/AddEdit.cshtml

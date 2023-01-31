@@ -54,7 +54,7 @@ namespace TTMS.Controllers
 
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"INSERT INTO Class(Name) VALUES('{classRecord.Name}')";
+                string sql = $"INSERT INTO Class(Name) VALUES({classRecord.Name})";
                 dbConnection.Open();
                 dbConnection.Execute(sql, classRecord);
             }
