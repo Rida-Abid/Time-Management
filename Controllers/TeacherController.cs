@@ -21,8 +21,12 @@ namespace TTMS.Controllers
         [Authorize]
         public IActionResult Index()
         {
-
             return View(GetTeachers());
+        }
+        [Authorize]
+        public IActionResult Add()
+        {
+            return View();
         }
 
         [Authorize]
@@ -45,17 +49,17 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(TeacherRecord teacherRecord)
+        public IActionResult Add(TeacherRecord teacherRecord, string Title, string Firstname, string Surname, string Email)
         {
-            AddTeacher(teacherRecord);
+            AddTeacher(teacherRecord, Title, Firstname, Surname, Email);
             return View();
         }
-        private void AddTeacher(TeacherRecord teacherRecord)
+        private void AddTeacher(TeacherRecord teacherRecord, string Title, string Firstname, string Surname, string Email)
         {
 
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"INSERT INTO Teacher(Title, Firstname, Surname, Email) VALUES('{teacherRecord.Title}', '{teacherRecord.Firstname}', '{teacherRecord.Surname}', '{teacherRecord.Email}')";
+                string sql = $"INSERT INTO Teacher(Title, Firstname, Surname, Email) VALUES('{Title}','{Firstname}','{Surname}','{Email}')";
                 dbConnection.Open();
                 dbConnection.Execute(sql, teacherRecord);
             }

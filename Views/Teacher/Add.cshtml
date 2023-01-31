@@ -6,7 +6,7 @@
 @{
     //ViewData["Title"] = "Add";
 }
- @using (Html.BeginForm("add", "Teacher", "POST"))
+ @using (Html.BeginForm("add", "Teacher", FormMethod.Post))
 {
          
      <main class="col-md-9 ms-sm-auto px-md-4">
@@ -17,7 +17,7 @@
 
                 <div class="col-sm-12">
                     <label for="title" class="form-label">title</label>
-                    <select class="form-select" id="title" name="teacherRecord.Title" required style="height:40px">
+                    <select class="form-select" id="title" name="Title" required style="height:40px">
                     <option>Mr.</option>
                     <option>Ms.</option>
                     </select>
@@ -28,7 +28,7 @@
         
                 <div class="col-sm-12">
                   <label for="firstName" class="form-label">firstname</label>
-                  <input type="text" class="form-control" id="firstname" placeholder="" value="" required>
+                  <input type="text" class="form-control" id="firstname" name="Firstname" placeholder="" value="" required>
                   <div class="invalid-feedback">
                     Valid firstname is required.
                   </div>
@@ -36,7 +36,7 @@
 
                 <div class="col-sm-12">
                   <label for="surname" class="form-label">surname</label>
-                  <input type="text" class="form-control" id="surname" placeholder="" value="" required>
+                <input type="text" class="form-control" id="surname" name="Surname" placeholder="" value="" required>
                   <div class="invalid-feedback">
                     Valid  surname is required.
                   </div>
@@ -44,7 +44,7 @@
 
                 <div class="col-sm-12">
                   <label for="email" class="form-label">email</label>
-                  <input type="email" class="form-control" id="email" placeholder="" value="" required>
+                <input type="email" class="form-control" id="email" name="Email" placeholder="" value="" required>
                   <div class="invalid-feedback">
                     Valid Email is required.
                   </div>
