@@ -1,23 +1,23 @@
 ﻿@using TTMS.Controllers;
 @using static TTMS.Controllers.TeacherController;
-@model IEnumerable<TeacherRecord>
+@model TeacherRecord
 
 
 @{
     //ViewData["Title"] = "Add";
 }
- @using (Html.BeginForm())
+@using (Html.BeginForm("edit", "Teacher", FormMethod.Post))
 {
          
      <main class="col-md-9 ms-sm-auto px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Manage teachers</h1>
+            <h1 class="h2">Edit teachers</h1>
         </div>
           <div class="col-md-7x col-lg-8x">
 
                 <div class="col-sm-12">
                     <label for="title" class="form-label">title</label>
-                    <select class="form-select" id="title" required style="height:40px">
+                    <select class="form-select" id="title" name="Title" value="@Model." required style="height:40px">
                     <option>Mr.</option>
                     <option>Ms.</option>
                     </select>
@@ -28,7 +28,7 @@
         
                 <div class="col-sm-12">
                   <label for="firstName" class="form-label">firstname</label>
-                  <input type="text" class="form-control" id="firstname" placeholder="" value="" required>
+                <input type="text" class="form-control" id="firstname" name="Firstname" placeholder="" value="@Model.Firstname" required>
                   <div class="invalid-feedback">
                     Valid firstname is required.
                   </div>
@@ -36,7 +36,7 @@
 
                 <div class="col-sm-12">
                   <label for="surname" class="form-label">surname</label>
-                  <input type="text" class="form-control" id="surname" placeholder="" value="" required>
+                <input type="text" class="form-control" id="surname" name="Surname" placeholder="" value="@Model.Surname" required>
                   <div class="invalid-feedback">
                     Valid  surname is required.
                   </div>
@@ -44,7 +44,7 @@
 
                 <div class="col-sm-12">
                   <label for="email" class="form-label">email</label>
-                  <input type="email" class="form-control" id="email" placeholder="" value="" required>
+                <input type="email" class="form-control" id="email" name="Email" placeholder="" value="@Model.Email" required>
                   <div class="invalid-feedback">
                     Valid Email is required.
                   </div>
@@ -55,7 +55,7 @@
   
                 <div class="col-sm-12">
                   <label for="Subject" class="form-label">subject</label>
-                  <select class="form-select" id="Subject" required multiple style="height:200px">
+                <select class="form-select" id="Subject" name="Subject" value="@Model.Subject" required multiple style="height:200px">
                     <option>please select</option>
                     <option>English</option>
                     <option>Urdu</option>
@@ -79,7 +79,7 @@
 
           </div>
             <div class="container-fluid">
-                <a class="btn btn-lg btn-outline-success col-md-12" href="~/Teacher/AddEdit">save</a>
+                <input type="submit" value="edit" class="btn btn-lg btn-outline-success col-md-12"> 
             </div>
      </main> 
 }

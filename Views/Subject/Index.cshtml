@@ -23,17 +23,16 @@
             <tbody>
                 @foreach(var subject in Model)
                 {
-                    using (Html.BeginForm("Delete", "Subject", new { id = @subject.SubjectID }))
-                    {
-
-                        <tr>
-                            <td>@subject.Name</td>
-                            <td>
-                                <a class="btn btn-sm btn-outline-secondary" href="/Subject/Edit?id=@subject.SubjectID">edit</a>
-                                <a class="btn btn-sm btn-outline-danger" href="/Subject/Delete?id=@subject.SubjectID"onclick="return confirm('Are you sure you want to delete @subject.Name');">delete</a>
-                            </td>
-                        </tr>
-                    }
+                     <tr>
+                        <td>@subject.Name</td>
+                        <td>
+                            <a href="/Subject/Edit?id=@subject.SubjectID" class="btn btn-sm btn-outline-secondary" >edit</a>
+                            using (Html.BeginForm("Delete", "Subject", new { Id = @subject.SubjectID }))
+                            {
+                            <a href="/Subject/Delete?id=@subject.SubjectID" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete @subject.Name');">delete</a>
+                            }
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

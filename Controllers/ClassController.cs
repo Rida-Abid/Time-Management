@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 using static TTMS.Controllers.SubjectController;
+using static TTMS.Controllers.TeacherController;
 
 namespace TTMS.Controllers
 {
@@ -32,9 +33,9 @@ namespace TTMS.Controllers
         }
 
         [Authorize]
-        public IActionResult Edit()
+        public IActionResult Edit(int Id)
         {
-            return View();
+            return View(GetClassById(Id));
         }
 
         [Authorize]
@@ -92,6 +93,16 @@ namespace TTMS.Controllers
             }
 
 
+        }
+
+        public ClassRecord GetClassById(int Id)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sql = $"SELECT * FROM Class   WHERE ClassID = {Id}";
+                dbConnection.Open();
+                return dbConnection.Query<ClassRecord>(sql).FirstOrDefault();
+            }
         }
 
         public IEnumerable<ClassRecord> GetClasses()
