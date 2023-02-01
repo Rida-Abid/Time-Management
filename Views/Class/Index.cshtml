@@ -1,4 +1,5 @@
 ﻿@using TTMS.Controllers;
+@using static TTMS.Controllers.ClassController;
 @model IEnumerable<ClassRecord>
 @{
     //ViewData["Title"] = "Classes";
@@ -19,15 +20,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var Class in Model)
+                @foreach (var cls in Model)
                 {
-                    using (Html.BeginForm("Delete", "Class", new { id = Class.ClassID }))
+                    using (Html.BeginForm("Delete", "Class", new { id = @cls.ClassID }))
                     {
                         <tr>
-                            <td>@Class.Name</td>
+                            <td>@cls.Name</td>
                             <td>
-                                <a class="btn btn-sm btn-outline-secondary" href="/Class/Edit?id = @Class.ClassID">edit</a>
-                                <a class="btn btn-sm btn-outline-danger" href="/Class/Delete?id = @Class.ClassID" onclick="return confirm('Are you sure you want to delete @Class.Name');">delete</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="/Class/Edit?id=@cls.ClassID">edit</a>
+                                <a class="btn btn-sm btn-outline-danger" href="/Class/Delete?id=@cls.ClassID" onclick="return confirm('Are you sure you want to delete @cls.Name');">delete</a>
                             </td>
                         </tr>
                     }

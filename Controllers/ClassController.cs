@@ -26,6 +26,18 @@ namespace TTMS.Controllers
         }
 
         [Authorize]
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult Edit()
+        {
+            return View();
+        }
+
+        [Authorize]
         public IActionResult Delete(int id)
         {
             DeleteClass(id);
@@ -44,17 +56,37 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(ClassRecord classRecord)
+        public IActionResult Add(ClassRecord classRecord, string Name)
         {
-            AddClass(classRecord);
+            AddClass(classRecord, Name);
             return View();
         }
-        private void AddClass(ClassRecord classRecord)
+        private void AddClass(ClassRecord classRecord, string Name)
         {
 
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"INSERT INTO Class(Name) VALUES({classRecord.Name})";
+                string sql = $"INSERT INTO Class(Name) VALUES('{Name}')";
+                dbConnection.Open();
+                dbConnection.Execute(sql, classRecord);
+            }
+
+
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Edit(ClassRecord classRecord, string Name)
+        {
+            EditClass(classRecord, Name);
+            return View();
+        }
+        private void EditClass(ClassRecord classRecord, string Name)
+        {
+
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sql = $"UPDATE Class SET Name=('{Name}') WHERE ClassID=('{classRecord.ClassID}')";
                 dbConnection.Open();
                 dbConnection.Execute(sql, classRecord);
             }

@@ -6,7 +6,7 @@
 @{
     //ViewData["Title"] = "Add";
 }
- @using (Html.BeginForm("add", "Class", "POST"))
+ @using (Html.BeginForm("add", "Class",FormMethod.Post))
 {
 
           
@@ -19,18 +19,18 @@
            
                 <div class="col-md-5">
                   <label for="Class" class="form-label">Class</label>
-                  <select class="form-select" id="Class" required>
+                  <select class="form-select" id="Class" name="Name" required>
                     <option value=""> </option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option> 
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
+                    <option>Class 1</option>
+                    <option>Class 2</option>
+                    <option>Class 3</option>
+                    <option>Class 4</option>
+                    <option>Class 5</option>
+                    <option>Class 6</option>
+                    <option>Class 7</option>
+                    <option>Class 8</option>
+                    <option>Class 9</option>
+                    <option>Class 10</option>
                   </select>
                   <div class="invalid-feedback">
                     Please select a valid Class.
