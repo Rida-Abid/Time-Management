@@ -1,6 +1,6 @@
 ﻿@using TTMS.Controllers;
 @using static TTMS.Controllers.ClassController;
-@model IEnumerable<ClassRecord>
+@model ClassRecord
 
 
 @{
@@ -19,7 +19,7 @@
            
                 <div class="col-md-5">
                   <label for="Class" class="form-label">Class</label>
-                  <select class="form-select" id="Class" name="Name" required>
+                  <select class="form-select" id="Class" name="Name"  required>
                     <option value=""> </option>
                     <option>Class 1</option>
                     <option>Class 2</option>
@@ -38,7 +38,7 @@
                 </div>
           </div>
             <div class="container-fluid">
-                <input type="submit" value="add" class="btn btn-lg btn-outline-success col-md-12">
+                <input type="submit" value="edit" class="btn btn-lg btn-outline-success col-md-12">
             </div>
      </main> 
 }

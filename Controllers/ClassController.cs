@@ -77,22 +77,21 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(ClassRecord classRecord, string Name)
+        public IActionResult Edit(int Id, string Name)
         {
-            EditClass(classRecord, Name);
+            UpdateClassById(Id, Name);
             return View();
         }
-        private void EditClass(ClassRecord classRecord, string Name)
-        {
+              
 
+        public IEnumerable<ClassRecord> GetClasses()
+        {
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"UPDATE Class SET Name=('{Name}') WHERE ClassID=('{classRecord.ClassID}')";
+                string sql = @"SELECT * FROM Class";
                 dbConnection.Open();
-                dbConnection.Execute(sql, classRecord);
+                return dbConnection.Query<ClassRecord>(sql);
             }
-
-
         }
 
         public ClassRecord GetClassById(int Id)
@@ -105,15 +104,17 @@ namespace TTMS.Controllers
             }
         }
 
-        public IEnumerable<ClassRecord> GetClasses()
+
+        public bool UpdateClassById(int Id, string Name)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = @"SELECT * FROM Class";
+                string sql = $"UPDATE Class SET Name='{Name}'  WHERE ClassID = {Id}";
                 dbConnection.Open();
-                return dbConnection.Query<ClassRecord>(sql);
+                return dbConnection.Execute(sql) == 1;
             }
         }
+
     }
     public class ClassRecord
     {
