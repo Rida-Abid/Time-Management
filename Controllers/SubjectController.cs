@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
+using TTMS.Models;
 
 namespace TTMS.Controllers
 {
@@ -73,6 +74,8 @@ namespace TTMS.Controllers
 
         }
 
+
+
         [Authorize]
         [HttpPost]
         public IActionResult Edit(int Id, string Name)
@@ -92,24 +95,24 @@ namespace TTMS.Controllers
             }
         }
 
-        public ClassRecord GetSubjectById(int Id)
+        public SubjectRecord GetSubjectById(int Id)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 string sql = $"SELECT * FROM Subject   WHERE SubjectID = {Id}";
                 dbConnection.Open();
-                return dbConnection.Query<ClassRecord>(sql).FirstOrDefault();
+                return dbConnection.Query<SubjectRecord>(sql).FirstOrDefault();
             }
         }
 
 
-        public bool UpdateSubjectById(int Id, string Name)
+        public void UpdateSubjectById(int Id, string Name)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 string sql = $"UPDATE Subject SET Name='{Name}'  WHERE SubjectID = {Id}";
                 dbConnection.Open();
-                return dbConnection.Execute(sql) == 1;
+                var result = dbConnection.Execute(sql) == 1;
             }
         }
 
