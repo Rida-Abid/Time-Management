@@ -1,12 +1,8 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using System.Data;
-using System.Xml.Linq;
-using TTMS.Models;
-using System.Configuration;
-
+using System.Data.SqlClient;
 
 namespace TTMS.Controllers
 {
@@ -29,11 +25,22 @@ namespace TTMS.Controllers
         }
 
         [Authorize]
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult Edit(int Id)
+        {
+            return View(GetSubjectById(Id));
+        }
+
+        [Authorize]
         public IActionResult Delete(int id)
         {
             DeleteSubject(id);
             return RedirectToAction("Index");
-
         }
         private void DeleteSubject(int id)
         {
@@ -48,23 +55,33 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(SubjectRecord subjectRecord)
+        public IActionResult Add(SubjectRecord subjectRecord, string Name)
         {
-            AddSubject(subjectRecord);
+            AddClass(subjectRecord, Name);
             return View();
         }
-        private void AddSubject(SubjectRecord subjectRecord)
+        private void AddClass(SubjectRecord subjectRecord, string Name)
         {
 
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"INSERT INTO Subject(Name) VALUES('{subjectRecord.Name}')";
+                string sql = $"INSERT INTO Subject(Name) VALUES('{Name}')";
                 dbConnection.Open();
                 dbConnection.Execute(sql, subjectRecord);
             }
 
 
         }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Edit(int Id, string Name)
+        {
+            UpdateSubjectById(Id, Name);
+            return View();
+        }
+
+
         public IEnumerable<SubjectRecord> GetSubjects()
         {
             using (IDbConnection dbConnection = Connection)
@@ -75,6 +92,26 @@ namespace TTMS.Controllers
             }
         }
 
+        public ClassRecord GetSubjectById(int Id)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sql = $"SELECT * FROM Subject   WHERE SubjectID = {Id}";
+                dbConnection.Open();
+                return dbConnection.Query<ClassRecord>(sql).FirstOrDefault();
+            }
+        }
+
+
+        public bool UpdateSubjectById(int Id, string Name)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sql = $"UPDATE Subject SET Name='{Name}'  WHERE SubjectID = {Id}";
+                dbConnection.Open();
+                return dbConnection.Execute(sql) == 1;
+            }
+        }
 
     }
     public class SubjectRecord
