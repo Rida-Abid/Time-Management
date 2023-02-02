@@ -74,14 +74,14 @@ namespace TTMS.Controllers
 
         }
 
-        //[Authorize]
-        //[HttpPost]
-        //public IActionResult Edit(int Id, string Title, string Firstname, string Surname, string Subject, string Email)
-        //{
-        //    UpdateTeacherById(Id, Title, Firstname, Surname, Subject, Email);
-        //    return View();
-        //}
-        
+        [Authorize]
+        [HttpPost]
+        public IActionResult Edit(int Id, string Title, string Firstname, string Surname, string Subject, string Email)
+        {
+            UpdateTeacherById(Id, Title, Firstname, Surname, Subject, Email);
+            return View();
+        }
+
 
 
         public IEnumerable<TeacherRecord> GetTeachers()
@@ -105,13 +105,13 @@ namespace TTMS.Controllers
             }
         }
 
-        public TeacherRecord UpdateTeacherById(int Id, string Title, string Firstname, string Surname, string Subject, string Email)
+        public bool UpdateTeacherById(int Id, string Title, string Firstname, string Surname, string Subject, string Email)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"UPDATE Teacher SET Title=('{Title}'), Firstname=('{Firstname}'), Surname=('{Surname}'), Subject=('{Subject}'), Email=('{Email}') WHERE TeacherID = ({Id})";
+                string sql = $"UPDATE Teacher SET Title='{Title}', Firstname='{Firstname}', Surname='{Surname}', Subject='{Subject}', Email='{Email}' WHERE TeacherID = ({Id})";
                 dbConnection.Open();
-                return dbConnection.Query<TeacherRecord>(sql, new { Id, Title, Firstname, Surname, Subject, Email }).FirstOrDefault();
+                return dbConnection.Execute(sql, new { Title, Firstname, Surname, Subject, Email }) == 1;
             }
         }
 
@@ -122,10 +122,10 @@ namespace TTMS.Controllers
         public class TeacherRecord
         {
             public int TeacherID;
-            public int Title;
+            public string Title;
             public string Firstname;
             public string Surname;
-            public int Subject;
+            public string Subject;
             public string Email;
             public DateTime DateCreated;
 
