@@ -103,13 +103,13 @@ namespace TTMS.Controllers
         }
 
 
-        public bool UpdateClassById(int Id, string Name)
+        public void UpdateClassById(int Id, string Name)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 string sql = $"UPDATE Class SET Name='{Name}'  WHERE ClassID = {Id}";
                 dbConnection.Open();
-                return dbConnection.Execute(sql) == 1;
+                var result = dbConnection.Execute(sql) == 1;
             }
         }
 

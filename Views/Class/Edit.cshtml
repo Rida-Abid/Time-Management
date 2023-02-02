@@ -6,7 +6,7 @@
 @{
     //ViewData["Title"] = "Add";
 }
- @using (Html.BeginForm("edit", "Class",FormMethod.Post))
+@using (Html.BeginForm("edit", "Class", new { Id = @Model.ClassID },FormMethod.Post))
 {
 
           
@@ -15,9 +15,17 @@
             <h1 class="h2">Edit Classes</h1>
         </div>
           <div class="col-md-7 col-lg-8">
+
+            <div class="col-sm-5">
+                <label for="ClassName" class="form-label">ClassName</label>
+                <input type="text" class="form-control" id="ClassName" name="Name" placeholder="" value="@Model.Name" required>
+                <div class="invalid-feedback">
+                    Please select a valid Class Name.
+                </div>
+            </div>
         
            
-                <div class="col-md-5">
+                @*<div class="col-md-5">
                   <label for="Class" class="form-label">Class</label>
                   <select class="form-select" id="Class" name="Name"  required>
                     <option value=""> </option>
@@ -35,7 +43,7 @@
                   <div class="invalid-feedback">
                     Please select a valid Class.
                   </div>
-                </div>
+                </div>*@
           </div>
             <div class="container-fluid">
                 <input type="submit" value="edit" class="btn btn-lg btn-outline-success col-md-12">
