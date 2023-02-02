@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
-using static TTMS.Controllers.SubjectController;
-using static TTMS.Controllers.TeacherController;
 
 namespace TTMS.Controllers
 {
