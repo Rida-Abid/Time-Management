@@ -1,5 +1,8 @@
-﻿namespace TTMS.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TTMS.Models
 {
+    [Table("Teacher")]
     public class SubjectModel
     {
 

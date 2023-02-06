@@ -1,9 +1,12 @@
 ﻿
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace TTMS.Models
 {
+    [Table("Subject")]
     public class TeacherModel
     {
-
+        
         public int TeacherID { get; set; }
 
         public string Title { get; set; }
