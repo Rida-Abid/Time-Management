@@ -6,7 +6,7 @@
 @{
     //ViewData["Title"] = "Add";
 }
-@using (Html.BeginForm("edit", "Teacher", FormMethod.Post))
+@using (Html.BeginForm("edit", "Teacher", new { Id = @Model.TeacherID }, FormMethod.Post))
 {
          
      <main class="col-md-9 ms-sm-auto px-md-4">
