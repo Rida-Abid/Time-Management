@@ -1,19 +1,19 @@
 Create table dbo.Lesson
 (
 	LessonID int  NOT NULL PRIMARY KEY IDENTITY(1,1),
-	StartTime Time NOT NULL,
-	EndTime Time NOT NULL
+	LessonNo varchar(15) NOT NULL,
+	Duration decimal NOT NULL
 	
 );
 
-INSERT INTO dbo.Lesson (StartTime, EndTime)
+INSERT INTO dbo.Lesson (LessonNo, Duration)
 VALUES 
-( '8:00:00', '8:40:00'),
-( '8:40:00', '9:20:00'),
-( '9:20:00', '10:00:00'),
-( '10:00:00', '10:40:00'),
-( '10:40:00', '11:00:00'),
-( '11:00:00', '11:40:00'),
-( '11:40:00', '12:20:00'),
-( '12:20:00', '1:00:00'),
-( '1:00:00', '1:40:00')
+( 'Lesson 1', '45.00'),
+( 'Lesson 2', '40.00'),
+( 'Lesson 3', '40.00'),
+( 'Lesson 4', '40.00'),
+( 'Lesson 5', '20.00'),
+( 'Lesson 6', '40.00'),
+( 'Lesson 7', '40.00'),
+( 'Lesson 8', '40.00'),
+( 'Lesson 9', '40.00')
