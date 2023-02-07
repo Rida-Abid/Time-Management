@@ -10,13 +10,10 @@
 
     public class Lesson
     {
-        public int TeacherID { get; set; }
+        public int LessonID { get; set; }
 
-        public int RoomID { get; set; }
-
-        public int SubjectID { get; set; }
-
-        public DateTime Date { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
 
 
     }
