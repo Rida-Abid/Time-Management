@@ -14,5 +14,17 @@ VALUES
 ( 'Urdu'),
 ( 'Mathematics'),
 ( 'Science'),
-( 'Geography')
+( 'Social Studies'),
+( 'Islamiat'),
+( 'Nazra'),
+( 'Tarjuma tul Quran'),
+( 'Computer'),
+( 'Art'),
+( 'Physics'),
+( 'Biology'),
+( 'Chemistry'),
+( 'Pak Studies')
+
+
+
  
