@@ -17,7 +17,7 @@ VALUES
 ( 'Social Studies'),
 ( 'Islamiat'),
 ( 'Nazra'),
-( 'Tarjuma tul Quran'),
+( 'TarjumatulQuran'),
 ( 'Computer'),
 ( 'Art'),
 ( 'Physics'),
