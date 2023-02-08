@@ -37,37 +37,41 @@ namespace TTMS.Controllers
         }
 
         [Authorize]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int Id)
         {
-            DeleteClass(id);
+            DeleteClass(Id);
             return RedirectToAction("Index");
         }
-        private void DeleteClass(int id)
+        private void DeleteClass(int Id)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = @"DELETE FROM Class WHERE ClassID = @Id";
+                string sql = $"DELETE FROM [dbo].[TeacherClassLookup]WHERE ClassID = ({Id})";
                 dbConnection.Open();
-                dbConnection.Execute(sql, new { Id = id });
+                dbConnection.Execute(sql);
+                sql = $"DELETE FROM Class WHERE ClassID = ({Id})";
+                dbConnection.Execute(sql);
             }
 
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(ClassRecord classRecord, string Name)
+        public IActionResult Add(string Name)
         {
-            AddClass(classRecord, Name);
+            AddClass(Name);
             return View();
         }
-        private void AddClass(ClassRecord classRecord, string Name)
+        private void AddClass(string Name)
         {
 
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"INSERT INTO Class(Name) VALUES('{Name}')";
+                string sql = $"INSERT INTO[dbo].[TeacherClassLookup]([TeacherID],[ClassID]) VALUES ({1}, {1})";
                 dbConnection.Open();
-                dbConnection.Execute(sql, classRecord);
+                var result = dbConnection.Execute(sql);
+                sql = $"INSERT INTO Class(Name) VALUES('{Name}')";
+                result = dbConnection.Execute(sql);
             }
 
 
@@ -107,9 +111,11 @@ namespace TTMS.Controllers
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"UPDATE Class SET Name='{Name}'  WHERE ClassID = {Id}";
+                string sql = $"UPDATE [dbo].[TeacherClassLookup] SET [ClassID] = ({4})  WHERE TeacherID = ({Id} ";
                 dbConnection.Open();
                 var result = dbConnection.Execute(sql) == 1;
+                sql = $"UPDATE Class SET Name='{Name}'  WHERE ClassID = {Id}";
+                result = dbConnection.Execute(sql) == 1;
             }
         }
 

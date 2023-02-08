@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using TTMS.Models;
@@ -37,19 +38,24 @@ namespace TTMS.Controllers
         }
 
         [Authorize]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int Id)
         {
-            DeleteTeacher(id);
+            DeleteTeacher(Id);
             return RedirectToAction("Index");
 
         }
-        private void DeleteTeacher(int id)
+        private void DeleteTeacher(int Id)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = @"DELETE FROM Teacher WHERE TeacherID = @Id";
+                string  sql = $"DELETE FROM [dbo].[TeacherSubjectLookup] WHERE TeacherID = ({Id})";
                 dbConnection.Open();
-                dbConnection.Execute(sql, new { Id = id });
+                var result = dbConnection.Execute(sql);
+                sql = $"DELETE FROM [dbo].[TeacherClassLookup] WHERE TeacherID = ({Id})";
+                result = dbConnection.Execute(sql);
+                sql = $"DELETE FROM Teacher WHERE TeacherID = ({Id})";
+                result = dbConnection.Execute(sql);
+
             }
 
         }
@@ -68,7 +74,12 @@ namespace TTMS.Controllers
             {
                 string sql = $"INSERT INTO Teacher(Title, Firstname, Surname, Subject, Email) VALUES('{Title}','{Firstname}','{Surname}','{Subject}','{Email}')";
                 dbConnection.Open();
-                dbConnection.Execute(sql, teacherRecord);
+                var result = dbConnection.Execute(sql);
+                sql = $"INSERT INTO[dbo].[TeacherClassLookup]([TeacherID],[ClassID]) VALUES ({}, {1})";
+                result = dbConnection.Execute(sql);
+                sql =  $"INSERT INTO[dbo].[TeacherSubjectLookup]([TeacherID],[SubjectID]) VALUES ({2}, {1})";
+                result = dbConnection.Execute(sql);
+
             }
 
 
@@ -109,9 +120,13 @@ namespace TTMS.Controllers
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"UPDATE Teacher SET Title='{Title}', Firstname='{Firstname}', Surname='{Surname}', Subject='{Subject}', Email='{Email}' WHERE TeacherID = ({Id})";
+                string sql = $"UPDATE [dbo].[TeacherSubjectLookup] SET [SubjectID] = ({4}) WHERE TeacherID = ({Id} ";
                 dbConnection.Open();
                 var result = dbConnection.Execute(sql) == 1;
+                sql = $"UPDATE [dbo].[TeacherClassLookup] SET [ClassID] = ({4}) WHERE TeacherID = ({Id} ";
+                result = dbConnection.Execute(sql) == 1;
+                sql =  $"UPDATE Teacher SET Title='{Title}', Firstname='{Firstname}', Surname='{Surname}', Subject='{Subject}', Email='{Email}' WHERE TeacherID = ({Id})";
+                result = dbConnection.Execute(sql) == 1;
             }
         }
 
