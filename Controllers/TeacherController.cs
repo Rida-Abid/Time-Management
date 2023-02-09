@@ -44,44 +44,38 @@ namespace TTMS.Controllers
             return RedirectToAction("Index");
 
         }
-        private void DeleteTeacher(int Id)
+        private bool DeleteTeacher(int Id)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string  sql = $"DELETE FROM [dbo].[TeacherSubjectLookup] WHERE TeacherID = ({Id})";
                 dbConnection.Open();
-                var result = dbConnection.Execute(sql);
-                sql = $"DELETE FROM [dbo].[TeacherClassLookup] WHERE TeacherID = ({Id})";
-                result = dbConnection.Execute(sql);
-                sql = $"DELETE FROM Teacher WHERE TeacherID = ({Id})";
-                result = dbConnection.Execute(sql);
-
+                string sql = $"DELETE FROM TeacherSubjectLookup WHERE TeacherID = ({Id});";
+                sql += $"DELETE FROM TeacherClassLookup WHERE TeacherID = ({Id});";
+                sql += $"DELETE FROM Teacher WHERE TeacherID = ({Id})";
+                return dbConnection.Execute(sql) == 3;
+               
             }
 
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(TeacherRecord teacherRecord, string Title, string Firstname, string Surname, string Subject, string Email)
+        public IActionResult Add(string Title, string Firstname, string Surname, string Subject, string Email)
         {
-            AddTeacher(teacherRecord, Title, Firstname, Surname, Subject, Email);
+            AddTeacher(Title, Firstname, Surname, Subject, Email);
             return View();
         }
-        private void AddTeacher(TeacherRecord teacherRecord, string Title, string Firstname, string Surname, string Subject, string Email)
+        private bool AddTeacher(string Title, string Firstname, string Surname, string Subject, string Email)
         {
-
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"INSERT INTO Teacher(Title, Firstname, Surname, Subject, Email) VALUES('{Title}','{Firstname}','{Surname}','{Subject}','{Email}')";
                 dbConnection.Open();
-                var result = dbConnection.Execute(sql);
-                sql = $"INSERT INTO[dbo].[TeacherClassLookup]([TeacherID],[ClassID]) VALUES ({}, {1})";
-                result = dbConnection.Execute(sql);
-                sql =  $"INSERT INTO[dbo].[TeacherSubjectLookup]([TeacherID],[SubjectID]) VALUES ({2}, {1})";
-                result = dbConnection.Execute(sql);
+                string sql = $"INSERT INTO Teacher (Title, Firstname, Surname, Subject, Email) VALUES ('{Title}','{Firstname}','{Surname}','{Subject}','{Email}');";
+                sql += $"INSERT INTO TeacherClassLookup (TeacherID, ClassID) VALUES ({1}, {1});";
+                sql +=  $"INSERT INTO TeacherSubjectLookup (TeacherID, SubjectID) VALUES ({1}, {1})";
+                return dbConnection.Execute(sql) == 3;
 
             }
-
 
         }
 
@@ -116,17 +110,15 @@ namespace TTMS.Controllers
             }
         }
 
-        public void UpdateTeacherById(int Id, string Title, string Firstname, string Surname, string Subject, string Email)
+        public bool UpdateTeacherById(int Id, string Title, string Firstname, string Surname, string Subject, string Email)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"UPDATE [dbo].[TeacherSubjectLookup] SET [SubjectID] = ({4}) WHERE TeacherID = ({Id} ";
                 dbConnection.Open();
-                var result = dbConnection.Execute(sql) == 1;
-                sql = $"UPDATE [dbo].[TeacherClassLookup] SET [ClassID] = ({4}) WHERE TeacherID = ({Id} ";
-                result = dbConnection.Execute(sql) == 1;
-                sql =  $"UPDATE Teacher SET Title='{Title}', Firstname='{Firstname}', Surname='{Surname}', Subject='{Subject}', Email='{Email}' WHERE TeacherID = ({Id})";
-                result = dbConnection.Execute(sql) == 1;
+                string sql = $"UPDATE TeacherSubjectLookup SET SubjectID = ({4}) WHERE TeacherID = ({Id};";
+                sql += $"UPDATE TeacherClassLookup SET ClassID = ({4}) WHERE TeacherID = ({Id};";
+                sql +=  $"UPDATE Teacher SET Title='{Title}', Firstname='{Firstname}', Surname='{Surname}', Subject='{Subject}', Email='{Email}' WHERE TeacherID = ({Id})";
+                return dbConnection.Execute(sql) == 3;
             }
         }
 
