@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using TTMS.Models;
-using static TTMS.Controllers.TeacherController;
+
 
 namespace TTMS.Controllers
 {
@@ -60,19 +60,19 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(string Title, string Firstname, string Surname, string Subject, string Email)
+        public IActionResult Add(string Title, string Firstname, string Surname, string Email)
         {
-            AddTeacher(Title, Firstname, Surname, Subject, Email);
+            AddTeacher(Title, Firstname, Surname, Email);
             return View();
         }
-        private bool AddTeacher(string Title, string Firstname, string Surname, string Subject, string Email)
+        private bool AddTeacher(string Title, string Firstname, string Surname, string Email)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 dbConnection.Open();
-                string sql = $"INSERT INTO Teacher (Title, Firstname, Surname, Subject, Email) VALUES ('{Title}','{Firstname}','{Surname}','{Subject}','{Email}');";
-                sql += $"INSERT INTO TeacherClassLookup (TeacherID, ClassID) VALUES ({1}, {1});";
-                sql +=  $"INSERT INTO TeacherSubjectLookup (TeacherID, SubjectID) VALUES ({1}, {1})";
+                string sql = $"INSERT INTO Teacher (Title, Firstname, Surname, Email) VALUES ('{Title}','{Firstname}','{Surname}','{Email}');";
+                sql += $"INSERT INTO TeacherClassLookup (TeacherID, ClassID) VALUES ({3}, {1});";
+                sql +=  $"INSERT INTO TeacherSubjectLookup (TeacherID, SubjectID) VALUES ({3}, {1})";
                 return dbConnection.Execute(sql) == 3;
 
             }
@@ -81,9 +81,9 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(int Id, string Title, string Firstname, string Surname, string Subject, string Email)
+        public IActionResult Edit(int Id, string Title, string Firstname, string Surname, string Email)
         {
-            UpdateTeacherById(Id, Title, Firstname, Surname, Subject, Email);
+            UpdateTeacherById(Id, Title, Firstname, Surname, Email);
             return View();
         }
 
@@ -110,14 +110,14 @@ namespace TTMS.Controllers
             }
         }
 
-        public bool UpdateTeacherById(int Id, string Title, string Firstname, string Surname, string Subject, string Email)
+        public bool UpdateTeacherById(int Id, string Title, string Firstname, string Surname, string Email)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 dbConnection.Open();
                 string sql = $"UPDATE TeacherSubjectLookup SET SubjectID = ({4}) WHERE TeacherID = ({Id};";
                 sql += $"UPDATE TeacherClassLookup SET ClassID = ({4}) WHERE TeacherID = ({Id};";
-                sql +=  $"UPDATE Teacher SET Title='{Title}', Firstname='{Firstname}', Surname='{Surname}', Subject='{Subject}', Email='{Email}' WHERE TeacherID = ({Id})";
+                sql +=  $"UPDATE Teacher SET Title='{Title}', Firstname='{Firstname}', Surname='{Surname}', Email='{Email}' WHERE TeacherID = ({Id})";
                 return dbConnection.Execute(sql) == 3;
             }
         }

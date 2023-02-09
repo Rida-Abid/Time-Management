@@ -116,7 +116,7 @@ namespace TTMS.Controllers
             using (IDbConnection dbConnection = Connection)
             {
                 dbConnection.Open();
-                string sql = $"UPDATE [dbo].[TeacherSubjectLookup] SET [SubjectID] = ({4})  WHERE TeacherID = ({Id} ";
+                string sql = $"UPDATE [dbo].[TeacherSubjectLookup] SET [SubjectID] = ({4})  WHERE TeacherID = ({Id};";
                 sql += $"UPDATE Subject SET Name='{Name}'  WHERE SubjectID = {Id}";
                 return dbConnection.Execute(sql) == 2;
                 
