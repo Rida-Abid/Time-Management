@@ -45,15 +45,14 @@ namespace TTMS.Controllers
             DeleteSubject(Id);
             return RedirectToAction("Index");
         }
-        private void DeleteSubject(int Id)
+        private bool DeleteSubject(int Id)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"DELETE FROM [dbo].[TeacherSubjectLookup]WHERE SubjectID = ({Id})";
                 dbConnection.Open();
-                dbConnection.Execute(sql);
-                sql = $"DELETE FROM Subject WHERE SubjectID = ({Id})";
-                dbConnection.Execute(sql);
+                string sql = $"DELETE FROM TeacherSubjectLookup WHERE SubjectID = ({Id});";
+                sql += $"DELETE FROM Subject WHERE SubjectID = ({Id})";
+                return dbConnection.Execute(sql) == 2;
             }
 
         }
@@ -65,16 +64,16 @@ namespace TTMS.Controllers
             AddClass( Name);
             return View();
         }
-        private void AddClass(string Name)
+        private bool AddClass(string Name)
         {
 
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"INSERT INTO Subject(Name) VALUES('{Name}')";
                 dbConnection.Open();
-                var result = dbConnection.Execute(sql);
-                sql = $"INSERT INTO[dbo].[TeacherSubjectLookup]([TeacherID],[SubjectID]) VALUES ({1}, {1})";
-                result = dbConnection.Execute(sql);
+                string sql = $"INSERT INTO Subject(Name) VALUES('{Name}');";
+                sql += $"INSERT INTO TeacherSubjectLookup (TeacherID, SubjectID) VALUES ({1}, {1})";
+                return dbConnection.Execute(sql) == 2;
+                
             }
 
 
@@ -112,15 +111,15 @@ namespace TTMS.Controllers
         }
 
 
-        public void UpdateSubjectById(int Id, string Name)
+        public bool UpdateSubjectById(int Id, string Name)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sql = $"UPDATE [dbo].[TeacherSubjectLookup] SET [SubjectID] = ({4})  WHERE TeacherID = ({Id} ";
                 dbConnection.Open();
-                var result = dbConnection.Execute(sql) == 1;
-                sql = $"UPDATE Subject SET Name='{Name}'  WHERE SubjectID = {Id}";
-                result = dbConnection.Execute(sql) == 1;
+                string sql = $"UPDATE [dbo].[TeacherSubjectLookup] SET [SubjectID] = ({4})  WHERE TeacherID = ({Id} ";
+                sql += $"UPDATE Subject SET Name='{Name}'  WHERE SubjectID = {Id}";
+                return dbConnection.Execute(sql) == 2;
+                
             }
         }
 
