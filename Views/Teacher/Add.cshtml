@@ -1,6 +1,8 @@
 ﻿@using TTMS.Controllers;
+@using static TTMS.Models.TeacherModel;
 @using static TTMS.Controllers.TeacherController;
-@model IEnumerable<TeacherRecord>
+@*@model IEnumerable<TeacherRecord>*@
+@model TeacherController.TeacherRecord
 
 
 @{
@@ -8,7 +10,7 @@
 }
  @using (Html.BeginForm("add", "Teacher", FormMethod.Post))
 {
-         
+              
      <main class="col-md-9 ms-sm-auto px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Add teacher</h1>
@@ -51,32 +53,37 @@
                 </div>
 
 
-
-
-            <div class="col-md-5">
-                <label for="Subject Name" class="form-label">Subject Name</label>
-                <select class="form-select" id="Subject Name" name="Name" required>
-                    <option >  </option>
-                    <option >English</option>
-                    <option >Urdu</option>
-                    <option >Mathematics</option>
-                    <option >Science</option>
-                    <option >Social Studies</option>
-                    <option >Islamiat</option>
-                    <option >Nazra</option>
-                    <option >Tarjuma tul Quran</option>
-                    <option >Computer</option>
-                    <option >Art</option>
-                    <option >Physics</option>
-                    <option >Biology</option>
-                    <option >Chemistry</option>
-                    <option >Pak Studies</option>
-                </select>
-                <div class="invalid-feedback">
-                    Please select a valid Subject Name.
+          
+            
+            
+                <div class="col-md-5">
+                  <label for="Subject" class="form-label">Subject</label>
+                    @Html.DropDownListFor(model => model.Subject, new SelectList(ViewBag.SelectedSubjects, "value", "name"), "",htmlAttributes:(new{@class = "form-control", @multiple = "multiple"}))
+                 
+                 
+                        @*
+                                <option value="">  </option>
+                                <option value="1">English</option>
+                                <option value="2">Urdu</option>
+                                <option value="3">Mathematics</option>
+                                <option value="4">Science</option>
+                                <option value="5">Social Studies</option>
+                                <option value="6">Islamiat</option>
+                                <option value="7">Nazra</option>
+                                <option value="8">Tarjuma tul Quran</option>
+                                <option value="9">Computer</option>
+                                <option value="10">Art</option>
+                                <option value="11">Physics</option>
+                                <option value="12">Biology</option>
+                                <option value="14">Chemistry</option>
+                                <option value="15">Pak Studies</option>
+                           
+                        </select>*@
+                        <div class="invalid-feedback">
+                            Please select a valid Subject Name.
+                        </div>
                 </div>
-            </div>
-        
+              
         
 
           </div>
