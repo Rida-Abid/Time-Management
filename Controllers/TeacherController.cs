@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using TTMS.Models;
-
+using static TTMS.Controllers.TeacherController;
 
 namespace TTMS.Controllers
 {
@@ -60,19 +60,19 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(string Title, string Firstname, string Surname, string Email)
+        public IActionResult Add(string Title, string Firstname, string Surname, string Subject, string Email)
         {
-            AddTeacher(Title, Firstname, Surname, Email);
+            AddTeacher(Title, Firstname, Surname, Subject, Email);
             return View();
         }
-        private bool AddTeacher(string Title, string Firstname, string Surname, string Email)
+        private bool AddTeacher(string Title, string Firstname, string Surname, string Subject, string Email)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 dbConnection.Open();
-                string sql = $"INSERT INTO Teacher (Title, Firstname, Surname, Email) VALUES ('{Title}','{Firstname}','{Surname}','{Email}');";
-                sql += $"INSERT INTO TeacherClassLookup (TeacherID, ClassID) VALUES ({3}, {1});";
-                sql +=  $"INSERT INTO TeacherSubjectLookup (TeacherID, SubjectID) VALUES ({3}, {1})";
+                string sql = $"INSERT INTO Teacher (Title, Firstname, Surname, Subject, Email) VALUES ('{Title}','{Firstname}','{Surname}','{Subject}','{Email}');";
+                sql += $"INSERT INTO TeacherClassLookup (TeacherID, ClassID) VALUES ({1}, {1});";
+                sql +=  $"INSERT INTO TeacherSubjectLookup (TeacherID, SubjectID) VALUES ({1}, {1})";
                 return dbConnection.Execute(sql) == 3;
 
             }
@@ -81,9 +81,9 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(int Id, string Title, string Firstname, string Surname, string Email)
+        public IActionResult Edit(int Id, string Title, string Firstname, string Surname,  string Email)
         {
-            UpdateTeacherById(Id, Title, Firstname, Surname, Email);
+            UpdateTeacherById(Id, Title, Firstname, Surname,  Email);
             return View();
         }
 
