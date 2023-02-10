@@ -72,14 +72,14 @@ namespace TTMS.Controllers
             }
         }
 
-        public bool UpdateTeacherById(int Id, string Title, string Firstname, string Surname, string Email)
+        public bool UpdateTeacherById(int Id, string Title, string Firstname, string Surname, string Subject, string Email)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 dbConnection.Open();
                 string sql = $"UPDATE TeacherSubjectLookup SET SubjectID = ({4}) WHERE TeacherID = ({Id};";
                 sql += $"UPDATE TeacherClassLookup SET ClassID = ({4}) WHERE TeacherID = ({Id};";
-                sql += $"UPDATE Teacher SET Title='{Title}', Firstname='{Firstname}', Surname='{Surname}', Email='{Email}' WHERE TeacherID = ({Id})";
+                sql += $"UPDATE Teacher SET Title='{Title}', Firstname='{Firstname}', Surname='{Surname}', Subject='{Subject}', Email='{Email}' WHERE TeacherID = ({Id})";
                 return dbConnection.Execute(sql) == 3;
             }
         }

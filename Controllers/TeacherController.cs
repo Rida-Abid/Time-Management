@@ -54,9 +54,9 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(int Id, string Title, string Firstname, string Surname,  string Email)
+        public IActionResult Edit(int Id, string Title, string Firstname, string Surname, string Subject, string Email)
         {
-            db.UpdateTeacherById(Id, Title, Firstname, Surname,  Email);
+            db.UpdateTeacherById(Id, Title, Firstname, Surname, Subject,  Email);
             return View();
         }
         
