@@ -1,7 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TTMS.Models
+namespace TTMS.ViewModels
 {
     [Table("Subject")]
     public class TeacherModel

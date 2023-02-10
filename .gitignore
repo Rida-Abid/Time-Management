@@ -364,3 +364,9 @@ FodyWeavers.xsd
 /Views/Subject/AddEdit.cshtml
 /Views/Teacher/AddEdit.cshtml
 /Views/Class/AddEdit.cshtml
+/Models/AccountViewModel.cs
+/Models/ClassViewModel.cs
+/Models/ErrorViewModel.cs
+/Models/LessonViewModel .cs
+/Models/SettingsViewModel .cs
+/Models/TeacherViewModel.cs

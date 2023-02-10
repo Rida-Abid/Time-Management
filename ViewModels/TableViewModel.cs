@@ -1,4 +1,4 @@
-﻿namespace TTMS.Models
+﻿namespace TTMS.ViewModels
 {
     public class TableViewModel
     {

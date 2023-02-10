@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace TTMS.Models
+namespace TTMS.ViewModels
 {
     [Bind("EmailAddress,Password")]
     public class AccountViewModel
