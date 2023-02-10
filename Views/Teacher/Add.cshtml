@@ -1,8 +1,9 @@
 ﻿@using TTMS.Controllers;
-@using static TTMS.Models.TeacherModel;
+@using static TTMS.ViewModels.TeacherModel;
 @using static TTMS.Controllers.TeacherController;
+@using TTMS.Models
 @*@model IEnumerable<TeacherRecord>*@
-@model TeacherController.TeacherRecord
+@model TeacherRecord
 
 
 @{
@@ -56,32 +57,31 @@
           
             
             
-                <div class="col-md-5">
-                  <label for="Subject" class="form-label">Subject</label>
-                    @Html.DropDownListFor(model => model.Subject, new SelectList(ViewBag.SelectedSubjects, "value", "name"), "",htmlAttributes:(new{@class = "form-control", @multiple = "multiple"}))
-                 
-                 
-                        @*
-                                <option value="">  </option>
-                                <option value="1">English</option>
-                                <option value="2">Urdu</option>
-                                <option value="3">Mathematics</option>
-                                <option value="4">Science</option>
-                                <option value="5">Social Studies</option>
-                                <option value="6">Islamiat</option>
-                                <option value="7">Nazra</option>
-                                <option value="8">Tarjuma tul Quran</option>
-                                <option value="9">Computer</option>
-                                <option value="10">Art</option>
-                                <option value="11">Physics</option>
-                                <option value="12">Biology</option>
-                                <option value="14">Chemistry</option>
-                                <option value="15">Pak Studies</option>
-                           
-                        </select>*@
-                        <div class="invalid-feedback">
-                            Please select a valid Subject Name.
-                        </div>
+                
+                   @* @Html.DropDownListFor(model => model.Subject, new SelectList(ViewBag.list, "Subject"), "",htmlAttributes:(new{@class = "form-control", @multiple = "multiple"}))*@
+                <div class="col-sm-12">
+                    <label for="Subject" class="form-label">subject</label>
+                    <select class="form-select" id="Subject" name="Subject" value="" required multiple style="height:200px">
+                        <option value="">  </option>
+                        <option value="1">English</option>
+                        <option value="2">Urdu</option>
+                        <option value="3">Mathematics</option>
+                        <option value="4">Science</option>
+                        <option value="5">Social Studies</option>
+                        <option value="6">Islamiat</option>
+                        <option value="7">Nazra</option>
+                        <option value="8">Tarjuma tul Quran</option>
+                        <option value="9">Computer</option>
+                        <option value="10">Art</option>
+                        <option value="11">Physics</option>
+                        <option value="12">Biology</option>
+                        <option value="13">Chemistry</option>
+                        <option value="14">Pak Studies</option>
+                    </select>
+                        
+                    <div class="invalid-feedback">
+                        Please select a valid Subject Name.
+                    </div>
                 </div>
               
         
