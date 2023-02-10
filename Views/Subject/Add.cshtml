@@ -21,11 +21,8 @@
 
                 <div class="col-md-5">
                     <label for="Subject" class="form-label">Subject</label>
-                    @Html.DropDownListFor(model => model.Name, new SelectList(ViewBag.selectedSubjects, "SubjectID", "Name"), "",htmlAttributes:(new{@class = "form-control", @multiple = "multiple"}))
-
-
-                    @*
-                        <option value="">  </option>
+                <select class="form-select" id="Subject" name="Subject" value="@Model.Name" required multiple style="height:200px">
+                    <option value="">  </option>
                         <option value="1">English</option>
                         <option value="2">Urdu</option>
                         <option value="3">Mathematics</option>
@@ -41,7 +38,7 @@
                         <option value="14">Chemistry</option>
                         <option value="15">Pak Studies</option>
 
-                        </select>*@
+                        </select>
                     <div class="invalid-feedback">
                         Please select a valid Subject Name.
                     </div>
