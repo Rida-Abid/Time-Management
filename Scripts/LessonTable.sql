@@ -1,12 +1,13 @@
-Create table dbo.Lesson
+Create table dbo.Lessons
 (
 	LessonID int  NOT NULL PRIMARY KEY IDENTITY(1,1),
 	LessonNo varchar(15) NOT NULL,
-	Duration decimal NOT NULL
+	Duration decimal NOT NULL,
+	CreatedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 	
 );
 
-INSERT INTO dbo.Lesson (LessonNo, Duration)
+INSERT INTO dbo.Lessons (LessonNo, Duration)
 VALUES 
 ( 'Lesson 1', '45.00'),
 ( 'Lesson 2', '40.00'),
