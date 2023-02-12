@@ -1,10 +1,10 @@
 ﻿
-using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace TTMS.ViewModels
 {
-    [Table("Subject")]
-    public class TeacherModel
+    public class TeacherViewModel
     {
         
         public int TeacherID { get; set; }
@@ -17,7 +17,7 @@ namespace TTMS.ViewModels
 
         public string Surname { get; set; }
 
-        public string Subject { get; set; }
+        public IEnumerable<SelectListItem> Subjects { get; set; }
 
         public string FullName => Firstname + " " + Surname;
 

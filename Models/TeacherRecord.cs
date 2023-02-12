@@ -9,7 +9,7 @@ namespace TTMS.Models
         public string Title;
         public string Firstname;
         public string Surname;
-        public string Subject { get; set; }
+        public string Subject;
         public string Email;
         public DateTime DateCreated;
 

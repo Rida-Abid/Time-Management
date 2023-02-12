@@ -3,8 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TTMS.ViewModels
 {
-    [Table("Teacher")]
-    public class SubjectModel
+    public class SubjectViewModel
     {
 
         public IEnumerable<Subject> Subjects { get; set; }
