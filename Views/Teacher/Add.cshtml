@@ -1,15 +1,7 @@
-﻿@using TTMS.Controllers;
-@using static TTMS.ViewModels.TeacherModel;
-@using static TTMS.Controllers.TeacherController;
-@using TTMS.Models
-@*@model IEnumerable<TeacherRecord>*@
-@model TeacherRecord
+﻿@model TTMS.ViewModels.TeacherViewModel;
 
 
-@{
-    //ViewData["Title"] = "Add";
-}
- @using (Html.BeginForm("add", "Teacher", FormMethod.Post))
+@using (Html.BeginForm("add", "Teacher", FormMethod.Post))
 {
               
      <main class="col-md-9 ms-sm-auto px-md-4">
@@ -58,9 +50,11 @@
             
             
                 
-                   @* @Html.DropDownListFor(model => model.Subject, new SelectList(ViewBag.list, "Subject"), "",htmlAttributes:(new{@class = "form-control", @multiple = "multiple"}))*@
+                   
                 <div class="col-sm-12">
                     <label for="Subject" class="form-label">subject</label>
+
+                        @*@Html.DropDownList("Subject",  ViewBag.data, "",htmlAttributes:(new{@class = "form-control", @multiple = "multiple"}))*@
                     <select class="form-select" id="Subject" name="Subject" value="" required multiple style="height:200px">
                         <option value="">  </option>
                         <option value="1">English</option>

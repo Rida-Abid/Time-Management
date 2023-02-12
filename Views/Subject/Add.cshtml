@@ -1,8 +1,6 @@
-﻿@using TTMS.Controllers;
-@using static TTMS.ViewModels.SubjectModel;
-@using static TTMS.Controllers.SubjectController;
-@*@model IEnumerable<SubjectRecord>*@
-@model SubjectRecord
+﻿@using TTMS.Models;
+@model TTMS.ViewModels.SubjectViewModel;
+
 
 
 @{
@@ -21,7 +19,7 @@
 
                 <div class="col-md-5">
                     <label for="Subject" class="form-label">Subject</label>
-                <select class="form-select" id="Subject" name="Subject" value="@Model.Name" required multiple style="height:200px">
+                <select class="form-select" id="Subject" name="Subject" value="" required multiple style="height:200px">
                     <option value="">  </option>
                         <option value="1">English</option>
                         <option value="2">Urdu</option>

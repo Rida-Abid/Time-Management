@@ -1,6 +1,4 @@
-﻿@using TTMS.Controllers;
-@using static TTMS.Controllers.LessonController;
-@model IEnumerable<LessonRecord>
+﻿@model TTMS.ViewModels.LessonViewModel;
 
 
 @{
@@ -26,20 +24,20 @@
             </div>
 
             <div class="col-sm-5">
-                <label for="StartTime" class="form-label">SubjectName</label>
-                <input type="text" class="form-control" id="StartTime" name="Name" placeholder="" value="" required>
+                <label for="Duration" class="form-label">Duration</label>
+                <input type="text" class="form-control" id="Duration" name="Duration" placeholder="" value="" required>
                 <div class="invalid-feedback">
-                    Please select a valid StartTime.
+                    Please select a valid Duration.
                 </div>
             </div>
 
-            <div class="col-sm-5">
+           @* <div class="col-sm-5">
                 <label for="EndTime" class="form-label">EndTime</label>
                 <input type="text" class="form-control" id="EndTime" name="Name" placeholder="" value="" required>
                 <div class="invalid-feedback">
                     Please select a valid EndTime.
                 </div>
-            </div>
+            </div>*@
                
 
           </div>

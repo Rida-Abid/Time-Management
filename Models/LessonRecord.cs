@@ -5,7 +5,7 @@ namespace TTMS.Models
     {
         public int LessonID;
         public string LessonNo;
-        public DateTime Duration;
+        public decimal Duration;
         public DateTime DateCreated;
 
     }

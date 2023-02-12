@@ -1,7 +1,7 @@
-﻿using Dapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
+using TTMS.ViewModels;
 
 namespace TTMS.Controllers
 {
@@ -21,10 +21,18 @@ namespace TTMS.Controllers
         [Authorize]
         public IActionResult Add()
         {
-            // db.GetSubjects 
+            var model = new TeacherViewModel();
+            model.Subjects = new List<SelectListItem>();
+            foreach(var item in db.GetSubjects())
+            {
+                model.Subjects.Add(new SelectListItem
+                {
+                    Value = item.SubjectID.ToString(),
+                });
+            }
+            model.Subjects = db.GetSubjects(); 
             // db.GetClasses
-
-            return View();
+            return View(model);
         }
 
         [Authorize]
@@ -46,7 +54,7 @@ namespace TTMS.Controllers
         [HttpPost]
         public IActionResult Add(string Title, string Firstname, string Surname, string Subject, string Email)
         {
-
+            db.GetSubjects();
             db.AddTeacher(Title, Firstname, Surname, Subject, Email);
             return View();
         }
@@ -61,17 +69,5 @@ namespace TTMS.Controllers
         }
         
 
-        
-   
-        
-
-        
-
-
-
-
-
-        
-        
     }
 }

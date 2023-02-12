@@ -42,7 +42,7 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(string LessonNo, string Duration)
+        public IActionResult Add(string LessonNo, decimal Duration)
         {
             db.AddLesson(LessonNo, Duration);
             return View();
@@ -50,7 +50,7 @@ namespace TTMS.Controllers
       
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(int Id, string LessonNo, string Duration)
+        public IActionResult Edit(int Id, string LessonNo, decimal Duration)
         {
             db.UpdateLessonById(Id, LessonNo, Duration);
             return View();

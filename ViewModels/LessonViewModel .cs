@@ -12,10 +12,10 @@
     {
         public int LessonID { get; set; }
 
-        public int LessonNo { get; set; }
+        public string LessonNo { get; set; }
 
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public decimal Duration { get; set; }
+       
 
 
     }

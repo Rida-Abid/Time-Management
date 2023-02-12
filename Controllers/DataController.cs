@@ -177,7 +177,7 @@ namespace TTMS.Controllers
         #region Lesson
 
 
-        public void AddLesson(string LessonNo, string Duration)
+        public void AddLesson(string LessonNo, decimal Duration)
         {
             using IDbConnection dbConnection = Connection;
             string sql = $"INSERT INTO Lesson(LessonNo, Duration) VALUES('{LessonNo}','{Duration}')";
@@ -216,7 +216,7 @@ namespace TTMS.Controllers
         }
 
 
-        public bool UpdateLessonById(int Id, string LessonNo, string Duration)
+        public bool UpdateLessonById(int Id, string LessonNo, decimal Duration)
         {
             using (IDbConnection dbConnection = Connection)
             {

@@ -1,7 +1,4 @@
-﻿@using TTMS.Controllers;
-@using static TTMS.Controllers.TeacherController;
-@model TeacherRecord
-
+﻿@model TTMS.ViewModels.TeacherViewModel;
 
 @{
     //ViewData["Title"] = "Add";
@@ -17,7 +14,7 @@
 
                 <div class="col-sm-12">
                     <label for="title" class="form-label">title</label>
-                    <select class="form-select" id="title" name="Title" value="@Model." required style="height:40px">
+                    <select class="form-select" id="title" name="Title" value="@Model.Title" required style="height:40px">
                     <option>Mr.</option>
                     <option>Ms.</option>
                     </select>
