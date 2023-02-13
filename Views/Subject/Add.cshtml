@@ -18,9 +18,13 @@
 
 
                 <div class="col-md-5">
-                    <label for="Subject" class="form-label">Subject</label>
-                <select class="form-select" id="Subject" name="Subject" value="" required multiple style="height:200px">
-                    <option value="">  </option>
+                    <label for="Subject" class="form-label">Subjects</label>
+                <select class="form-select" id="Subject" name="Subject" value=""  multiple style="height:200px">
+                    @foreach(var item in Model.Subjects)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                    @*<option value="">  </option>
                         <option value="1">English</option>
                         <option value="2">Urdu</option>
                         <option value="3">Mathematics</option>
@@ -34,11 +38,19 @@
                         <option value="11">Physics</option>
                         <option value="12">Biology</option>
                         <option value="14">Chemistry</option>
-                        <option value="15">Pak Studies</option>
+                        <option value="15">Pak Studies</option>*@
 
                         </select>
                     <div class="invalid-feedback">
                         Please select a valid Subject Name.
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <label for="addSubject" class="form-label">add new Subject</label>
+                <input type="text" class="form-control" id="addSubject" name="Name" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                         Valid Subject is required.
                     </div>
                 </div>
                
