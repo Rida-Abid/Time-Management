@@ -22,23 +22,18 @@ namespace TTMS.Controllers
         public IActionResult Add()
         {
             var model = new TeacherViewModel();
-            model.Subjects = new List<SelectListItem>();
-            foreach(var item in db.GetSubjects())
-            {
-                model.Subjects.Add(new SelectListItem
-                {
-                    Value = item.SubjectID.ToString(),
-                });
-            }
-            model.Subjects = db.GetSubjects(); 
-            // db.GetClasses
+            model.Subjects = GetSubjects();
+            
             return View(model);
         }
 
         [Authorize]
         public IActionResult Edit(int Id)
         {
-            return View(db.GetTeacherById(Id));
+            var model = GetTeacherById(Id);
+            model.Subjects = GetSubjects();
+
+            return View(model);
         }
 
         [Authorize]
@@ -52,10 +47,10 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(string Title, string Firstname, string Surname, string Subject, string Email)
+        public IActionResult Add(string Title, string Firstname, string Surname, IEnumerable<int> Subject, string Email)
         {
-            db.GetSubjects();
-            db.AddTeacher(Title, Firstname, Surname, Subject, Email);
+            GetSubjects();
+            db.AddTeacher(Title, Firstname, Surname, null, Email);
             return View();
         }
         
@@ -64,10 +59,40 @@ namespace TTMS.Controllers
         [HttpPost]
         public IActionResult Edit(int Id, string Title, string Firstname, string Surname, string Subject, string Email)
         {
+
             db.UpdateTeacherById(Id, Title, Firstname, Surname, Subject,  Email);
             return View();
         }
         
+        private List<SelectListItem> GetSubjects()
+        {
+            // Convert database subjects to viewModel Subjects
+            var subjects = new List<SelectListItem>();
+            foreach (var item in db.GetSubjects())
+            {
+                subjects.Add(new SelectListItem
+                {
+                    Value = item.SubjectID.ToString(),
+                    Text = item.Name
+                });
+            }
+            return subjects;
+        }
+
+        private TeacherViewModel GetTeacherById(int Id)
+        {
+            // Convert database teacher to viewModel teacher
+            var dbTeacher = db.GetTeacherById(Id);
+            return new TeacherViewModel
+            {
+                TeacherID= dbTeacher.TeacherID,
+                Title = dbTeacher.Title,
+                Firstname = dbTeacher.Firstname,
+                Surname = dbTeacher.Surname,
+                Email = dbTeacher.Email,
+
+            } ;
+        }
 
     }
 }

@@ -19,7 +19,6 @@
               <th scope="col">title</th>
               <th scope="col">firstname</th>
               <th scope="col">surname</th>
-              <th scope="col">subject</th>
               <th scope="col">email</th> 
               <th scope="col">action</th>
             </tr>
@@ -27,26 +26,23 @@
            <tbody>
               @foreach(var teacher in Model)
               {
-                    using (Html.BeginForm("Delete", "Teacher", new { id = @teacher.TeacherID }))
-                    {
-                        <tr>
-                            <td>@teacher.TeacherID</td>
-                            <td>@teacher.Title</td>
-                            <td>@teacher.Firstname</td>
-                            <td>@teacher.Surname</td>
-                            <td>@teacher.Subject</td>
-                            <td>@teacher.Email</td>
+                    
+                    <tr>
+                        <td>@teacher.TeacherID</td>
+                        <td>@teacher.Title</td>
+                        <td>@teacher.Firstname</td>
+                        <td>@teacher.Surname</td>
+                        <td>@teacher.Email</td>
 
-                            <td>
+                        <td>
 
-                                <a class="btn btn-sm btn-outline-secondary" href="/Teacher/Edit?id=@teacher.TeacherID">edit</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="/Teacher/Edit?id=@teacher.TeacherID">edit</a>
 
-                                <a class="btn btn-sm btn-outline-danger" href="/Teacher/Delete?id=@teacher.TeacherID" onclick="return confirm('Are you sure you want to delete Teacher record for teacher @teacher.Firstname');">delete</a>
+                            <a class="btn btn-sm btn-outline-danger" href="/Teacher/Delete?id=@teacher.TeacherID" onclick="return confirm('Are you sure you want to delete Teacher record for teacher @teacher.Firstname');">delete</a>
 
-                            </td>
-                        </tr>
-                    }
-                }
+                        </td>
+                    </tr>
+              }
         </tbody>
         </table>
       </div>

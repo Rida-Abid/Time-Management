@@ -46,38 +46,28 @@
                 </div>
 
 
-          
-            
-            
-                
-                   
-                <div class="col-sm-12">
-                    <label for="Subject" class="form-label">subject</label>
 
-                        @*@Html.DropDownList("Subject",  ViewBag.data, "",htmlAttributes:(new{@class = "form-control", @multiple = "multiple"}))*@
-                    <select class="form-select" id="Subject" name="Subject" value="" required multiple style="height:200px">
-                        <option value="">  </option>
-                        <option value="1">English</option>
-                        <option value="2">Urdu</option>
-                        <option value="3">Mathematics</option>
-                        <option value="4">Science</option>
-                        <option value="5">Social Studies</option>
-                        <option value="6">Islamiat</option>
-                        <option value="7">Nazra</option>
-                        <option value="8">Tarjuma tul Quran</option>
-                        <option value="9">Computer</option>
-                        <option value="10">Art</option>
-                        <option value="11">Physics</option>
-                        <option value="12">Biology</option>
-                        <option value="13">Chemistry</option>
-                        <option value="14">Pak Studies</option>
-                    </select>
-                        
-                    <div class="invalid-feedback">
-                        Please select a valid Subject Name.
-                    </div>
+
+
+
+
+            <div class="col-sm-5">
+                <label for="Subject" class="form-label">Subject</label>
+                <select class="form-select" id="Subject" name="Subject" required multiple style="height:200px">
+                    @if (Model.Subjects != null && Model.Subjects.Any())
+                    {
+                        @foreach (var item in Model.Subjects)
+                        {
+                            <option value="@item.Value"> @item.Text</option>
+                        }
+
+                    }
+
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid Subject Name.
                 </div>
-              
+            </div>                   
         
 
           </div>
