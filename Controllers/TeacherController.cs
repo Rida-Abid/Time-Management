@@ -47,20 +47,20 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(string Title, string Firstname, string Surname, IEnumerable<int> Subject, string Email)
+        public IActionResult Add(string Title, string Firstname, string Surname, IEnumerable<int> Subjects, string Email)
         {
             GetSubjects();
-            db.AddTeacher(Title, Firstname, Surname, null, Email);
-            return View();
+            db.AddTeacher(Title, Firstname, Surname, Subjects, Email);
+            return View(new TeacherViewModel());
         }
         
 
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(int Id, string Title, string Firstname, string Surname, string Subject, string Email)
+        public IActionResult Edit(int Id, string Title, string Firstname, string Surname, IEnumerable<int> Subjects, string Email)
         {
 
-            db.UpdateTeacherById(Id, Title, Firstname, Surname, Subject,  Email);
+            db.UpdateTeacherById(Id, Title, Firstname, Surname, Subjects,  Email);
             return View();
         }
         

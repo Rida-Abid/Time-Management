@@ -9,6 +9,9 @@
             <h1 class="h2">Add teacher</h1>
         </div>
           <div class="col-md-7x col-lg-8x">
+            <div class="alert alert-primary" role="alert">
+                A simple primary alert—check it out!
+            </div>
 
                 <div class="col-sm-12">
                     <label for="title" class="form-label">title</label>
@@ -53,7 +56,7 @@
 
             <div class="col-sm-5">
                 <label for="Subject" class="form-label">Subject</label>
-                <select class="form-select" id="Subject" name="Subject" required multiple style="height:200px">
+                <select class="form-select" id="Subject" name="Subjects" required multiple style="height:200px">
                     @if (Model.Subjects != null && Model.Subjects.Any())
                     {
                         @foreach (var item in Model.Subjects)
