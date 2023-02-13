@@ -15,8 +15,8 @@
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
-                   
-                    <th scope="col">subject</th>
+                    <th scope="col">Lesson</th>
+                    <th scope="col">Duration</th>
                     <th scope="col">action</th>
                 </tr>
             </thead>
@@ -27,8 +27,7 @@
                     {
                         <tr>
                             <td>@lesson.LessonNo</td>
-                            <td>@lesson.StartTime</td>
-                            <td>@lesson.EndTime</td>
+                            <td>@lesson.Duration</td>
                             <td>
                                 <a href="/Lesson/Edit?id=@lesson.LessonID" class="btn btn-sm btn-outline-secondary">edit</a>
 

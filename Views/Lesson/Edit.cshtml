@@ -4,7 +4,7 @@
 @{
     //ViewData["Title"] = "Add";
 }
-@using (Html.BeginForm("edit", "Lesson",new {Id = @Model.LessonID },FormMethod.Post))
+@using (Html.BeginForm("edit", "Lesson",new {Id = Model.LessonID },FormMethod.Post))
 {
           
      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -15,17 +15,17 @@
 
             <div class="col-sm-5">
                 <label for="LessonNo" class="form-label">LessonNo</label>
-                <input type="text" class="form-control" id="LessonNo" name="Name" placeholder="" value="@Model.LessonNo" required>
+                <input type="text" class="form-control" id="LessonNo" name="LessonNo" placeholder="" value="@Model.LessonNo" required>
                 <div class="invalid-feedback">
                     Please select a valid Lesson No.
                 </div>
             </div>
 
             <div class="col-sm-5">
-                <label for="StartTime" class="form-label">SubjectName</label>
-                <input type="text" class="form-control" id="StartTime" name="Name" placeholder="" value="@Model.Duration" required>
+                <label for="Duration" class="form-label">Duration</label>
+                <input type="text" class="form-control" id="Duration" name="Duration" placeholder="" value="@Model.Duration" required>
                 <div class="invalid-feedback">
-                    Please select a valid StartTime.
+                    Please select a valid Duration.
                 </div>
             </div>
 
