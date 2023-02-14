@@ -50,7 +50,7 @@
 
                 <div class="col-sm-5">
                 <label for="Subject" class="form-label">Subject</label>
-                <select class="form-select" id="Subject" name="Subject" required multiple style="height:200px">
+                <select class="form-select" id="Subject" name="Subject" value="@Model.Subjects" required multiple style="height:200px">
               
                     @foreach(var item in Model.Subjects)
                     {
@@ -61,6 +61,24 @@
                     Please select a valid Subject Name.
                  </div>
                 </div>
+
+                 <div class="col-sm-5">
+                <label for="Classes" class="form-label">Classes</label>
+                <select class="form-select" id="Classes" name="Classes" value="@Model.Classes" required multiple style="height:200px">
+                    @if (Model.Classes != null && Model.Classes.Any())
+                    {
+                        @foreach (var item in Model.Classes)
+                        {
+                            <option value="@item.Value"> @item.Text</option>
+                        }
+
+                    }
+
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid Class Name.
+                </div>
+            </div>
 
                
 

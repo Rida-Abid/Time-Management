@@ -24,19 +24,9 @@ namespace TTMS.Controllers
         }
         #region Teacher
 
-        public bool AddTeacher(string Title, string Firstname, string Surname, IEnumerable<int> Subjects, string Email)
+        public bool AddTeacher(string Title, string Firstname, string Surname, IEnumerable<int> Subjects, IEnumerable<int> Classes, string Email)
         {
-            using IDbConnection dbConnection = Connection;
-            dbConnection.Open();
-            string sql = $"INSERT INTO Teacher (Title, Firstname, Surname, Email) VALUES ('{Title}','{Firstname}','{Surname}','{Email}');SELECT SCOPE_IDENTITY();";
-            var savedTeacherId = dbConnection.ExecuteScalar(sql);
-            var listSubjectIds = Subjects.ToList();
-            // sql = $"INSERT INTO TeacherClassLookup (TeacherID, ClassID) VALUES ({savedTeacherId}, {Subjects});";
-            foreach(int subjectId in listSubjectIds)
-            {
-                sql = $"INSERT INTO TeacherSubjectLookup (TeacherID, SubjectID) VALUES ({savedTeacherId}, {subjectId})";
-                dbConnection.Execute(sql);
-            }
+            InsertTeacher(Title, Firstname, Surname, Subjects, Classes, Email);
             return true;
         }
 
@@ -68,14 +58,53 @@ namespace TTMS.Controllers
             return dbConnection.Query<TeacherRecord>(sql).FirstOrDefault();
         }
 
-        public bool UpdateTeacherById(int Id, string Title, string Firstname, string Surname, IEnumerable<int> Subjects, string Email)
+        public bool UpdateTeacherById(int Id, string Title, string Firstname, string Surname, IEnumerable<int> Subjects, IEnumerable<int> Classes, string Email)
+        {
+            UpdateTeacher(Id, Title, Firstname, Surname, Subjects, Classes, Email);
+            return true;
+        }
+
+        private bool InsertTeacher(string Title, string Firstname, string Surname, IEnumerable<int> Subjects, IEnumerable<int> Classes, string Email)
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"UPDATE TeacherSubjectLookup SET SubjectID = ({4}) WHERE TeacherID = ({Id}";
-            sql += $"UPDATE TeacherClassLookup SET ClassID = ({4}) WHERE TeacherID = ({Id}";
-            sql += $"UPDATE Teacher SET Title='{Title}', Firstname='{Firstname}', Surname='{Surname}', Email='{Email}' WHERE TeacherID = ({Id})";
-            return dbConnection.Execute(sql) == 3;
+            string sql = $"INSERT INTO Teacher (Title, Firstname, Surname, Email) VALUES ('{Title}','{Firstname}','{Surname}','{Email}');SELECT SCOPE_IDENTITY();";
+            var savedTeacherId = dbConnection.ExecuteScalar(sql);
+            var listSubjectIds = Subjects.ToList();
+            foreach (int subjectId in listSubjectIds)
+            {
+                sql = $"INSERT INTO TeacherSubjectLookup (TeacherID, SubjectID) VALUES ({savedTeacherId}, {subjectId})";
+                dbConnection.Execute(sql);
+            }
+            var listClassIds = Classes.ToList();
+            foreach (int classId in listClassIds)
+            {
+                sql = $"INSERT INTO TeacherClassLookup (TeacherID, ClassID) VALUES ({savedTeacherId}, {classId});";
+                dbConnection.Execute(sql);
+            }
+            return true;
+        }
+
+        private bool UpdateTeacher(int Id,string Title, string Firstname, string Surname, IEnumerable<int> Subjects, IEnumerable<int> Classes, string Email)
+        {
+            using IDbConnection dbConnection = Connection;
+            dbConnection.Open();
+            string sql = "";
+            var listSubjectIds = Subjects.ToList();
+            foreach (int subjectId in listSubjectIds)
+            {
+                sql = $"UPDATE TeacherSubjectLookup SET SubjectID = ({subjectId}) WHERE TeacherID = ({Id};SELECT SCOPE_IDENTITY(); ";
+                dbConnection.Execute(sql);
+            }
+            var listClassIds = Classes.ToList();
+            foreach (int classId in listClassIds)
+            {
+                sql = $"UPDATE TeacherClassLookup SET ClassID = ({classId}) WHERE TeacherID = ({Id}); SELECT SCOPE_IDENTITY();";
+                dbConnection.Execute(sql);
+            }
+             sql = $"UPDATE Teacher SET Title='{Title}', Firstname='{Firstname}', Surname='{Surname}', Email='{Email}' WHERE TeacherID = ({Id})";
+
+            return true;
         }
 
         #endregion

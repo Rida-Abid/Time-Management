@@ -19,6 +19,8 @@ namespace TTMS.ViewModels
 
         public List<SelectListItem> Subjects { get; set; }
 
+        public List<SelectListItem> Classes { get; set; }
+
         public string FullName => Firstname + " " + Surname;
 
     }

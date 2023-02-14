@@ -47,7 +47,7 @@
                     Valid Email is required.
                   </div>
                 </div>
-
+                
 
 
 
@@ -55,8 +55,8 @@
 
 
             <div class="col-sm-5">
-                <label for="Subject" class="form-label">Subject</label>
-                <select class="form-select" id="Subject" name="Subjects" required multiple style="height:200px">
+                <label for="Subjects" class="form-label">Subjects</label>
+                <select class="form-select" id="Subjects" name="Subjects" required multiple style="height:200px">
                     @if (Model.Subjects != null && Model.Subjects.Any())
                     {
                         @foreach (var item in Model.Subjects)
@@ -70,7 +70,25 @@
                 <div class="invalid-feedback">
                     Please select a valid Subject Name.
                 </div>
-            </div>                   
+            </div>
+            
+            <div class="col-sm-5">
+                <label for="Classes" class="form-label">Classes</label>
+                <select class="form-select" id="Classes" name="Classes" required multiple style="height:200px">
+                    @if (Model.Classes != null && Model.Classes.Any())
+                    {
+                        @foreach (var item in Model.Classes)
+                        {
+                            <option value="@item.Value"> @item.Text</option>
+                        }
+
+                    }
+
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid Class Name.
+                </div>
+            </div>
         
 
           </div>

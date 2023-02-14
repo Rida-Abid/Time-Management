@@ -70,16 +70,16 @@ namespace TTMS.Controllers
         private List<SelectListItem> GetClasses()
         {
             // Convert database subjects to viewModel Subjects
-            var lessons = new List<SelectListItem>();
+            var classes = new List<SelectListItem>();
             foreach (var item in db.GetClasses())
             {
-                lessons.Add(new SelectListItem
+                classes.Add(new SelectListItem
                 {
                     Value = item.ClassID.ToString(),
                     Text = item.Name
                 });
             }
-            return lessons;
+            return classes;
         }
 
         private ClassViewModel GetClassById(int Id)

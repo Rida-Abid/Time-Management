@@ -23,7 +23,7 @@ namespace TTMS.Controllers
         {
             var model = new TeacherViewModel();
             model.Subjects = GetSubjects();
-            
+            model.Classes= GetClasses();
             return View(model);
         }
 
@@ -32,7 +32,7 @@ namespace TTMS.Controllers
         {
             var model = GetTeacherById(Id);
             model.Subjects = GetSubjects();
-
+            model.Classes= GetClasses();    
             return View(model);
         }
 
@@ -47,21 +47,22 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(string Title, string Firstname, string Surname, IEnumerable<int> Subjects, string Email)
+        public IActionResult Add(string Title, string Firstname, string Surname, IEnumerable<int> Subjects, IEnumerable<int> Classes, string Email)
         {
             GetSubjects();
-            db.AddTeacher(Title, Firstname, Surname, Subjects, Email);
+            GetClasses();
+            db.AddTeacher(Title, Firstname, Surname, Subjects, Classes, Email);
             return View(new TeacherViewModel());
         }
         
 
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(int Id, string Title, string Firstname, string Surname, IEnumerable<int> Subjects, string Email)
+        public IActionResult Edit(int Id, string Title, string Firstname, string Surname, IEnumerable<int> Subjects, IEnumerable<int> Classes, string Email)
         {
 
-            db.UpdateTeacherById(Id, Title, Firstname, Surname, Subjects,  Email);
-            return View();
+            db.UpdateTeacherById(Id, Title, Firstname, Surname, Subjects, Classes,  Email);
+            return View(new TeacherViewModel());
         }
         
         private List<SelectListItem> GetSubjects()
@@ -77,6 +78,21 @@ namespace TTMS.Controllers
                 });
             }
             return subjects;
+        }
+
+        private List<SelectListItem> GetClasses()
+        {
+            // Convert database subjects to viewModel Subjects
+            var classes = new List<SelectListItem>();
+            foreach (var item in db.GetClasses())
+            {
+                classes.Add(new SelectListItem
+                {
+                    Value = item.ClassID.ToString(),
+                    Text = item.Name
+                });
+            }
+            return classes;
         }
 
         private TeacherViewModel GetTeacherById(int Id)
