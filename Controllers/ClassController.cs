@@ -1,8 +1,11 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
+using TTMS.ViewModels;
 
 namespace TTMS.Controllers
 {
@@ -25,13 +28,17 @@ namespace TTMS.Controllers
         [Authorize]
         public IActionResult Add()
         {
-            return View();
+            var model = new ClassViewModel();
+            model.Classes = GetClasses();
+            return View(model);
         }
 
         [Authorize]
         public IActionResult Edit(int Id)
         {
-            return View(db.GetClassById(Id));
+            var model = GetClassById(Id);
+            model.Classes = GetClasses();
+            return View(model);
         }
 
         [Authorize]
@@ -46,8 +53,9 @@ namespace TTMS.Controllers
         [HttpPost]
         public IActionResult Add(string Name)
         {
+            GetClasses();
             db.AddClass(Name);
-            return View();
+            return View(new ClassViewModel());
         }
         
 
@@ -58,9 +66,34 @@ namespace TTMS.Controllers
             db.UpdateClassById(Id, Name);
             return View();
         }
-              
 
-       
+        private List<SelectListItem> GetClasses()
+        {
+            // Convert database subjects to viewModel Subjects
+            var lessons = new List<SelectListItem>();
+            foreach (var item in db.GetClasses())
+            {
+                lessons.Add(new SelectListItem
+                {
+                    Value = item.ClassID.ToString(),
+                    Text = item.Name
+                });
+            }
+            return lessons;
+        }
+
+        private ClassViewModel GetClassById(int Id)
+        {
+            // Convert database teacher to viewModel teacher
+            var dbClass = db.GetClassById(Id);
+            return new ClassViewModel
+            {
+                ClassID = dbClass.ClassID,
+                Name = dbClass.Name,
+               
+            };
+        }
+
 
     }
     
