@@ -1,0 +1,56 @@
+﻿@model TTMS.ViewModels.TimetableViewModel;
+
+
+@{
+    //ViewData["Title"] = "Add";
+}
+ @using (Html.BeginForm("add", "Class",FormMethod.Post))
+{
+
+          
+     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Add Timetables</h1>
+        </div>
+          <div class="col-md-7 col-lg-8">
+        
+           
+                <div class="col-md-5">
+                <label for="Timetables" class="form-label">Timetables</label>
+                <select class="form-select" id="Timetables" name="Timetables" multiple style="height:200px">
+                          @foreach(var item in Model.Timetables)
+                          {
+                                <option value="@item.Value">@item.Text</option>
+                          }
+                        
+                       @* <option value=""> </option>
+                        <option>Class 1</option>
+                        <option>Class 2</option>
+                        <option>Class 3</option>
+                        <option>Class 4</option>
+                        <option>Class 5</option>
+                        <option>Class 6</option>
+                        <option>Class 7</option>
+                        <option>Class 8</option>
+                        <option>Class 9</option>
+                        <option>Class 10</option>*@
+                    </select>
+                  <div class="invalid-feedback">
+                    Please select a valid Class.
+                  </div>
+                </div>
+
+            <div class="col-md-5">
+                <label for="addTimetables" class="form-label">add new Timetables</label>
+                <input type="text" class="form-control" id="addClass" name="Name" placeholder="" value="" required>
+                <div class="invalid-feedback">
+                    Valid Class is required.
+                </div>
+            </div>
+
+          </div>
+            <div class="container-fluid">
+                <input type="submit" value="add" class="btn btn-lg btn-outline-success col-md-12">
+            </div>
+     </main> 
+}

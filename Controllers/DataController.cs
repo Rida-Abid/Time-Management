@@ -116,8 +116,6 @@ namespace TTMS.Controllers
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
             string sql = $"INSERT INTO Subject(Name) VALUES('{Name}')";
-            var selectedSubjectId = dbConnection.ExecuteScalar(sql);
-            sql = $"INSERT INTO TeacherSubjectLookup (TeacherID, SubjectID) VALUES ({1}, {selectedSubjectId})";
             return dbConnection.Execute(sql) == 1;
 
         }
@@ -154,9 +152,8 @@ namespace TTMS.Controllers
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"UPDATE [dbo].[TeacherSubjectLookup] SET [SubjectID] = ({4})  WHERE TeacherID = ({Id};";
-            sql += $"UPDATE Subject SET Name='{Name}'  WHERE SubjectID = {Id}";
-            return dbConnection.Execute(sql) == 2;
+            string sql = $"UPDATE Subject SET Name='{Name}'  WHERE SubjectID = {Id}";
+            return dbConnection.Execute(sql) == 1;
         }
         #endregion
 
@@ -166,8 +163,7 @@ namespace TTMS.Controllers
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"INSERT INTO TeacherClassLookup (TeacherID, ClassID) VALUES ({1}, {1});";
-            sql += $"INSERT INTO Class(Name) VALUES('{Name}')";
+            string sql = $"INSERT INTO Class(Name) VALUES('{Name}')";
             return dbConnection.Execute(sql) == 2;
         }
 
@@ -202,8 +198,7 @@ namespace TTMS.Controllers
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"UPDATE TeacherClassLookup SET ClassID = ({4}) WHERE TeacherID = ({Id};";
-            sql += $"UPDATE Class SET Name='{Name}'  WHERE ClassID = {Id}";
+            string sql = $"UPDATE Class SET Name='{Name}'  WHERE ClassID = {Id}";
             return dbConnection.Execute(sql) == 2;
         }
         #endregion
@@ -258,6 +253,52 @@ namespace TTMS.Controllers
                 dbConnection.Open();
                 return dbConnection.Execute(sql) == 1;
             }
+        }
+        #endregion
+
+        #region Timetable
+
+        public bool AddTimetable(string Name)
+        {
+            using IDbConnection dbConnection = Connection;
+            dbConnection.Open();
+            string sql = $"INSERT INTO Timetable(Name) VALUES('{Name}')";
+            return dbConnection.Execute(sql) == 2;
+        }
+
+        public bool DeleteTimetable(int Id)
+        {
+            using IDbConnection dbConnection = Connection;
+            dbConnection.Open();
+            //string sql = $"DELETE FROM TeacherClassLookup WHERE ClassID = ({Id});";
+            string sql = $"DELETE FROM Timetable WHERE TimetableID = ({Id})";
+            return dbConnection.Execute(sql) == 2;
+
+        }
+
+        public IEnumerable<TimetableRecord> GetTimetables()
+        {
+            using IDbConnection dbConnection = Connection;
+            string sql = @"SELECT * FROM Timetable";
+            dbConnection.Open();
+            return dbConnection.Query<TimetableRecord>(sql);
+        }
+
+        public TimetableRecord GetTimetableById(int Id)
+        {
+            using IDbConnection dbConnection = Connection;
+            string sql = $"SELECT * FROM Timetable   WHERE TimetableID = {Id}";
+            dbConnection.Open();
+            return dbConnection.Query<TimetableRecord>(sql).FirstOrDefault();
+        }
+
+
+        public bool UpdatetimetableById(int Id, string Name)
+        {
+            using IDbConnection dbConnection = Connection;
+            dbConnection.Open();
+            string sql = $"UPDATE Timetable SET Name='{Name}'  WHERE TimetableID = {Id}";
+            return dbConnection.Execute(sql) == 2;
         }
         #endregion
     }

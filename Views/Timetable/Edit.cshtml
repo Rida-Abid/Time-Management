@@ -1,0 +1,50 @@
+﻿@model TTMS.ViewModels.ClassViewModel;
+
+
+@{
+    //ViewData["Title"] = "Add";
+}
+@using (Html.BeginForm("edit", "Class", new { Id = @Model.ClassID },FormMethod.Post))
+{
+
+          
+     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Edit Classes</h1>
+        </div>
+          <div class="col-md-7 col-lg-8">
+
+            <div class="col-sm-5">
+                <label for="ClassName" class="form-label">ClassName</label>
+                <input type="text" class="form-control" id="ClassName" name="Name" placeholder="" value="@Model.Name" required>
+                <div class="invalid-feedback">
+                    Please select a valid Class Name.
+                </div>
+            </div>
+        
+           
+                @*<div class="col-md-5">
+                  <label for="Class" class="form-label">Class</label>
+                  <select class="form-select" id="Class" name="Name"  required>
+                    <option value=""> </option>
+                    <option>Class 1</option>
+                    <option>Class 2</option>
+                    <option>Class 3</option>
+                    <option>Class 4</option>
+                    <option>Class 5</option>
+                    <option>Class 6</option>
+                    <option>Class 7</option>
+                    <option>Class 8</option>
+                    <option>Class 9</option>
+                    <option>Class 10</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Please select a valid Class.
+                  </div>
+                </div>*@
+          </div>
+            <div class="container-fluid">
+                <input type="submit" value="edit" class="btn btn-lg btn-outline-success col-md-12">
+            </div>
+     </main> 
+}
