@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-
+using Microsoft.AspNetCore.Mvc.Rendering;
+using TTMS.ViewModels;
 
 namespace TTMS.Controllers
 {
@@ -23,13 +23,17 @@ namespace TTMS.Controllers
         [Authorize]
         public IActionResult Add()
         {
-            return View();
+            var model = new LessonViewModel();
+            model.Lessons = GetLessons();
+            return View(model);
         }
 
         [Authorize]
         public IActionResult Edit(int Id)
         {
-            return View(db.GetLessonById(Id));
+            var model = GetLessonById(Id); 
+            model.Lessons = GetLessons();
+            return View(model);
         }
 
         [Authorize]
@@ -44,8 +48,9 @@ namespace TTMS.Controllers
         [HttpPost]
         public IActionResult Add(string LessonNo, decimal Duration)
         {
+            GetLessons();
             db.AddLesson(LessonNo, Duration);
-            return View();
+            return View(new LessonViewModel());
         }
       
         [Authorize]
@@ -56,8 +61,36 @@ namespace TTMS.Controllers
             return View();
         }
 
+        public List<SelectListItem> GetLessons()
+        {
+            var lessons = new List<SelectListItem>();
+            foreach (var item in db.GetLessons())
+            {
+                lessons.Add(new SelectListItem
+                {
+                    Value = item.LessonID.ToString(),
+                    Text = item.LessonNo
 
-        
+                });
+            }
+            return lessons;
+            
+        }
+
+        private LessonViewModel GetLessonById(int Id)
+        {
+            var dbLesson = db.GetLessonById(Id);
+            return new LessonViewModel
+            {
+                LessonID = dbLesson.LessonID,
+                LessonNo = dbLesson.LessonNo,
+                Duration = dbLesson.Duration
+               
+            };
+        }
+
+
+
 
 
 
