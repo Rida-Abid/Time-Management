@@ -6,6 +6,14 @@ namespace TTMS.ViewModels
     {
         public List<SelectListItem> Timetables { get; set; }
 
+        public List<SelectListItem> Teachers { get; set; }
+
+        public List<SelectListItem> Subjects { get; set; }
+
+        public List<SelectListItem> Classes { get; set; }
+
+        public List<SelectListItem> Lessons { get; set; }
+
         public int TimetableID { get; set; }
 
         public string Name { get; set; }
