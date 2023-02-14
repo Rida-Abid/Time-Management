@@ -370,3 +370,4 @@ FodyWeavers.xsd
 /Models/LessonViewModel .cs
 /Models/SettingsViewModel .cs
 /Models/TeacherViewModel.cs
+/Scripts/LessonTable.sql
