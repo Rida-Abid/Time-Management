@@ -256,6 +256,26 @@ namespace TTMS.Controllers
         }
         #endregion
 
+        #region Days
+
+
+        public IEnumerable<DaysRecord> GetDays()
+        {
+            using IDbConnection dbConnection = Connection;
+            string sql = @"SELECT * FROM Days";
+            dbConnection.Open();
+            return dbConnection.Query<DaysRecord>(sql);
+        }
+
+        public DaysRecord GetDaysById(int Id)
+        {
+            using IDbConnection dbConnection = Connection;
+            string sql = $"SELECT * FROM Days  WHERE DayID = {Id}";
+            dbConnection.Open();
+            return dbConnection.Query<DaysRecord>(sql).FirstOrDefault();
+        }
+        #endregion
+
         #region Timetable
 
         public bool AddTimetable(string Name)

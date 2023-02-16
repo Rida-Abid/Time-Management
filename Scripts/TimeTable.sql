@@ -7,7 +7,8 @@ CREATE TABLE dbo.TimeTable
      TeacherID int NOT NULL,
      SubjectID int NOT NULL,
      ClassID int NOT NULL,
-     LessonID int NOT NULL
+     LessonID int NOT NULL,
+     DayId int NOT NULL
 
 );
     
@@ -22,3 +23,6 @@ References dbo.Class (ClassID)
 
 ALTER TABLE dbo.TimeTable WITH CHECK ADD CONSTRAINT FK_TimeTable_Lesson Foreign Key(LessonID)
 References dbo.Lessons (LessonID)
+
+ALTER TABLE dbo.TimeTable WITH CHECK ADD CONSTRAINT FK_TimeTable_Day Foreign Key(LessonID)
+References dbo.Days (DayID)
