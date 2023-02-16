@@ -16,10 +16,15 @@
             <div class="col-md-5">
                 <label for="Lessons" class="form-label">Lessons</label>
                 <select class="form-select" id="Lessons" name="Lessons" value="" multiple style="height:200px">
-                    @foreach (var item in Model.Lessons)
+                    @if (Model.Lessons != null && Model.Lessons.Any())
                     {
-                        <option value="@item.Value">@item.Text</option>
+                        @foreach (var item in Model.Lessons)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        } 
+
                     }
+                    
                 </select>
             </div>
         

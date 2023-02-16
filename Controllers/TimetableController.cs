@@ -70,7 +70,7 @@ namespace TTMS.Controllers
         [HttpPost]
         public IActionResult Edit(int Id, string Name)
         {
-            db.UpdatetimetableById(Id, Name);
+            db.UpdateTimetableById(Id, Name);
             return View();
         }
 

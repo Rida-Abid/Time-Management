@@ -278,11 +278,11 @@ namespace TTMS.Controllers
 
         #region Timetable
 
-        public bool AddTimetable(string Name)
+        public bool AddTimetable(string Name, int teacher, IEnumerable<int> Subjects, IEnumerable<int> Classes, IEnumerable<int> Lesson, int Days)
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"INSERT INTO Timetable(Name) VALUES('{Name}')";
+            string sql = $"INSERT INTO Timetable(Name, TeacherID, SubjectID, ClassID, LessonID ) VALUES('{Name}')";
             return dbConnection.Execute(sql) == 2;
         }
 
@@ -290,7 +290,6 @@ namespace TTMS.Controllers
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            //string sql = $"DELETE FROM TeacherClassLookup WHERE ClassID = ({Id});";
             string sql = $"DELETE FROM Timetable WHERE TimetableID = ({Id})";
             return dbConnection.Execute(sql) == 2;
 
@@ -313,7 +312,7 @@ namespace TTMS.Controllers
         }
 
 
-        public bool UpdatetimetableById(int Id, string Name)
+        public bool UpdateTimetableById(int Id, string Name)
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
