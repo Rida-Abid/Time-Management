@@ -24,9 +24,11 @@ namespace TTMS.Controllers
         public IActionResult Add()
         {
             var model = new TimetableViewModel();
+            model.Teachers = GetTeachers();
             model.Subjects = GetSubjects();
             model.Classes = GetClasses();
             model.Lessons = GetLessons();
+            model.Days = GetDays();
             return View(model);
         }
 
@@ -34,9 +36,11 @@ namespace TTMS.Controllers
         public IActionResult Edit(int Id)
         {
             var model = GetTimetableById(Id);
+            model.Teachers = GetTeachers();
             model.Subjects = GetSubjects();
             model.Classes = GetClasses();
             model.Lessons = GetLessons();
+            model.Days = GetDays();
             return View(model);
         }
 
@@ -53,9 +57,11 @@ namespace TTMS.Controllers
         public IActionResult Add(string Name)
         {
             GetTimetables();
+            GetTeachers();
             GetSubjects();
             GetClasses();
             GetLessons();
+            GetDays();
             db.AddTimetable(Name);
             return View(new TimetableViewModel());
         }
@@ -82,6 +88,20 @@ namespace TTMS.Controllers
             }
             return timetables;
             
+        }
+
+        private List<SelectListItem> GetTeachers()
+        {
+            var teachers = new List<SelectListItem>();
+            foreach (var item in db.GetTeachers())
+            {
+                teachers.Add(new SelectListItem
+                {
+                    Value = item.TeacherID.ToString(),
+                    Text = item.Firstname
+                });
+            }
+            return teachers;
         }
 
         private List<SelectListItem> GetSubjects()
@@ -128,6 +148,21 @@ namespace TTMS.Controllers
             }
             return lessons;
 
+        }
+
+        private List<SelectListItem> GetDays()
+        {
+            // Convert database subjects to viewModel Subjects
+            var days = new List<SelectListItem>();
+            foreach (var item in db.GetDays())
+            {
+                days.Add(new SelectListItem
+                {
+                    Value = item.DayID.ToString(),
+                    Text = item.Name
+                });
+            }
+            return days;
         }
 
         private TimetableViewModel GetTimetableById(int Id)

@@ -6,7 +6,9 @@ namespace TTMS.ViewModels
 {
     public class TeacherViewModel
     {
-        
+
+        public List<SelectListItem> Teachers { get; set; }
+
         public int TeacherID { get; set; }
 
         public string Title { get; set; }

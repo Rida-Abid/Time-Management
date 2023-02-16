@@ -15,62 +15,96 @@
           <div class="col-md-7 col-lg-8">
 
 
-            <div class="col-sm-5">
-                <label for="Subjects" class="form-label">Subjects</label>
-                <select class="form-select" id="Subjects" name="Subjects" required multiple style="height:200px">
-                    @if (Model.Subjects != null && Model.Subjects.Any())
-                    {
-                        @foreach (var item in Model.Subjects)
+              <div class="col-sm-5">
+
+                    <label for="Teachers" class="form-label">Teachers</label>
+                    <select class="form-select" id="Teachers" name="Teachers" required multiple style="height:200px">
+                        @if (Model.Teachers != null && Model.Teachers.Any())
                         {
-                            <option value="@item.Value"> @item.Text</option>
+                            @foreach (var item in Model.Teachers)
+                            {
+                                <option value="@item.Value"> @item.Text</option>
+                            }
+
                         }
 
-                    }
-
-                </select>
-                <div class="invalid-feedback">
-                    Please select a valid Subject Name.
-                </div>
-            
-
-@*          <div class="col-sm-5">
-*@                <label for="Classes" class="form-label">Classes</label>
-                <select class="form-select" id="Classes" name="Classes" required multiple style="height:200px">
-                    @if (Model.Classes != null && Model.Classes.Any())
-                    {
-                        @foreach (var item in Model.Classes)
-                        {
-                            <option value="@item.Value"> @item.Text</option>
-                        }
-
-                    }
-
-                </select>
-                <div class="invalid-feedback">
-                    Please select a valid Class Name.
-                </div>
-            
-
-            @*<div class="col-md-5">*@
-                <label for="Lessons" class="form-label">Lessons</label>
-                    <select class="form-select" id="Lessons" name="Lessons" multiple style="height:200px">
-                    @if (Model.Lessons != null && Model.Lessons.Any())
-                    {   
-                        @foreach (var item in Model.Lessons)
-                        {
-                            <option value="@item.Value">@item.Text</option>
-                        }
-                        
-                    }  
                     </select>
                     <div class="invalid-feedback">
-                        Please select a valid Class.
+                        Please select a valid Subject Name.
                     </div>
-                
-            </div>
-           
 
-          </div>
+
+                    <label for="Subjects" class="form-label">Subjects</label>
+                    <select class="form-select" id="Subjects" name="Subjects" required multiple style="height:200px">
+                        @if (Model.Subjects != null && Model.Subjects.Any())
+                        {
+                            @foreach (var item in Model.Subjects)
+                            {
+                                <option value="@item.Value"> @item.Text</option>
+                            }
+
+                        }
+
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid Subject Name.
+                    </div>
+            
+
+    @*          <div class="col-sm-5">
+    *@                <label for="Classes" class="form-label">Classes</label>
+                    <select class="form-select" id="Classes" name="Classes" required multiple style="height:200px">
+                        @if (Model.Classes != null && Model.Classes.Any())
+                        {
+                            @foreach (var item in Model.Classes)
+                            {
+                                <option value="@item.Value"> @item.Text</option>
+                            }
+
+                        }
+
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid Class Name.
+                    </div>
+            
+
+                @*<div class="col-md-5">*@
+                    <label for="Lessons" class="form-label">Lessons</label>
+                        <select class="form-select" id="Lessons" name="Lessons" multiple style="height:200px">
+                        @if (Model.Lessons != null && Model.Lessons.Any())
+                        {   
+                            @foreach (var item in Model.Lessons)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        
+                        }  
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a valid Lesson.
+                        </div>
+
+            
+                        <label for="Days" class="form-label">Days</label>
+                        <select class="form-select" id="Days" name="Days" required multiple style="height:200px">
+                        @if (Model.Days != null && Model.Days.Any())
+                        {
+                            @foreach (var item in Model.Days)
+                            {
+                                <option value="@item.Value"> @item.Text</option>
+                            }
+
+                        }
+
+                        </select>
+                    <div class="invalid-feedback">
+                        Please select a valid Day.
+                    </div>
+ 
+
+              </div>
+        </div>
             <div class="container-fluid">
                 <input type="submit" value="add" class="btn btn-lg btn-outline-success col-md-12">
             </div>
