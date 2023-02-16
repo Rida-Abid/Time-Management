@@ -1,50 +1,120 @@
-﻿@model TTMS.ViewModels.ClassViewModel;
+﻿@model TTMS.ViewModels.TimetableViewModel;
 
 
 @{
     //ViewData["Title"] = "Add";
 }
-@using (Html.BeginForm("edit", "Class", new { Id = @Model.ClassID },FormMethod.Post))
+@using (Html.BeginForm("edit", "Timetable", new { Id = Model.TimetableID }, FormMethod.Post))
 {
 
-          
-     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Edit Classes</h1>
+            <h1 class="h2">Add Timetables</h1>
         </div>
-          <div class="col-md-7 col-lg-8">
+        <div class="col-md-7 col-lg-8">
+
+            <div class="col-sm-12">
+                <label for="TimetableName" class="form-label">Timetable Name</label>
+                <input type="text" class="form-control" id="TimetableName" name="Name" value="@Model.Name" placeholder="" value="" required>
+                <div class="invalid-feedback">
+                    Valid Name is required.
+                </div>
+            </div>
+
 
             <div class="col-sm-5">
-                <label for="ClassName" class="form-label">ClassName</label>
-                <input type="text" class="form-control" id="ClassName" name="Name" placeholder="" value="@Model.Name" required>
+
+                <label for="Teachers" class="form-label">Teachers</label>
+                <select class="form-select" id="Teachers" name="Teachers" value="@Model.Teachers" required multiple style="height:200px">
+                    @if (Model.Teachers != null && Model.Teachers.Any())
+                    {
+                        @foreach (var item in Model.Teachers)
+                        {
+                            <option value="@item.Value"> @item.Text</option>
+                        }
+
+                    }
+
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid Subject Name.
+                </div>
+
+
+                <label for="Subjects" class="form-label">Subjects</label>
+                <select class="form-select" id="Subjects" name="Subjects" value="@Model.Subjects" required multiple style="height:200px">
+                    @if (Model.Subjects != null && Model.Subjects.Any())
+                    {
+                        @foreach (var item in Model.Subjects)
+                        {
+                            <option value="@item.Value"> @item.Text</option>
+                        }
+
+                    }
+
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid Subject Name.
+                </div>
+
+
+                @*          <div class="col-sm-5">
+            *@                <label for="Classes" class="form-label">Classes</label>
+                <select class="form-select" id="Classes" name="Classes" value="@Model.Classes" required multiple style="height:200px">
+                    @if (Model.Classes != null && Model.Classes.Any())
+                    {
+                        @foreach (var item in Model.Classes)
+                        {
+                            <option value="@item.Value"> @item.Text</option>
+                        }
+
+                    }
+
+                </select>
                 <div class="invalid-feedback">
                     Please select a valid Class Name.
                 </div>
+
+
+                @*<div class="col-md-5">*@
+                <label for="Lessons" class="form-label">Lessons</label>
+                <select class="form-select" id="Lessons" name="Lessons" value="@Model.Lessons" multiple style="height:200px">
+                    @if (Model.Lessons != null && Model.Lessons.Any())
+                    {
+                        @foreach (var item in Model.Lessons)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+
+                    }
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid Lesson.
+                </div>
+
+
+                <label for="Days" class="form-label">Days</label>
+                <select class="form-select" id="Days" name="Days" value="@Model.Days" required multiple style="height:200px">
+                    @if (Model.Days != null && Model.Days.Any())
+                    {
+                        @foreach (var item in Model.Days)
+                        {
+                            <option value="@item.Value"> @item.Text</option>
+                        }
+
+                    }
+
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid Day.
+                </div>
+
+
             </div>
-        
-           
-                @*<div class="col-md-5">
-                  <label for="Class" class="form-label">Class</label>
-                  <select class="form-select" id="Class" name="Name"  required>
-                    <option value=""> </option>
-                    <option>Class 1</option>
-                    <option>Class 2</option>
-                    <option>Class 3</option>
-                    <option>Class 4</option>
-                    <option>Class 5</option>
-                    <option>Class 6</option>
-                    <option>Class 7</option>
-                    <option>Class 8</option>
-                    <option>Class 9</option>
-                    <option>Class 10</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid Class.
-                  </div>
-                </div>*@
-          </div>
-            <div class="container-fluid">
-                <input type="submit" value="edit" class="btn btn-lg btn-outline-success col-md-12">
-            </div>
-     </main> 
+        </div>
+        <div class="container-fluid">
+            <input type="submit" value="edit" class="btn btn-lg btn-outline-success col-md-12">
+        </div>
+    </main>
 }

@@ -20,14 +20,8 @@ namespace TTMS.ViewModels
 
         public string Name { get; set; }
 
+       
 
-        public int LessonID { get; set; }
-
-        public int TeacherID { get; set; }
-
-        public int ClassID { get; set; }
-
-        public int SubjectID { get; set; }
 
 
 
