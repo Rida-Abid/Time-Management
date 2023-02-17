@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Xml.Linq;
 using TTMS.ViewModels;
 
 namespace TTMS.Controllers
@@ -54,24 +56,20 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(string Name)
+        public IActionResult Add(string Name, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
         {
-            GetTimetables();
-            GetTeachers();
-            GetSubjects();
-            GetClasses();
-            GetLessons();
-            GetDays();
-            db.AddTimetable(Name);
-            return View(new TimetableViewModel());
+            var model = new TimetableViewModel();
+            db.AddTimetable(Name, TeacherID, SubjectID, ClassID, LessonID, DayID);
+            return View(model);
         }
       
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(int Id, string Name)
+        public IActionResult Edit(int Id, string Name, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
         {
-            db.UpdateTimetableById(Id, Name);
-            return View();
+            var model = new TimetableViewModel();
+            db.UpdateTimetableById(Id, Name, TeacherID, SubjectID, ClassID, LessonID, DayID);
+            return View(model);
         }
 
         public List<SelectListItem> GetTimetables()

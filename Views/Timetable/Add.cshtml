@@ -26,7 +26,7 @@
               <div class="col-sm-5">
 
                     <label for="Teachers" class="form-label">Teachers</label>
-                    <select class="form-select" id="Teachers" name="Teachers" required multiple style="height:200px">
+                    <select class="form-select" id="Teachers" name="TeacherID" required multiple style="height:200px">
                         @if (Model.Teachers != null && Model.Teachers.Any())
                         {
                             @foreach (var item in Model.Teachers)
@@ -43,7 +43,7 @@
 
 
                     <label for="Subjects" class="form-label">Subjects</label>
-                    <select class="form-select" id="Subjects" name="Subjects" required multiple style="height:200px">
+                    <select class="form-select" id="Subjects" name="SubjectID" required multiple style="height:200px">
                         @if (Model.Subjects != null && Model.Subjects.Any())
                         {
                             @foreach (var item in Model.Subjects)
@@ -61,7 +61,7 @@
 
     @*          <div class="col-sm-5">
     *@                <label for="Classes" class="form-label">Classes</label>
-                    <select class="form-select" id="Classes" name="Classes" required multiple style="height:200px">
+                    <select class="form-select" id="Classes" name="ClassID" required multiple style="height:200px">
                         @if (Model.Classes != null && Model.Classes.Any())
                         {
                             @foreach (var item in Model.Classes)
@@ -79,7 +79,7 @@
 
                 @*<div class="col-md-5">*@
                     <label for="Lessons" class="form-label">Lessons</label>
-                        <select class="form-select" id="Lessons" name="Lessons" multiple style="height:200px">
+                        <select class="form-select" id="Lessons" name="LessonID" multiple style="height:200px">
                         @if (Model.Lessons != null && Model.Lessons.Any())
                         {   
                             @foreach (var item in Model.Lessons)
@@ -95,7 +95,7 @@
 
             
                         <label for="Days" class="form-label">Days</label>
-                        <select class="form-select" id="Days" name="Days" required multiple style="height:200px">
+                        <select class="form-select" id="Days" name="DayID" required multiple style="height:200px">
                         @if (Model.Days != null && Model.Days.Any())
                         {
                             @foreach (var item in Model.Days)

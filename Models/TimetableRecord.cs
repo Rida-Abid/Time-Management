@@ -7,11 +7,11 @@ namespace TTMS.Models
     {
         public int TimetableID;
         public string Name;
-        public int Teacher;
-        public int Subject;
-        public int Class;
-        public int Lesson;
-        public int Day;
+        public int TeacherID;
+        public int SubjectID;
+        public int ClassID;
+        public int LessonID;
+        public int DayID;
         public DateTime DateCreated;
 
     }
