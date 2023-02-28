@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 using System.Data.SqlClient;
 using TTMS.Models;
@@ -278,12 +279,12 @@ namespace TTMS.Controllers
 
         #region Timetable
 
-        public bool AddTimetable(string Name, int teacher, IEnumerable<int> Subjects, IEnumerable<int> Classes, IEnumerable<int> Lesson, int Days)
+        public bool AddTimetable(string Name, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"INSERT INTO Timetable(Name, TeacherID, SubjectID, ClassID, LessonID ) VALUES('{Name}')";
-            return dbConnection.Execute(sql) == 2;
+            string sql = $"INSERT INTO Timetable(Name, TeacherID, SubjectID, ClassID, LessonID, DayID ) VALUES('{Name}','{TeacherID}','{SubjectID}','{ClassID}','{LessonID}','{DayID}')";
+            return dbConnection.Execute(sql) == 1;
         }
 
         public bool DeleteTimetable(int Id)
@@ -291,7 +292,7 @@ namespace TTMS.Controllers
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
             string sql = $"DELETE FROM Timetable WHERE TimetableID = ({Id})";
-            return dbConnection.Execute(sql) == 2;
+            return dbConnection.Execute(sql) == 1;
 
         }
 
@@ -312,13 +313,32 @@ namespace TTMS.Controllers
         }
 
 
-        public bool UpdateTimetableById(int Id, string Name)
+        public bool UpdateTimetableById(int Id, string Name, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"UPDATE Timetable SET Name='{Name}'  WHERE TimetableID = {Id}";
-            return dbConnection.Execute(sql) == 2;
+            string sql = $"UPDATE Timetable SET Name='{Name}',TeacherID = '{TeacherID}', SubjectID = '{SubjectID}', ClassID = '{ClassID}', LessonID = '{LessonID}', DayID = '{DayID}'  WHERE TimetableID = {Id}";
+            return dbConnection.Execute(sql) == 1;
         }
+
+        public IEnumerable<SubjectRecord> GetSubjectsByTeacherId(int Id)
+        {
+            using IDbConnection dbConnection = Connection;
+            dbConnection.Open();
+            string sql = $"SELECT  TeacherSubjectLookup.SubjectID,Subject.Name FROM Subject INNER JOIN TeacherSubjectLookup ON Subject.SubjectID = TeacherSubjectLookup.SubjectID WHERE TeacherID = {Id}";
+            return dbConnection.Query<SubjectRecord>(sql);
+            
+        }
+
+        public IEnumerable<ClassRecord> GetClassesByTeacherId(int Id)
+        {
+            using IDbConnection dbConnection = Connection;
+            dbConnection.Open();
+            string sql = $"SELECT  TeacherClassLookup.ClassID,Class.Name FROM Class INNER JOIN TeacherClassLookup ON Class.ClassID = TeacherClassLookup.ClassID WHERE TeacherID = {Id}";
+            return dbConnection.Query<ClassRecord>(sql);
+        }
+
+      
         #endregion
     }
 }

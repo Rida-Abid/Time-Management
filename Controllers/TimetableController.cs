@@ -23,12 +23,12 @@ namespace TTMS.Controllers
         }
 
         [Authorize]
-        public IActionResult Add()
+        public IActionResult Add(int Id)
         {
             var model = new TimetableViewModel();
             model.Teachers = GetTeachers();
-            model.Subjects = GetSubjects();
-            model.Classes = GetClasses();
+            model.Subjects = GetSubjects(Id);
+            model.Classes = GetClasses(Id);
             model.Lessons = GetLessons();
             model.Days = GetDays();
             return View(model);
@@ -37,10 +37,10 @@ namespace TTMS.Controllers
         [Authorize]
         public IActionResult Edit(int Id)
         {
-            var model = GetTimetableById(Id);
+            var model = new TimetableViewModel();
             model.Teachers = GetTeachers();
-            model.Subjects = GetSubjects();
-            model.Classes = GetClasses();
+            model.Subjects = GetSubjects(Id);
+            model.Classes = GetClasses(Id);
             model.Lessons = GetLessons();
             model.Days = GetDays();
             return View(model);
@@ -52,7 +52,9 @@ namespace TTMS.Controllers
             db.DeleteTimetable(Id);
             return RedirectToAction("Index");
         }
-        
+
+       
+
 
         [Authorize]
         [HttpPost]
@@ -102,11 +104,11 @@ namespace TTMS.Controllers
             return teachers;
         }
 
-        private List<SelectListItem> GetSubjects()
+        private List<SelectListItem> GetSubjects(int Id)
         {
             // Convert database subjects to viewModel Subjects
             var subjects = new List<SelectListItem>();
-            foreach (var item in db.GetSubjects())
+            foreach (var item in db.GetSubjectsByTeacherId( Id))
             {
                 subjects.Add(new SelectListItem
                 {
@@ -117,11 +119,11 @@ namespace TTMS.Controllers
             return subjects;
         }
 
-        private List<SelectListItem> GetClasses()
+        private List<SelectListItem> GetClasses(int Id)
         {
             // Convert database classes to viewModel Classes
             var classes = new List<SelectListItem>();
-            foreach (var item in db.GetClasses())
+            foreach (var item in db.GetClassesByTeacherId(Id))
             {
                 classes.Add(new SelectListItem
                 {

@@ -1,4 +1,5 @@
 ﻿@model TTMS.ViewModels.TimetableViewModel;
+@using TTMS.Controllers.API;
 
 
 @{
@@ -25,8 +26,41 @@
 
               <div class="col-sm-5">
 
+
+                    <label for="Days" class="form-label">Days</label>
+                    <select class="form-select" id="Days" name="DayID" required multiple style="height:200px">
+                        @if (Model.Days != null && Model.Days.Any())
+                        {
+                            @foreach (var item in Model.Days)
+                            {
+                                <option value="@item.Value"> @item.Text</option>
+                            }
+
+                        }
+
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid Day.
+                    </div>
+
+                    <label for="Lessons" class="form-label">Lessons</label>
+                    <select class="form-select" id="Lessons" name="LessonID" multiple style="height:200px">
+                        @if (Model.Lessons != null && Model.Lessons.Any())
+                        {
+                            @foreach (var item in Model.Lessons)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+
+                        }
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid Lesson.
+                    </div>
+
                     <label for="Teachers" class="form-label">Teachers</label>
-                    <select class="form-select" id="Teachers" name="TeacherID" required multiple style="height:200px">
+                <select class="form-select" id="TeacherID" name="TeacherID" required multiple style="height:200px" onclick="GetTeacher()">
+
                         @if (Model.Teachers != null && Model.Teachers.Any())
                         {
                             @foreach (var item in Model.Teachers)
@@ -38,7 +72,7 @@
 
                     </select>
                     <div class="invalid-feedback">
-                        Please select a valid Subject Name.
+                        Please select a valid Teacher Name.
                     </div>
 
 
@@ -59,8 +93,7 @@
                     </div>
             
 
-    @*          <div class="col-sm-5">
-    *@                <label for="Classes" class="form-label">Classes</label>
+                   <label for="Classes" class="form-label">Classes</label>
                     <select class="form-select" id="Classes" name="ClassID" required multiple style="height:200px">
                         @if (Model.Classes != null && Model.Classes.Any())
                         {
@@ -78,39 +111,7 @@
             
 
                 @*<div class="col-md-5">*@
-                    <label for="Lessons" class="form-label">Lessons</label>
-                        <select class="form-select" id="Lessons" name="LessonID" multiple style="height:200px">
-                        @if (Model.Lessons != null && Model.Lessons.Any())
-                        {   
-                            @foreach (var item in Model.Lessons)
-                            {
-                                <option value="@item.Value">@item.Text</option>
-                            }
-                        
-                        }  
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select a valid Lesson.
-                        </div>
-
             
-                        <label for="Days" class="form-label">Days</label>
-                        <select class="form-select" id="Days" name="DayID" required multiple style="height:200px">
-                        @if (Model.Days != null && Model.Days.Any())
-                        {
-                            @foreach (var item in Model.Days)
-                            {
-                                <option value="@item.Value"> @item.Text</option>
-                            }
-
-                        }
-
-                        </select>
-                    <div class="invalid-feedback">
-                        Please select a valid Day.
-                    </div>
- 
-
               </div>
         </div>
             <div class="container-fluid">
@@ -118,3 +119,14 @@
             </div>
      </main> 
 }
+
+<script>
+    async function GetTeacher(){
+        var id = $('#TeacherID')[0].selectedOptions[0].value;
+        $.get("/controllers/api/lookup/GetSubjectsByTeacher?id="+id, function (r) {
+           console.log(r);
+        });
+    }
+
+    
+</script>

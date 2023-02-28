@@ -58,7 +58,7 @@ namespace TTMS.Controllers
         public IActionResult Edit(int Id, string LessonNo, decimal Duration)
         {
             db.UpdateLessonById(Id, LessonNo, Duration);
-            return View();
+            return View(new LessonViewModel());
         }
 
         public List<SelectListItem> GetLessons()
