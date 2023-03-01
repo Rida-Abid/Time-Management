@@ -24,7 +24,7 @@ References dbo.Class (ClassID)
 ALTER TABLE dbo.Timetable WITH CHECK ADD CONSTRAINT FK_Timetable_Lesson Foreign Key(LessonID)
 References dbo.Lessons (LessonID)
 
-ALTER TABLE dbo.Timetable WITH CHECK ADD CONSTRAINT FK_Timetable_Day Foreign Key(LessonID)
+ALTER TABLE dbo.Timetable WITH CHECK ADD CONSTRAINT FK_Timetable_Day Foreign Key(DayID)
 References dbo.Days (DayID)
 
 USE [tms]
