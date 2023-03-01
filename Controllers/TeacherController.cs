@@ -43,11 +43,17 @@ namespace TTMS.Controllers
             return RedirectToAction("Index");
 
         }
-        
+
+        [Authorize]
+        public IActionResult ViewTimetable()
+        {   var model = new TeacherViewModel();
+            return View(model);
+        }
+
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(string Title, string Firstname, string Surname, IEnumerable<int> Subjects, IEnumerable<int> Classes, string Email)
+        public IActionResult Add(int Id, string Title, string Firstname, string Surname, IEnumerable<int> Subjects, IEnumerable<int> Classes, string Email)
         {
             GetSubjects();
             GetClasses();
@@ -64,7 +70,20 @@ namespace TTMS.Controllers
             db.UpdateTeacherById(Id, Title, Firstname, Surname, Subjects, Classes,  Email);
             return View(new TeacherViewModel());
         }
-        
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult ViewTimetable(int Id)
+        {
+            var model = new TimetableViewModel();
+            model.Timetables = db.GetTimetableByTeacherId(Id).ToList();
+            model.Subjects = GetSubjectsByTeacherId(Id);
+            model.Classes = GetClassesByTeacherId(Id);
+            model.Lessons = GetLessons();
+            model.Days = GetDays();
+            return View(model);
+        }
+
         private List<SelectListItem> GetSubjects()
         {
             // Convert database subjects to viewModel Subjects
@@ -95,7 +114,68 @@ namespace TTMS.Controllers
             return classes;
         }
 
-        private TeacherViewModel GetTeacherById(int Id)
+        private List<SelectListItem> GetLessons()
+        {
+            var lessons = new List<SelectListItem>();
+            foreach (var item in db.GetLessons())
+            {
+                lessons.Add(new SelectListItem
+                {
+                    Value = item.LessonID.ToString(),
+                    Text = item.LessonNo
+
+                });
+            }
+            return lessons;
+
+        }
+
+        private List<SelectListItem> GetDays()
+        {
+            // Convert database subjects to viewModel Subjects
+            var days = new List<SelectListItem>();
+            foreach (var item in db.GetDays())
+            {
+                days.Add(new SelectListItem
+                {
+                    Value = item.DayID.ToString(),
+                    Text = item.Name
+                });
+            }
+            return days;
+        }
+
+        private List<SelectListItem> GetSubjectsByTeacherId(int Id)
+        {
+            // Convert database subjects to viewModel Subjects
+            var subjects = new List<SelectListItem>();
+            foreach (var item in db.GetSubjectsByTeacherId(Id))
+            {
+                subjects.Add(new SelectListItem
+                {
+                    Value = item.SubjectID.ToString(),
+                    Text = item.Name
+                });
+            }
+            return subjects;
+        }
+
+        private List<SelectListItem> GetClassesByTeacherId(int Id)
+        {
+            // Convert database subjects to viewModel Subjects
+            var classes = new List<SelectListItem>();
+            foreach (var item in db.GetClassesByTeacherId(Id))
+            {
+                classes.Add(new SelectListItem
+                {
+                    Value = item.ClassID.ToString(),
+                    Text = item.Name
+                });
+            }
+            return classes;
+        }
+
+            private TeacherViewModel GetTeacherById(int Id)
         {
             // Convert database teacher to viewModel teacher
             var dbTeacher = db.GetTeacherById(Id);
