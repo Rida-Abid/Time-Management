@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using TTMS.Models;
 
 namespace TTMS.ViewModels
 {
     public class TimetableViewModel
     {
-        public List<SelectListItem> Timetables { get; set; }
+        public List<TimetableRecord> Timetables { get; set; }
 
         public List<SelectListItem> Teachers { get; set; }
 

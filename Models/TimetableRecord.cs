@@ -6,12 +6,11 @@ namespace TTMS.Models
     public class TimetableRecord
     {
         public int TimetableID;
-        public string Name;
-        public int TeacherID;
-        public int SubjectID;
-        public int ClassID;
-        public int LessonID;
-        public int DayID;
+        public string  Teacher;
+        public string Subject;
+        public string Class;
+        public string Lesson;
+        public string Day;
         public DateTime DateCreated;
 
     }

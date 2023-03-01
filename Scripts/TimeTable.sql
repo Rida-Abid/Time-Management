@@ -26,3 +26,11 @@ References dbo.Lessons (LessonID)
 
 ALTER TABLE dbo.Timetable WITH CHECK ADD CONSTRAINT FK_Timetable_Day Foreign Key(LessonID)
 References dbo.Days (DayID)
+
+USE [tms]
+GO
+
+INSERT INTO [dbo].[Timetable] (TeacherID,[SubjectID],[ClassID],[LessonID],[DayId]) VALUES (34,7,1,3,1)
+INSERT INTO [dbo].[Timetable] (TeacherID,[SubjectID],[ClassID],[LessonID],[DayId]) VALUES (34,8,2,4,1)
+INSERT INTO [dbo].[Timetable] (TeacherID,[SubjectID],[ClassID],[LessonID],[DayId]) VALUES (34,9,3,5,1)         
+

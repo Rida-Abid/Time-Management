@@ -25,10 +25,9 @@
                     using (Html.BeginForm("Delete", "Timetable", new { id = @timetable.TimetableID }))
                     {
                         <tr>
-                            <td>@timetable.Name</td>
                             <td>
                                 <a class="btn btn-sm btn-outline-secondary" href="/Timetable/Edit?id=@timetable.TimetableID">edit</a>
-                                <a class="btn btn-sm btn-outline-danger" href="/Timetable/Delete?id=@timetable.TimetableID" onclick="return confirm('Are you sure you want to delete @timetable.Name');">delete</a>
+                                <a class="btn btn-sm btn-outline-danger" href="/Timetable/Delete?id=@timetable.TimetableID" onclick="return confirm('Are you sure you want to delete @timetable.TimetableID');">delete</a>
                             </td>
                         </tr>
                     }
