@@ -29,8 +29,8 @@ namespace TTMS.Controllers
 
         public IEnumerable<ClassRecord> GetClassesByTeacher(int Id)
         {
-
-            return db.GetClassesByTeacherId(Id);
+            var x = db.GetClassesByTeacherId(Id).ToList();
+            return db.GetClassesByTeacherId(Id).ToList();
 
         }
 

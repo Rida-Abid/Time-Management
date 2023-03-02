@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Xml.Linq;
+using TTMS.Models;
 using TTMS.ViewModels;
 
 namespace TTMS.Controllers
@@ -19,7 +20,7 @@ namespace TTMS.Controllers
         public IActionResult Index()
         {
 
-            return View(db.GetTimetables());
+            return View(GetTimetables());
         }
 
         [Authorize]
@@ -27,8 +28,6 @@ namespace TTMS.Controllers
         {
             var model = new TimetableViewModel();
             model.Teachers = GetTeachers();
-            model.Subjects = GetSubjects(Id);
-            model.Classes = GetClasses(Id);
             model.Lessons = GetLessons();
             model.Days = GetDays();
             return View(model);
@@ -37,10 +36,9 @@ namespace TTMS.Controllers
         [Authorize]
         public IActionResult Edit(int Id)
         {
+            var dbLesson = db.GetTimetableById(Id);
             var model = new TimetableViewModel();
             model.Teachers = GetTeachers();
-            model.Subjects = GetSubjects(Id);
-            model.Classes = GetClasses(Id);
             model.Lessons = GetLessons();
             model.Days = GetDays();
             return View(model);
@@ -58,36 +56,49 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(string Name, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
+        public IActionResult Add(int Id, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
         {
             var model = new TimetableViewModel();
-            db.AddTimetable(Name, TeacherID, SubjectID, ClassID, LessonID, DayID);
-            return View(model);
-        }
-      
-        [Authorize]
-        [HttpPost]
-        public IActionResult Edit(int Id, string Name, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
-        {
-            var model = new TimetableViewModel();
-            db.UpdateTimetableById(Id, Name, TeacherID, SubjectID, ClassID, LessonID, DayID);
+            db.AddTimetable( TeacherID, SubjectID, ClassID, LessonID, DayID);
+            model.Teachers = GetTeachers();
+            model.Subjects = GetSubjectsByTeacherId(Id);
+            model.Classes = GetClassesByTeacherId(Id);
+            model.Lessons = GetLessons();
+            model.Days = GetDays();
             return View(model);
         }
 
-        public List<SelectListItem> GetTimetables()
+        
+        [Authorize]
+        [HttpPost]
+        public IActionResult Edit(int Id, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
         {
-            var timetables = new List<SelectListItem>();
+            var model = new TimetableViewModel();
+            db.UpdateTimetableById(Id, TeacherID, SubjectID, ClassID, LessonID, DayID);
+            model.Teachers = GetTeachers();
+            model.Subjects = GetSubjectsByTeacherId(Id);
+            model.Classes = GetClassesByTeacherId(Id);
+            model.Lessons = GetLessons();
+            model.Days = GetDays();
+            return View(model);
+        }
+
+        public List<TimetableViewModel> GetTimetables()
+        {
+            var timetables = new List<TimetableViewModel>();
             foreach (var item in db.GetTimetables())
             {
-                timetables.Add(new SelectListItem
+                timetables.Add(new TimetableViewModel
                 {
-                    Value = item.TimetableID.ToString(),
-                    Text = item.Name
+                    TimetableID = item.TimetableID,
+                    Teacher = item.Teacher,
+                    Day = item.Day,
+                    Lesson = item.Lesson
 
                 });
             }
             return timetables;
-            
+
         }
 
         private List<SelectListItem> GetTeachers()
@@ -104,36 +115,7 @@ namespace TTMS.Controllers
             return teachers;
         }
 
-        private List<SelectListItem> GetSubjects(int Id)
-        {
-            // Convert database subjects to viewModel Subjects
-            var subjects = new List<SelectListItem>();
-            foreach (var item in db.GetSubjectsByTeacherId( Id))
-            {
-                subjects.Add(new SelectListItem
-                {
-                    Value = item.SubjectID.ToString(),
-                    Text = item.Name
-                });
-            }
-            return subjects;
-        }
-
-        private List<SelectListItem> GetClasses(int Id)
-        {
-            // Convert database classes to viewModel Classes
-            var classes = new List<SelectListItem>();
-            foreach (var item in db.GetClassesByTeacherId(Id))
-            {
-                classes.Add(new SelectListItem
-                {
-                    Value = item.ClassID.ToString(),
-                    Text = item.Name
-                });
-            }
-            return classes;
-        }
-
+        
         private List<SelectListItem> GetLessons()
         {
             var lessons = new List<SelectListItem>();
@@ -165,16 +147,47 @@ namespace TTMS.Controllers
             return days;
         }
 
-        private TimetableViewModel GetTimetableById(int Id)
+        private List<SelectListItem> GetSubjectsByTeacherId(int Id)
         {
-            var dbLesson = db.GetTimetableById(Id);
-            return new TimetableViewModel
+            // Convert database subjects to viewModel Subjects
+            var subjects = new List<SelectListItem>();
+            foreach (var item in db.GetSubjectsByTeacherId(Id))
             {
-                TimetableID = dbLesson.TimetableID,
-                Name = dbLesson.Name
-               
-            };
+                subjects.Add(new SelectListItem
+                {
+                    Value = item.SubjectID.ToString(),
+                    Text = item.Name
+                });
+            }
+            var x= 0;
+            return subjects;
         }
+
+        private List<SelectListItem> GetClassesByTeacherId(int Id)
+        {
+            // Convert database subjects to viewModel Subjects
+            var classes = new List<SelectListItem>();
+            foreach (var item in db.GetClassesByTeacherId(Id))
+            {
+                classes.Add(new SelectListItem
+                {
+                    Value = item.ClassID.ToString(),
+                    Text = item.Name
+                });
+            }
+            return classes;
+        }
+
+        //private TimetableViewModel GetTimetableById(int Id)
+        //{
+        //    var dbLesson = db.GetTimetableById(Id);
+        //    return new TimetableViewModel
+        //    {
+        //        TimetableID = dbLesson.TimetableID,
+        //        Name = dbLesson.Name
+
+        //    };
+        //}
 
 
 

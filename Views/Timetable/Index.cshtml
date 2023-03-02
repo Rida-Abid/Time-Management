@@ -1,6 +1,7 @@
 ﻿@using TTMS.Controllers;
+@using TTMS.ViewModels;
 @using static TTMS.Controllers.TimetableController;
-@model IEnumerable<TimetableRecord>
+@model IEnumerable<TimetableViewModel>
 @{
     //ViewData["Title"] = "Classes";
 }
@@ -15,22 +16,35 @@
             <thead>
                 <tr>
 
-                    <th scope="col">Timetable </th>
+                    <th scope="col">Day</th>
+                     <th scope="col">Lesson</th>
+
+                                                            <th scope="col">Teacher</th>
+
                     <th scope="col">action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var timetable in Model)
                 {
-                    using (Html.BeginForm("Delete", "Timetable", new { id = @timetable.TimetableID }))
-                    {
-                        <tr>
+                    <tr>
+                            <td>
+                                @timetable.Day
+                             </td>
+                            <td>
+                                @timetable.Lesson
+                            </td>
+                            <td>
+                                @timetable.Teacher
+                            </td>
                             <td>
                                 <a class="btn btn-sm btn-outline-secondary" href="/Timetable/Edit?id=@timetable.TimetableID">edit</a>
-                                <a class="btn btn-sm btn-outline-danger" href="/Timetable/Delete?id=@timetable.TimetableID" onclick="return confirm('Are you sure you want to delete @timetable.TimetableID');">delete</a>
+                            </td>
+                            <td>
+                                 <a class="btn btn-sm btn-outline-danger" href="/Timetable/Delete?id=@timetable.TimetableID" onclick="return confirm('Are you sure you want to delete @timetable.TimetableID');">delete</a>
                             </td>
                         </tr>
-                    }
+
                 }
             </tbody>
         </table>

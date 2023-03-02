@@ -6,11 +6,11 @@ namespace TTMS.Models
     public class TimetableRecord
     {
         public int TimetableID;
-        public string  Teacher;
-        public string Subject;
-        public string Class;
-        public string Lesson;
-        public string Day;
+        public string  Teacher { get; set; }
+        public string Subject { get; set; }
+        public string Class { get; set; }
+        public string Lesson { get; set; }
+        public string Day { get; set; }
         public DateTime DateCreated;
 
     }

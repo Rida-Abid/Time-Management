@@ -10,17 +10,11 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Add Timetables</h1>
+            <h1 class="h2">Edit Timetables</h1>
         </div>
         <div class="col-md-7 col-lg-8">
 
-            <div class="col-sm-12">
-                <label for="TimetableName" class="form-label">Timetable Name</label>
-                <input type="text" class="form-control" id="TimetableName" name="Name" value="@Model.Name" placeholder="" value="" required>
-                <div class="invalid-feedback">
-                    Valid Name is required.
-                </div>
-            </div>
+            
 
 
             <div class="col-sm-5">
@@ -48,7 +42,7 @@
                     {
                         @foreach (var item in Model.Subjects)
                         {
-                            <option value="@item.Value"> @item.Text</option>
+                            <option value="@item.Value" selected ="selected"> @item.Text</option>
                         }
 
                     }

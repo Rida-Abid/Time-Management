@@ -1,8 +1,11 @@
 ﻿using Dapper;
+using DevExpress.XtraPrinting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Claims;
+using System.Xml;
 using TTMS.Models;
 
 
@@ -279,11 +282,11 @@ namespace TTMS.Controllers
 
         #region Timetable
 
-        public bool AddTimetable(string Name, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
+        public bool AddTimetable(int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"INSERT INTO Timetable(Name, TeacherID, SubjectID, ClassID, LessonID, DayID ) VALUES('{Name}','{TeacherID}','{SubjectID}','{ClassID}','{LessonID}','{DayID}')";
+            string sql = $"INSERT INTO Timetable (TeacherID, SubjectID, ClassID, LessonID, DayID ) VALUES('{TeacherID}','{SubjectID}','{ClassID}','{LessonID}','{DayID}')";
             return dbConnection.Execute(sql) == 1;
         }
 
@@ -299,7 +302,7 @@ namespace TTMS.Controllers
         public IEnumerable<TimetableRecord> GetTimetables()
         {
             using IDbConnection dbConnection = Connection;
-            string sql = @"SELECT * FROM Timetable";
+            string sql = $"SELECT TimetableID, t.Firstname AS Teacher,l.LessonNo AS Lesson,d.Name AS Day FROM [tms].[dbo].[Timetable] AS tt LEFT JOIN Teacher AS t ON t.TeacherID = tt.TeacherID LEFT JOIN Lessons AS l ON l.LessonID = tt.LessonID LEFT JOIN Days AS d ON d.DayID = tt.DayID";
             dbConnection.Open();
             return dbConnection.Query<TimetableRecord>(sql);
         }
@@ -307,17 +310,17 @@ namespace TTMS.Controllers
         public TimetableRecord GetTimetableById(int Id)
         {
             using IDbConnection dbConnection = Connection;
-            string sql = $"SELECT * FROM Timetable   WHERE TimetableID = {Id}";
+            string sql = $"SELECT TimetableID, t.Firstname AS Teacher,l.LessonNo AS Lesson,d.Name AS Day FROM [tms].[dbo].[Timetable] AS tt  LEFT JOIN Teacher AS t ON t.TeacherID = tt.TeacherID LEFT JOIN Lessons AS l ON l.LessonID = tt.LessonID LEFT JOIN Days AS d ON d.DayID = tt.DayID WHERE TimetableID = {Id}";
             dbConnection.Open();
             return dbConnection.Query<TimetableRecord>(sql).FirstOrDefault();
         }
 
 
-        public bool UpdateTimetableById(int Id, string Name, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
+        public bool UpdateTimetableById(int Id, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"UPDATE Timetable SET Name='{Name}',TeacherID = '{TeacherID}', SubjectID = '{SubjectID}', ClassID = '{ClassID}', LessonID = '{LessonID}', DayID = '{DayID}'  WHERE TimetableID = {Id}";
+            string sql = $"UPDATE Timetable SET TeacherID = '{TeacherID}', SubjectID = '{SubjectID}', ClassID = '{ClassID}', LessonID = '{LessonID}', DayID = '{DayID}'  WHERE TimetableID = {Id}";
             return dbConnection.Execute(sql) == 1;
         }
 
@@ -334,11 +337,26 @@ namespace TTMS.Controllers
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"SELECT  TeacherClassLookup.ClassID,Class.Name FROM Class INNER JOIN TeacherClassLookup ON Class.ClassID = TeacherClassLookup.ClassID WHERE TeacherID = {Id}";
+            string sql = $"SELECT  TeacherClassLookup.ClassID,Class.Name FROM Class INNER JOIN TeacherClassLookup ON Class.ClassID = TeacherClassLookup.ClassID WHERE TeacherID = {Id}";            
             return dbConnection.Query<ClassRecord>(sql);
         }
 
-      
+        public IEnumerable<TimetableRecord> GetTimetableByTeacherId(int Id)
+        {
+            using IDbConnection dbConnection = Connection;
+            dbConnection.Open();
+            string sql = $"SELECT t.Firstname AS Teacher,s.Name AS Subject,c.Name AS Class,l.LessonNo AS Lesson,d.Name AS Day FROM Timetable AS tt LEFT JOIN Teacher AS t ON t.TeacherID = tt.TeacherID LEFT JOIN Subject AS s ON s.SubjectID = tt.SubjectID LEFT JOIN Class AS c ON c.ClassID = tt.ClassID LEFT JOIN Lessons AS l ON l.LessonID = tt.LessonID LEFT JOIN Days AS d ON d.DayID = tt.DayID WHERE t.TeacherID = {Id}";
+            return dbConnection.Query<TimetableRecord>(sql);
+        }
+
+        public IEnumerable<TimetableRecord> GetTimetableByClassId(int Id)
+        {
+            using IDbConnection dbConnection = Connection;
+            dbConnection.Open();
+            string sql = $"SELECT t.Firstname AS Teacher,s.Name AS Subject,c.Name AS Class,l.LessonNo AS Lesson,d.Name AS Day FROM [tms].[dbo].[Timetable] AS tt LEFT JOIN Teacher AS t ON t.TeacherID = tt.TeacherID LEFT JOIN Subject AS s ON s.SubjectID = tt.SubjectID LEFT JOIN Class AS c ON c.ClassID = tt.ClassID LEFT JOIN Lessons AS l ON l.LessonID = tt.LessonID LEFT JOIN Days AS d ON d.DayID = tt.DayID WHERE c.ClassID = {Id}";
+;
+            return dbConnection.Query<TimetableRecord>(sql);
+        }
         #endregion
     }
 }

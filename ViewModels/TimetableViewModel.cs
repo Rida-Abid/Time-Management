@@ -19,9 +19,12 @@ namespace TTMS.ViewModels
 
         public int TimetableID { get; set; }
 
-        public string Name { get; set; }
+        public string Teacher { get; set; }
+        public string Subject { get; set; }
+        public string Class { get; set; }
+        public string Lesson { get; set; }
+        public string Day { get; set; }
 
-       
 
 
 

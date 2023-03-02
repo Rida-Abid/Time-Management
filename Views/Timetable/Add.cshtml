@@ -1,5 +1,5 @@
 ﻿@model TTMS.ViewModels.TimetableViewModel;
-@using TTMS.Controllers.API;
+@using TTMS.Controllers;
 
 
 @{
@@ -123,8 +123,29 @@
 <script>
     async function GetTeacher(){
         var id = $('#TeacherID')[0].selectedOptions[0].value;
-        $.get("/controllers/api/lookup/GetSubjectsByTeacher?id="+id, function (r) {
-           console.log(r);
+        $.get("/api/lookup/GetSubjectsByTeacher?id=" + id, function (r) {
+            $("#Subjects").empty();
+            var subjects = document.getElementById("Subjects");
+
+            r.forEach(function(subject){
+                var option = document.createElement("option");
+                option.text = subject.name;
+                option.value = subject.subjectID;
+                subjects.add(option);
+            })
+            
+
+        });
+        $.get("/api/lookup/GetClassesByTeacher?id=" + id, function (r) {
+            $("#Classes").empty();
+            var classes = document.getElementById("Classes");
+            console.log(r);
+            r.forEach(function (_class) {
+                var option = document.createElement("option");
+                option.text = _class.name;
+                option.value = _class.classID;
+                classes.add(option);
+            })
         });
     }
 
