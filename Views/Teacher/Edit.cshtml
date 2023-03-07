@@ -6,7 +6,7 @@
 @using (Html.BeginForm("edit", "Teacher", new { Id = Model.TeacherID }, FormMethod.Post))
 {
          
-     <main class="col-md-9 ms-sm-auto px-md-4">
+     <main class="col-md-9 ms-sm-auto px-md-4" >
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Edit teachers</h1>
         </div>
@@ -50,11 +50,14 @@
 
                 <div class="col-sm-5">
                 <label for="Subject" class="form-label">Subjects</label>
-                <select class="form-select" id="Subject" name="Subject" value="@Model.Subjects" required multiple style="height:200px">
-              
-                    @foreach(var item in Model.Subjects)
+                <select class="form-select" id="Subject" name="Subject"  value="@Model.Subjects" required multiple style="height:200px" onload="GetTeacher">
+
+                    @if (Model.Subjects != null && Model.Subjects.Any())
                     {
-                        <option value="@item.Value">@item.Text</option>
+                        @foreach (var item in Model.Subjects)
+                        {
+                            <option value="@item.Value" selected ="@item.Selected">@item.Text</option>
+                        }
                     }
                 </select>
                 <div class="invalid-feedback">
@@ -64,12 +67,12 @@
 
                  <div class="col-sm-5">
                 <label for="Classes" class="form-label">Classes</label>
-                <select class="form-select" id="Classes" name="Classes" value="@Model.Classes" required multiple style="height:200px">
+                <select class="form-select" id="Classes" name="Classes" value="@Model.Classes" required multiple style="height:200px" onload="GetTeacher">
                     @if (Model.Classes != null && Model.Classes.Any())
                     {
                         @foreach (var item in Model.Classes)
                         {
-                            <option value="@item.Value"> @item.Text</option>
+                            <option value="@item.Value" selected="@item.Selected"> @item.Text</option>
                         }
 
                     }
@@ -117,4 +120,36 @@
             </div>
      </main> 
 }
+
+<script>
+    async function GetTeacher() {
+        var id = $('#TeacherID')[0].selectedOptions[0].value;
+        $.get("/api/lookup/GetSubjectsByTeacher?id=" + id, function (r) {
+            $("#Subjects").empty();
+            var subjects = document.getElementById("Subjects");
+
+            r.forEach(function (subject) {
+                var option = document.createElement("option");
+                option.text = subject.name;
+                option.value = subject.subjectID;
+                subjects.add(option);
+            })
+
+
+        });
+        $.get("/api/lookup/GetClassesByTeacher?id=" + id, function (r) {
+            $("#Classes").empty();
+            var classes = document.getElementById("Classes");
+            console.log(r);
+            r.forEach(function (_class) {
+                var option = document.createElement("option");
+                option.text = _class.name;
+                option.value = _class.classID;
+                classes.add(option);
+            })
+        });
+    }
+
+
+</script>
  
