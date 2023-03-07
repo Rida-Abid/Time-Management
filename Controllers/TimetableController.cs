@@ -39,8 +39,6 @@ namespace TTMS.Controllers
             var dbLesson = db.GetTimetableById(Id);
             var model = new TimetableViewModel();
             model.Teachers = GetTeachers();
-            model.Subjects = GetSubjectsByTeacherId(Id);
-            model.Classes = GetClassesByTeacherId(Id);
             model.Lessons = GetLessons();
             model.Days = GetDays();
             return View(model);
@@ -61,7 +59,7 @@ namespace TTMS.Controllers
         public IActionResult Add(int Id, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
         {
             var model = new TimetableViewModel();
-            model.Status = db.AddTimetable( TeacherID, SubjectID, ClassID, LessonID, DayID);
+            db.AddTimetable( TeacherID, SubjectID, ClassID, LessonID, DayID);
             model.Teachers = GetTeachers();
             model.Subjects = GetSubjectsByTeacherId(Id);
             model.Classes = GetClassesByTeacherId(Id);
@@ -76,7 +74,7 @@ namespace TTMS.Controllers
         public IActionResult Edit(int Id, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
         {
             var model = new TimetableViewModel();
-            model.Status = db.UpdateTimetableById(Id, TeacherID, SubjectID, ClassID, LessonID, DayID);
+            db.UpdateTimetableById(Id, TeacherID, SubjectID, ClassID, LessonID, DayID);
             model.Teachers = GetTeachers();
             model.Subjects = GetSubjectsByTeacherId(Id);
             model.Classes = GetClassesByTeacherId(Id);
@@ -161,6 +159,7 @@ namespace TTMS.Controllers
                     Text = item.Name
                 });
             }
+            var x= 0;
             return subjects;
         }
 

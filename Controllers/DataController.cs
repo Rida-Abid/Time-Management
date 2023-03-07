@@ -93,23 +93,21 @@ namespace TTMS.Controllers
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sqlSubjects = $"DELETE TeacherSubjectLookup WHERE TeacherID = ({Id});";
-            string sqlClasses = $"DELETE TeacherClassLookup WHERE TeacherID = ({Id});";
+            string sql = "";
             var listSubjectIds = Subjects.ToList();
-            var listClassIds = Classes.ToList();
-
             foreach (int subjectId in listSubjectIds)
             {
-                sqlSubjects += $"INSERT INTO TeacherSubjectLookup (TeacherID, SubjectID) VALUES ({Id}, {subjectId})";
+                sql = $"UPDATE TeacherSubjectLookup SET SubjectID = ({subjectId}) WHERE TeacherID = ({Id};SELECT SCOPE_IDENTITY(); ";
+                dbConnection.Execute(sql);
             }
+            var listClassIds = Classes.ToList();
             foreach (int classId in listClassIds)
             {
-                sqlClasses += $"INSERT INTO TeacherClassLookup (TeacherID, ClassID) VALUES ({Id}, {classId});";
+                sql = $"UPDATE TeacherClassLookup SET ClassID = ({classId}) WHERE TeacherID = ({Id}); SELECT SCOPE_IDENTITY();";
+                dbConnection.Execute(sql);
             }
-             var sql = $"UPDATE Teacher SET Title='{Title}', Firstname='{Firstname}', Surname='{Surname}', Email='{Email}' WHERE TeacherID = ({Id});";
-             sql += sqlSubjects + sqlClasses;
+             sql = $"UPDATE Teacher SET Title='{Title}', Firstname='{Firstname}', Surname='{Surname}', Email='{Email}' WHERE TeacherID = ({Id})";
 
-            dbConnection.Execute(sql);
             return true;
         }
 
@@ -288,12 +286,8 @@ namespace TTMS.Controllers
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"INSERT INTO Timetable (TeacherID, SubjectID, ClassID, LessonID, DayID ) VALUES ({TeacherID},{SubjectID},{ClassID},{LessonID},{DayID})";
-            try{
-                return dbConnection.Execute(sql) == 1;
-            }catch(Exception ex){
-            }
-            return false;
+            string sql = $"INSERT INTO Timetable (TeacherID, SubjectID, ClassID, LessonID, DayID ) VALUES('{TeacherID}','{SubjectID}','{ClassID}','{LessonID}','{DayID}')";
+            return dbConnection.Execute(sql) == 1;
         }
 
         public bool DeleteTimetable(int Id)
@@ -326,13 +320,8 @@ namespace TTMS.Controllers
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"UPDATE Timetable SET TeacherID = {TeacherID}, SubjectID = {SubjectID}, ClassID = {ClassID}, LessonID = {LessonID}, DayID = {DayID} WHERE TimetableID = {Id}";
-            try{
-                var results = dbConnection.Execute(sql) == 1;
-                return true;
-            }catch(Exception ex){
-            }
-            return false;
+            string sql = $"UPDATE Timetable SET TeacherID = '{TeacherID}', SubjectID = '{SubjectID}', ClassID = '{ClassID}', LessonID = '{LessonID}', DayID = '{DayID}'  WHERE TimetableID = {Id}";
+            return dbConnection.Execute(sql) == 1;
         }
 
         public IEnumerable<SubjectRecord> GetSubjectsByTeacherId(int Id)
