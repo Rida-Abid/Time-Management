@@ -15,7 +15,16 @@
         </div>
           <div class="col-md-7 col-lg-8">
 
-            
+            @if(Model.Status){
+                <div class="alert alert-success" role="alert">
+                Database Updated!
+                </div>
+            }
+            else{
+                <div class="alert alert-danger" role="alert">
+                Clash Found!
+                </div>
+            }
 
 
               <div class="col-sm-5">

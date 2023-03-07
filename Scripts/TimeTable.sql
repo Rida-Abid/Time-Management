@@ -26,6 +26,9 @@ References dbo.Lessons (LessonID)
 ALTER TABLE dbo.Timetable WITH CHECK ADD CONSTRAINT FK_Timetable_Day Foreign Key(DayID)
 References dbo.Days (DayID)
 
+ALTER TABLE dbo.Timetable
+  ADD CONSTRAINT ucCodes UNIQUE (ClassID, LessonID, DayId)
+
 USE [tms]
 GO
 

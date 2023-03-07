@@ -51,7 +51,7 @@ namespace TTMS.Controllers
         [Authorize]
         public IActionResult ViewTimetable()
         {
-            var model = new TeacherViewModel();
+            var model = new ClassViewModel();
             return View(model);
         }
 
@@ -79,7 +79,7 @@ namespace TTMS.Controllers
         public IActionResult ViewTimetable(int Id)
         {
             var model = new TimetableViewModel();
-            model.Timetables = db.GetTimetableByTeacherId(Id).ToList();
+            model.Timetables = db.GetTimetableByClassId(Id).ToList();
             model.Subjects = GetSubjectsByTeacherId(Id);
             model.Classes = GetClassesByTeacherId(Id);
             model.Lessons = GetLessons();
