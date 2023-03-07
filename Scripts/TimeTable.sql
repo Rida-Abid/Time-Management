@@ -3,12 +3,11 @@ CREATE TABLE dbo.Timetable
 (   
 
      TimetableID int NOT NULL PRIMARY KEY IDENTITY(1,1), 
-     Name varchar(50) NOT NULL,
      TeacherID int NOT NULL,
      SubjectID int NOT NULL,
      ClassID int NOT NULL,
      LessonID int NOT NULL,
-     DayId int NOT NULL
+     DayID int NOT NULL
 
 );
     
