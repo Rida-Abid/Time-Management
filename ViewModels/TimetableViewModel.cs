@@ -25,7 +25,7 @@ namespace TTMS.ViewModels
         public string Lesson { get; set; }
         public string Day { get; set; }
 
-
+        public bool Status { get; set; }
 
 
 
