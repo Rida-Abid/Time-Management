@@ -31,8 +31,8 @@ namespace TTMS.Controllers
         public IActionResult Edit(int Id)
         {
             var model = GetTeacherById(Id);
-            model.Subjects = GetSubjects();
-            model.Classes= GetClasses();    
+            model.Subjects = GetSubjectsByTeacherId(Id);
+            model.Classes= GetClassesByTeacherId(Id);    
             return View(model);
         }
 
@@ -147,35 +147,58 @@ namespace TTMS.Controllers
 
         private List<SelectListItem> GetSubjectsByTeacherId(int Id)
         {
+
+
             // Convert database subjects to viewModel Subjects
             var subjects = new List<SelectListItem>();
-            foreach (var item in db.GetSubjectsByTeacherId(Id))
+            foreach (var item in db.GetSubjects())
             {
                 subjects.Add(new SelectListItem
                 {
                     Value = item.SubjectID.ToString(),
-                    Text = item.Name
+                    Text = item.Name,
+                    Selected = false
                 });
+
             }
+            var selectedsubjects = db.GetSubjectsByTeacherId(Id);
+            foreach (var s in selectedsubjects)
+            {
+                subjects.First(x => x.Value == s.SubjectID.ToString()).Selected = true;
+
+            }
+
             return subjects;
+
         }
 
         private List<SelectListItem> GetClassesByTeacherId(int Id)
         {
+
+
             // Convert database subjects to viewModel Subjects
             var classes = new List<SelectListItem>();
-            foreach (var item in db.GetClassesByTeacherId(Id))
+            foreach (var item in db.GetClasses())
             {
                 classes.Add(new SelectListItem
                 {
                     Value = item.ClassID.ToString(),
-                    Text = item.Name
+                    Text = item.Name,
+                    Selected = false
                 });
+
             }
+            var selectedclasses = db.GetClassesByTeacherId(Id);
+            foreach (var c in selectedclasses)
+            {
+                classes.First(x => x.Value == c.ClassID.ToString()).Selected = true;
+
+            }
+
             return classes;
         }
 
-            private TeacherViewModel GetTeacherById(int Id)
+        private TeacherViewModel GetTeacherById(int Id)
         {
             // Convert database teacher to viewModel teacher
             var dbTeacher = db.GetTeacherById(Id);
