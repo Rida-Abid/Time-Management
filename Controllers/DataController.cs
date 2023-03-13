@@ -347,7 +347,7 @@ namespace TTMS.Controllers
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"SELECT t.Firstname AS Teacher,s.Name AS Subject,c.Name AS Class,l.LessonNo AS Lesson,d.Name AS Day FROM Timetable AS tt LEFT JOIN Teacher AS t ON t.TeacherID = tt.TeacherID LEFT JOIN Subject AS s ON s.SubjectID = tt.SubjectID LEFT JOIN Class AS c ON c.ClassID = tt.ClassID LEFT JOIN Lessons AS l ON l.LessonID = tt.LessonID LEFT JOIN Days AS d ON d.DayID = tt.DayID WHERE t.TeacherID = {Id}";
+            string sql = $"SELECT t.Firstname AS Teacher,s.Name AS Subject,c.Name AS Class,l.LessonNo AS Lesson,d.Name AS Day FROM Timetable AS tt LEFT JOIN Teacher AS t ON t.TeacherID = tt.TeacherID LEFT JOIN Subject AS s ON s.SubjectID = tt.SubjectID LEFT JOIN Class AS c ON c.ClassID = tt.ClassID LEFT JOIN Lessons AS l ON l.LessonID = tt.LessonID LEFT JOIN Days AS d ON d.DayID = tt.DayID WHERE t.TeacherID = {Id} ORDER BY l.LessonNo";
             return dbConnection.Query<TimetableRecord>(sql);
         }
 
@@ -355,7 +355,7 @@ namespace TTMS.Controllers
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"SELECT t.Firstname AS Teacher,s.Name AS Subject,c.Name AS Class,l.LessonNo AS Lesson,d.Name AS Day FROM [tms].[dbo].[Timetable] AS tt LEFT JOIN Teacher AS t ON t.TeacherID = tt.TeacherID LEFT JOIN Subject AS s ON s.SubjectID = tt.SubjectID LEFT JOIN Class AS c ON c.ClassID = tt.ClassID LEFT JOIN Lessons AS l ON l.LessonID = tt.LessonID LEFT JOIN Days AS d ON d.DayID = tt.DayID WHERE c.ClassID = {Id}";
+            string sql = $"SELECT s.Name AS Subject,c.Name AS Class,l.LessonNo AS Lesson,d.Name AS Day FROM [tms].[dbo].[Timetable] AS tt  LEFT JOIN Subject AS s ON s.SubjectID = tt.SubjectID LEFT JOIN Class AS c ON c.ClassID = tt.ClassID LEFT JOIN Lessons AS l ON l.LessonID = tt.LessonID LEFT JOIN Days AS d ON d.DayID = tt.DayID WHERE c.ClassID = {Id} ORDER BY l.LessonNo";
 ;
             return dbConnection.Query<TimetableRecord>(sql);
         }

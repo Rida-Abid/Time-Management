@@ -79,7 +79,7 @@ namespace TTMS.Controllers
         public IActionResult ViewTimetable(int Id)
         {
             var model = new TimetableViewModel();
-            model.Timetables = db.GetTimetableByTeacherId(Id).ToList();
+            model.Timetables = db.GetTimetableByClassId(Id).ToList();
             model.Subjects = GetSubjectsByTeacherId(Id);
             model.Classes = GetClassesByTeacherId(Id);
             model.Lessons = GetLessons();

@@ -58,6 +58,7 @@
                         {
                             <option value="@item.Value" selected ="@item.Selected">@item.Text</option>
                         }
+
                     }
                 </select>
                 <div class="invalid-feedback">
@@ -66,22 +67,22 @@
                 </div>
 
                  <div class="col-sm-5">
-                <label for="Classes" class="form-label">Classes</label>
-                <select class="form-select" id="Classes" name="Classes" value="@Model.Classes" required multiple style="height:200px" onload="GetTeacher">
-                    @if (Model.Classes != null && Model.Classes.Any())
-                    {
-                        @foreach (var item in Model.Classes)
+                    <label for="Classes" class="form-label">Classes</label>
+                    <select class="form-select" id="Classes" name="Classes" value="@Model.Classes" required multiple style="height:200px" onload="GetTeacher">
+                        @if (Model.Classes != null && Model.Classes.Any())
                         {
-                            <option value="@item.Value" selected="@item.Selected"> @item.Text</option>
+                            @foreach (var item in Model.Classes)
+                            {
+                                <option value="@item.Value" selected="@item.Selected"> @item.Text</option>
+                            }
+
                         }
 
-                    }
-
-                </select>
-                <div class="invalid-feedback">
-                    Please select a valid Class Name.
-                </div>
-            </div>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid Class Name.
+                    </div>
+                 </div>
 
                
 
