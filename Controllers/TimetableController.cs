@@ -56,16 +56,21 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(int Id, int TeacherID, int SubjectID, int ClassID, int LessonID, int DayID)
+        public bool Add()
         {
-            var model = new TimetableViewModel();
-            db.AddTimetable( TeacherID, SubjectID, ClassID, LessonID, DayID);
-            model.Teachers = GetTeachers();
-            model.Subjects = GetSubjectsByTeacherId(Id);
-            model.Classes = GetClassesByTeacherId(Id);
-            model.Lessons = GetLessons();
-            model.Days = GetDays();
-            return View(model);
+            //Array[0] = TeacherID;
+            //Array[1] = SubjectID;
+            //Array[2] = ClassID;
+            //Array[3] = LessonID;
+            //Array[4] = DayID;
+            //var model = new TimetableViewModel();
+            //db.AddTimetable( TeacherID, SubjectID, ClassID, LessonID, DayID);
+            //model.Teachers = GetTeachers();
+            //model.Subjects = GetSubjectsByTeacherId(Id);
+            //model.Classes = GetClassesByTeacherId(Id);
+            //model.Lessons = GetLessons();
+            //model.Days = GetDays();
+            return true;
         }
 
         

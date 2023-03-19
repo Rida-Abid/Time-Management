@@ -3,92 +3,55 @@
 
 
     <main class="col-md-9 ms-sm-auto px-md-4"  >
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" >
-            <h1 class="h2">Timetable for Teacher @Model.Timetables.First().Teacher </h1>
-        </div>
-        <div class="btn-group1" >
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" >
+@*                <h1 class="h2">Timetable for Teacher @Model.Timetables.First().Teacher </h1>
+*@        </div>
+            <div class="btn-group1" ondragstart="drag(event)">
             
-        </div>
+            </div>
 
-        <div class="btn-group">
-        </div>
+            <div class="btn-group" ondragstart="drag(event)">
 
-        <table class="table table-bordered" >
-            <thead>
-                <tr >
-                    <th width="50px">Days </th>
-                    @{
-                        foreach (var l in Model.Lessons)
-                        {
-                           <th width="50px">@l.Text</th>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr >
+                        <th width="50px" >Days </th>
+                        @{
+                            foreach (var l in Model.Lessons)
+                            {
+                            <th width="50px" class="Lessons">@l.Text</th>
+                            }
                         }
-                    }
 
                     
-                </tr>
-            </thead>
-            <tbody>
-                    @{
-                        foreach (var d in Model.Days)
-                        {
-                             <tr>
-                                <td>@d.Text</td>
-                                @foreach(var l in Model.Timetables.Where(x => x.Day == d.Text))
-                                {
-                                   <td>
+                    </tr>
+                </thead>
+                <tbody >
+                        @{
+                            foreach (var d in Model.Days)
+                            {
+                                 <tr>
+                                    <td class="Days">@d.Text</td>
+                                    @foreach(var l in Model.Lessons)//Timetables.Where(x => x.Day == d.Text))
+                                    {
+                                <td ondrop="drop(event)" ondragover="allowDrop(event)"  data-lessonId="@l.Value" data-daysId="@d.Value">
                                         
+                                            
 
+                                       </td>
+                                    }
+                                 </tr>
 
-                                   </td>
-                                }
-                             </tr>
-
+                            }
                         }
-                    }
-
-                    
-            </tbody>
-        </table>
-
-        @*<form id="make_checkbox_select">
-             <div class="col-sm-5">
-                <label for="Subjects" class="form-label">Subjects</label>
-            <select class="form-select" id="Subjects" name="SubjectID" required multiple style="height:200px" >
-                    @if (Model.Subjects != null && Model.Subjects.Any())
-                    {
-                        @foreach (var item in Model.Subjects)
-                        {
-                            <option value="@item.Value"> @item.Text</option>
-                        }
-
-                    }
-
-                </select>
-       
-
-
-                <label for="Classes" class="form-label">Classes</label>
-            <select class="form-select" id="Classes" name="ClassID" required multiple style="height:200px" >
-                    @if (Model.Classes != null && Model.Classes.Any())
-                    {
-                        @foreach (var item in Model.Classes)
-                        {
-                            <option value="@item.Value"> @item.Text</option>
-                        }
-
-                    }
-
-                </select>
-            </div>
+                                        
+                </tbody>
+            </table>
+          
         
-            <div class="container-fluid">
-                 <input type="submit" value="add" class="btn btn-lg btn-outline-success col-md-12">
-            </div>
-                
-        </form>*@
 
     </main>
-
 
 <script>
     $(document).ready(function () {
@@ -108,7 +71,10 @@
                 button.style.margin = "5px";
                 button.classList.add("btn");
                 button.classList.add("btn-primary");
-                //button.value = _class.classID;
+                button.draggable = "true";
+                button.setAttribute("data-id", "subject_" + subject.subjectID);
+                button.setAttribute("data-name",  subject.name);
+                button.id ="subject_" + subject.subjectID+subject.name;
                 classBtnGroup.appendChild(button);
                
                 
@@ -126,11 +92,70 @@
                 button.style.margin = "5px";
                 button.classList.add("btn");
                 button.classList.add("btn-primary");
+                button.draggable = "true";
+                button.setAttribute("data-id", "class_" + _class.classID);
+                button.setAttribute("data-name", _class.name);
+                button.id = "class_" + _class.classID + _class.name;
+
                 classBtnGroup.appendChild(button);
             });
         });
     }
 
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+        console.log('drag', ev);
+        ev.dataTransfer.setData("id", ev.target.dataset.id);
+        ev.dataTransfer.setData("name", ev.target.dataset.name);
+    }
+
+    var globalData;
+    var globalTarget;
+    function drop(ev) {
+        //console.log('drop', ev, ev.currentTarget.dataset.daysid,ev.currentTarget.dataset.lessonid);
+
+        ev.preventDefault();
+        var dataId = ev.dataTransfer.getData("id");
+        var name = ev.dataTransfer.getData("name");
+        if (dataId.startsWith("class") && ev.currentTarget.children.length == 0) {
+            return;
+        }
+        if (dataId.startsWith("subject")) {
+            while (ev.currentTarget.firstChild) {
+                ev.currentTarget.removeChild(ev.currentTarget.firstChild);
+            }
+            ev.currentTarget.appendChild(document.getElementById(dataId + name).cloneNode(true));
+
+        }
+        if(dataId.startsWith("class")){
+            if (ev.currentTarget.children.length == 1) {
+                ev.currentTarget.appendChild(document.getElementById(dataId + name).cloneNode(true));
+            }
+            if (ev.currentTarget.children.length == 2) {
+                ev.currentTarget.removeChild(ev.currentTarget.lastChild);
+                ev.currentTarget.appendChild(document.getElementById(dataId + name).cloneNode(true));
+            }
+
+            var teacherID = window.location.href.split('?id=')[1];
+            var subjectID = ev.currentTarget.firstChild.dataset.id.split('subject_')[1];
+            submit(teacherID, ev.currentTarget.dataset.daysid, ev.currentTarget.dataset.lessonid, subjectID, dataId.split('class_')[1]);
+        }
+        
+
+
+    } 
+    function submit(teacherID, daysID, lessonID, subjectID, classID ){
+        $.post("/api/update/UpdateTimetableEntry", { teacherID: teacherID, daysID: daysID, lessonID: lessonID, subjectID: subjectID, classID: classID });
+
+        console.log(teacherID, daysID, lessonID, subjectID, classID);
+
+                       
+    }
+
+    
 
 </script>
 

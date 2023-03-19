@@ -359,6 +359,17 @@ namespace TTMS.Controllers
 ;
             return dbConnection.Query<TimetableRecord>(sql);
         }
+
+        public bool UpdateTimetableEntry(int teacherID, int daysID, int lessonID, int subjectID, int classID)
+        {
+            using IDbConnection dbConnection = Connection;
+            dbConnection.Open();
+            string sql = $"DELETE FROM Timetable WHERE TeacherID = {teacherID} AND  LessonID = {lessonID}, DayID = {daysID};";
+            sql += $"INSERT INTO Timetable (TeacherID, SubjectID, ClassID, LessonID, DayID ) VALUES({teacherID},{subjectID},{classID},{lessonID},{daysID})";
+
+            return dbConnection.Execute(sql) == 1;
+        }
+    
         #endregion
     }
 }
