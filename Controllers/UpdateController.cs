@@ -15,14 +15,14 @@ namespace TTMS.Controllers
             db = new DataController();
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("UpdateTimetableEntry")]
         public bool UpdateTimetableEntry(int teacherID, int daysID, int lessonID, int subjectID, int classID)
         {
 
-            return db.UpdateTimetableEntry(teacherID, daysID, lessonID, subjectID, classID);
+            return db.UpdateTimetable( teacherID, daysID, lessonID, subjectID, classID);
 
-        }
+        }                       
 
        
 

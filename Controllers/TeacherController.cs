@@ -73,6 +73,19 @@ namespace TTMS.Controllers
 
         [Authorize]
         [HttpGet]
+        public IActionResult AddTimetable(int Id)
+        {
+            var model = new TimetableViewModel();
+            model.Timetables = db.GetTimetableByTeacherId(Id).ToList();
+            model.Subjects = GetSubjectsByTeacherId(Id);
+            model.Classes = GetClassesByTeacherId(Id);
+            model.Lessons = GetLessons();
+            model.Days = GetDays();
+            return View(model);
+        }
+
+        [Authorize]
+        [HttpGet]
         public IActionResult ViewTimetable(int Id)
         {
             var model = new TimetableViewModel();
