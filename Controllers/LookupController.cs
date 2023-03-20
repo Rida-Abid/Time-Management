@@ -34,6 +34,15 @@ namespace TTMS.Controllers
 
         }
 
+        [HttpGet]
+        [Route("GetTimetable")]
+        public IEnumerable<TimetableRecord> GetTimetable(int Id)
+        {
+
+            return db.GetTimetableByTeacherId(Id);
+
+        }
+
 
 
 
