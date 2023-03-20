@@ -312,7 +312,7 @@ namespace TTMS.Controllers
         public TimetableRecord GetTimetableById(int Id)
         {
             using IDbConnection dbConnection = Connection;
-            string sql = $"SELECT TimetableID, t.Firstname AS Teacher,l.LessonNo AS Lesson,l.LessonID AS LessonId,d.Name AS Day, d.DayID AS DayId, s.Name AS Subject, s.SubjectID AS SubjectId, c.Name AS Class,c.ClassID AS ClassId FROM [tms].[dbo].[Timetable] AS tt  LEFT JOIN Teacher AS t ON t.TeacherID = tt.TeacherID LEFT JOIN Lessons AS l ON l.LessonID = tt.LessonID LEFT JOIN Days AS d ON d.DayID = tt.DayID LEFT JOIN Subject AS s ON s.SubjectID = tt.SubjectID LEFT JOIN Class AS c ON c.ClassID = tt.ClassID WHERE tt.TeacherID = {Id}";
+            string sql = $"SELECT TimetableID, t.Firstname AS Teacher,l.LessonNo AS Lesson,d.Name AS Day FROM [tms].[dbo].[Timetable] AS tt  LEFT JOIN Teacher AS t ON t.TeacherID = tt.TeacherID LEFT JOIN Lessons AS l ON l.LessonID = tt.LessonID LEFT JOIN Days AS d ON d.DayID = tt.DayID WHERE TimetableID = {Id}";
             dbConnection.Open();
             return dbConnection.Query<TimetableRecord>(sql).FirstOrDefault();
         }
@@ -347,7 +347,7 @@ namespace TTMS.Controllers
         {
             using IDbConnection dbConnection = Connection;
             dbConnection.Open();
-            string sql = $"SELECT t.Firstname AS Teacher,s.Name AS Subject,c.Name AS Class,l.LessonNo AS Lesson,d.Name AS Day FROM Timetable AS tt LEFT JOIN Teacher AS t ON t.TeacherID = tt.TeacherID LEFT JOIN Subject AS s ON s.SubjectID = tt.SubjectID LEFT JOIN Class AS c ON c.ClassID = tt.ClassID LEFT JOIN Lessons AS l ON l.LessonID = tt.LessonID LEFT JOIN Days AS d ON d.DayID = tt.DayID WHERE t.TeacherID = {Id} ORDER BY l.LessonNo";
+            string sql = $"SELECT TimetableID, t.Firstname AS Teacher,l.LessonNo AS Lesson,l.LessonID AS LessonId,d.Name AS Day, d.DayID AS DayId, s.Name AS Subject, s.SubjectID AS SubjectId, c.Name AS Class,c.ClassID AS ClassId FROM [tms].[dbo].[Timetable] AS tt  LEFT JOIN Teacher AS t ON t.TeacherID = tt.TeacherID LEFT JOIN Lessons AS l ON l.LessonID = tt.LessonID LEFT JOIN Days AS d ON d.DayID = tt.DayID LEFT JOIN Subject AS s ON s.SubjectID = tt.SubjectID LEFT JOIN Class AS c ON c.ClassID = tt.ClassID WHERE tt.TeacherID = {Id} ORDER BY l.LessonNo";
             return dbConnection.Query<TimetableRecord>(sql);
         }
 

@@ -2,63 +2,62 @@
 
 
 
-    <main class="col-md-9 ms-sm-auto px-md-4"  >
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" >
-@*                <h1 class="h2">Timetable for Teacher @Model.Timetables.First().Teacher </h1>
-*@        </div>
-            <div class="btn-group1" ondragstart="drag(event)">
-            
-            </div>
+<main class="col-md-9 ms-sm-auto px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        @*                <h1 class="h2">Timetable for Teacher @Model.Timetables.First().Teacher </h1>
+        *@
+    </div>
+    <div class="btn-group1" ondragstart="drag(event)">
+    </div>
 
-            <div class="btn-group" ondragstart="drag(event)">
+    <div class="btn-group" ondragstart="drag(event)">
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th width="50px">Days </th>
+                @{
+                    foreach (var l in Model.Lessons)
+                    {
+                        <th width="50px" class="Lessons">@l.Text</th>
+                    }
+                }
 
-            </div>
-            <table class="table table-bordered">
-                <thead>
-                    <tr >
-                        <th width="50px" >Days </th>
-                        @{
-                            foreach (var l in Model.Lessons)
-                            {
-                            <th width="50px" class="Lessons">@l.Text</th>
-                            }
+
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var d in Model.Days)
+                {
+                    <tr>
+                        <td class="Days">@d.Text</td>
+                        @foreach (var l in Model.Lessons)//Timetables.Where(x => x.Day == d.Text))
+                        {
+                            <td ondrop="drop(event)" ondragover="allowDrop(event)" data-lessonId="@l.Value" data-daysId="@d.Value">
+                            </td>
                         }
-
-                    
                     </tr>
-                </thead>
-                <tbody >
-                        @{
-                            foreach (var d in Model.Days)
-                            {
-                                 <tr>
-                                    <td class="Days">@d.Text</td>
-                                    @foreach(var l in Model.Lessons)//Timetables.Where(x => x.Day == d.Text))
-                                    {
-                                <td ondrop="drop(event)" ondragover="allowDrop(event)"  data-lessonId="@l.Value" data-daysId="@d.Value">
-                                        
-                                            
 
-                                       </td>
-                                    }
-                                 </tr>
+                }
+            }
 
-                            }
-                        }
-                                        
-                </tbody>
-            </table>
-          
-        
+        </tbody>
+    </table>
 
-    </main>
+
+
+</main>
 
 <script>
     $(document).ready(function () {
         GetTeacher();
     });
+    $(document).ready(function (){
+        GetTimetable();
+    });
 
-    
+
     async function GetTeacher() {
         var id = window.location.href.split('?id=')[1];
         $.get("/api/lookup/GetSubjectsByTeacher?id=" + id, function (r) {
@@ -73,11 +72,11 @@
                 button.classList.add("btn-primary");
                 button.draggable = "true";
                 button.setAttribute("data-id", "subject_" + subject.subjectID);
-                button.setAttribute("data-name",  subject.name);
-                button.id ="subject_" + subject.subjectID+subject.name;
+                button.setAttribute("data-name", subject.name);
+                button.id = "subject_" + subject.subjectID + subject.name;
                 classBtnGroup.appendChild(button);
-               
-                
+
+
             });
 
 
@@ -130,7 +129,7 @@
             ev.currentTarget.appendChild(document.getElementById(dataId + name).cloneNode(true));
 
         }
-        if(dataId.startsWith("class")){
+        if (dataId.startsWith("class")) {
             if (ev.currentTarget.children.length == 1) {
                 ev.currentTarget.appendChild(document.getElementById(dataId + name).cloneNode(true));
             }
@@ -143,21 +142,26 @@
             var subjectID = ev.currentTarget.firstChild.dataset.id.split('subject_')[1];
             submit(teacherID, ev.currentTarget.dataset.daysid, ev.currentTarget.dataset.lessonid, subjectID, dataId.split('class_')[1]);
         }
-        
 
+    }
+    function submit(teacherID, daysID, lessonID, subjectID, classID) {
+        $.get("/api/update/UpdateTimetableEntry", { teacherID: teacherID, daysID: daysID, lessonID: lessonID, subjectID: subjectID, classID: classID }, function (result) {
+            console.log(teacherID, daysID, lessonID, subjectID, classID);
 
-    } 
-    function submit(teacherID, daysID, lessonID, subjectID, classID ){
-        $.post("/api/update/UpdateTimetableEntry", { teacherID: teacherID, daysID: daysID, lessonID: lessonID, subjectID: subjectID, classID: classID });
+        });
 
-        console.log(teacherID, daysID, lessonID, subjectID, classID);
-
-                       
     }
 
-    
+    async function GetTimetable() {
+        var id = window.location.href.split('?id=')[1];
+        $.get("/api/lookup/GetTimetable?id=" + id, function (r) {
+            console.log(r);
+            r.forEach(function (entry) {
+                console.log(entry);
 
+            });
+            
+
+        });
+    }
 </script>
-
-
-
