@@ -2,10 +2,10 @@
 
 
 
-<main class="col-md-9 ms-sm-auto px-md-4">
+<main class="col-md-10 ms-sm-auto px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        @*                <h1 class="h2">Timetable for Teacher @Model.Timetables.First().Teacher </h1>
-        *@
+                        <h1 class="h2">Timetable for Teacher @Model.Timetables.First().Teacher </h1>
+        
     </div>
     <div class="btn-group1" ondragstart="drag(event)">
     </div>
@@ -15,11 +15,11 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th width="50px">Days </th>
+                <th style="width:20px">Days </th>
                 @{
                     foreach (var l in Model.Lessons)
                     {
-                        <th width="50px" class="Lessons">@l.Text</th>
+                        <th style="width:60px" class="Lessons">@l.Text</th>
                     }
                 }
 
@@ -90,7 +90,7 @@
                 button.textContent = _class.name;
                 button.style.margin = "5px";
                 button.classList.add("btn");
-                button.classList.add("btn-primary");
+                button.classList.add("btn-warning");
                 button.draggable = "true";
                 button.setAttribute("data-id", "class_" + _class.classID);
                 button.setAttribute("data-name", _class.name);
@@ -155,9 +155,15 @@
     async function GetTimetable() {
         var id = window.location.href.split('?id=')[1];
         $.get("/api/lookup/GetTimetable?id=" + id, function (r) {
-            console.log(r);
             r.forEach(function (entry) {
                 console.log(entry);
+                console.log('subject_' + entry.subjectId + '' + entry.subject);
+            console.log('class_' + entry.classId + '' + entry.class);
+                var tdEle = document.querySelectorAll("[data-daysid='"+entry.dayId+"'][data-lessonid='"+entry.lessonId+"']")[0];
+                tdEle.appendChild(document.getElementById('subject_'+entry.subjectId+''+entry.subject).cloneNode(true));
+
+                var tdEle2 = document.querySelectorAll("[data-daysid='" + entry.dayId + "'][data-lessonid='" + entry.lessonId + "']")[0];
+                tdEle2.appendChild(document.getElementById('class_' + entry.classId + '' + entry.class).cloneNode(true));
 
             });
             
